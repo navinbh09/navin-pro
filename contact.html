@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact Navin Bhattarai - Engineering student specializing in mechanical design and prototyping. Get in touch for collaborations or inquiries.">
+  <meta name="keywords" content="contact, mechanical engineering, 3D modeling, portfolio, Navin Bhattarai">
+  <meta name="author" content="Navin Bhattarai">
+  <title>Contact - Navin Bhattarai</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Local styles for contact form -->
+  <style>
+    .contact-container {
+      padding: clamp(48px,7vw,72px) 5% 56px;
+      animation: fadeInUp .8s ease-out forwards;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      width: min(1200px, 92%);
+      margin: 0 auto;
+    }
+    .contact-form {
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      padding: var(--pad);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .contact-info {
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      padding: var(--pad);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      font-family: 'Inter', sans-serif;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--gold-1);
+      background: rgba(255,255,255,.12);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .contact-info-item {
+      margin-bottom: 1.5rem;
+    }
+    .contact-info-item h4 {
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--gold-1);
+      margin-bottom: 0.5rem;
+    }
+    .contact-info-item p, 
+    .contact-info-item a {
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .contact-info-item a:hover {
+      color: var(--gold-1);
+    }
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      transition: all 0.3s ease;
+    }
+    .social-links a:hover {
+      background: rgba(255,255,255,.12);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+      .social-links {
+        flex-direction: column;
+      }
+      .social-links a {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="background-animation"></div>
+
+  <header class="navbar">
+    <div class="logo">Navin Bhattarai</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+      <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </header>
+
+  <main class="contact-container">
+    <h1 class="gradient-text" style="text-align: center; font-family: 'Rajdhani', sans-serif; font-size: clamp(2.2rem,5vw,3rem); margin-bottom: 2rem;">Get in Touch</h1>
+    
+    <div class="contact-grid">
+      <!-- Contact Form -->
+      <div class="contact-form">
+        <h2 style="color: var(--gold-1); font-family: 'Rajdhani', sans-serif; margin-bottom: 1.5rem;">Send a Message</h2>
+        <form id="contact-form" action="https://formspree.io/f/your-formspree-id" method="POST">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+        </form>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="contact-info">
+        <h2 style="color: var(--gold-1); font-family: 'Rajdhani', sans-serif; margin-bottom: 1.5rem;">Contact Information</h2>
+        
+        <div class="contact-info-item">
+          <h4>Location</h4>
+          <p>Washington University in St. Louis<br>St. Louis, MO</p>
+        </div>
+
+        <div class="contact-info-item">
+          <h4>Email</h4>
+          <a href="mailto:navin.bhattarai515@gmail.com">navin.bhattarai515@gmail.com</a>
+        </div>
+
+        <div class="contact-info-item">
+          <h4>Phone</h4>
+          <a href="tel:+1-660-280-5163">+1 (660) 280-5163</a>
+        </div>
+
+        <div class="contact-info-item">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="https://linkedin.com/in/navin-bhattarai" target="_blank" rel="noopener">
+              LinkedIn
+            </a>
+            <a href="https://github.com/navinbhattarai" target="_blank" rel="noopener">
+              GitHub
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <h4>Availability</h4>
+          <p>Available for internships and project collaborations</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-section">
+      <h3>Contact Info</h3>
+      <p>Email: <a href="mailto:navin.bhattarai515@gmail.com" aria-label="Email Navin Bhattarai">navin.bhattarai515@gmail.com</a></p>
+      <p>Phone: <a href="tel:+1-660-280-5163" aria-label="Call Navin Bhattarai">+1 (660) 280-5163</a></p>
+    </div>
+    <div class="footer-section">
+      <h3>Connect</h3>
+      <a href="https://linkedin.com/in/navin-bhattarai" target="_blank" rel="noopener" aria-label="Navin Bhattarai's LinkedIn">LinkedIn</a>
+      <a href="https://github.com/navinbhattarai" target="_blank" rel="noopener" aria-label="Navin Bhattarai's GitHub">GitHub</a>
+    </div>
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <a href="index.html" aria-label="Home Page">Home</a>
+      <a href="about.html" aria-label="About Navin Bhattarai">About</a>
+      <a href="projects.html" aria-label="Navin's Projects">Projects</a>
+      <a href="contact.html" aria-label="Contact Navin Bhattarai" aria-current="page">Contact</a>
+    </div>
+    <div class="footer-bottom" style="text-align:center; width:100%; clear:both; margin-top:1.5rem;">
+      <p style="margin:0;">© 2025 Navin Bhattarai | Built with ❤️</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

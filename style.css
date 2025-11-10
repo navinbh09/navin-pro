@@ -19,6 +19,9 @@
   --radius:14px;
   --radius-lg:22px;
   --pad:clamp(16px,2.2vw,28px);
+  /* Safari-specific */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -35,10 +38,23 @@ body{
    GLOBAL UTILS
    ====================================== */
 .container{width:min(1100px,92%); margin-inline:auto}
+
+/* Safari fixes for glass effects */
+.glass-card,
+[class*="glass"],
+[style*="backdrop-filter"] {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transform: translateZ(0);
+  will-change: transform;
+}
 h1,h2,h3,h4{color:#fff}
 .gradient-text{
   background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;
+  background-clip: text;
+  -webkit-text-fill-color:transparent;
+  color: var(--gold-1); /* Fallback for Safari */
 }
 .btn{
   display:inline-flex; align-items:center; justify-content:center;
@@ -64,9 +80,12 @@ h1,h2,h3,h4{color:#fff}
   position:sticky; top:0; z-index:1000;
   display:flex; justify-content:space-between; align-items:center;
   padding:1rem 5%; width:100%;
-  background:var(--nav-glass); backdrop-filter:blur(10px);
+  background:var(--nav-glass); 
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
   box-shadow:0 4px 20px rgba(0,0,0,.05);
   transition:background .3s ease, box-shadow .3s ease;
+  transform: translateZ(0); /* Force GPU acceleration in Safari */
 }
 .logo{
   font-family:'Rajdhani',sans-serif; font-size:1.6rem; font-weight:700;
