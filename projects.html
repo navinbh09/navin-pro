@@ -9,11 +9,218 @@
   <title>Projects - Navin Bhattarai</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Project card and grid styles */
+    .project-card h3 {
+      background: linear-gradient(90deg,var(--gold-1),var(--gold-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      width: min(1200px, 90%);
+      margin: 0 auto;
+    }
+    
+    .project-card {
+      cursor: pointer;
+      overflow: hidden;
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-2);
+    }
+    
+    .project-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .project-card:hover img {
+      transform: scale(1.05);
+    }
+    
+    .project-card-content {
+      padding: 1.5rem;
+    }
+    
+    .project-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, margin 0.5s ease, opacity 0.5s ease;
+      background: var(--glass-strong);
+      margin: 0 auto;
+      width: min(1200px, 90%);
+      border-radius: var(--radius);
+      opacity: 0;
+      position: absolute;
+      left: -9999px;
+      pointer-events: none;
+    }
+    
+    .project-details.active {
+      position: relative;
+      left: 0;
+      pointer-events: all;
+      max-height: 2000px;
+      margin: 2rem auto;
+      opacity: 1;
+    }
+    
+    .project-details-inner {
+      padding: 2rem;
+      position: relative;
+    }
+    
+    .project-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .project-gallery img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+    
+    .project-gallery img:hover {
+      transform: scale(1.05);
+    }
+    
+    .close-details {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: background 0.3s ease;
+    }
+    
+    .close-details:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    
+    .project-description {
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    .project-description h2 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+    
+    .project-description h2 a {
+      background: linear-gradient(90deg,var(--gold-1),var(--gold-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    .project-description h2 a:hover {
+      opacity: 0.8;
+    }
+
+    .project-description h2 a.live-link {
+      text-decoration: underline;
+      text-decoration-style: wavy;
+      text-decoration-color: var(--gold-2);
+      text-underline-offset: 4px;
+    }
+
+    .view-more-prompt {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: var(--gold-2);
+      font-size: 0.9rem;
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover .view-more-prompt {
+      opacity: 1;
+    }
+
+    .coming-soon-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      min-height: 300px;
+      background: linear-gradient(45deg, rgba(255,215,0,0.1), rgba(255,165,0,0.1));
+      border: 2px dashed rgba(255,215,0,0.3);
+    }
+
+    .coming-soon-card h3 {
+      margin-bottom: 1rem;
+    }
+
+    .coming-soon-card p {
+      color: var(--text-dim);
+    }
+    
+    .project-description h3 {
+      color: var(--gold-2);
+      margin: 1.5rem 0 0.5rem;
+    }
+    
+    .project-description ul {
+      list-style: none;
+      margin: 0.5rem 0;
+    }
+    
+    .project-description li {
+      margin: 0.25rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    
+    .project-description li:before {
+      content: "•";
+      color: var(--gold-1);
+      position: absolute;
+      left: 0;
+    }
+  </style>
 </head>
 <body>
-  <div id="background-animation"></div>
+  <canvas id="hyperspeed-bg"></canvas>
   <header class="navbar">
-    <div class="logo">Navin Bhattarai</div>
+    <a href="index.html" class="logo">
+      <img src="./assets/navin-headshot.jpg" alt="" class="logo-thumbnail">
+      <span>Navin Bhattarai</span>
+    </a>
     <nav>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
@@ -33,31 +240,239 @@
     <h1 class="projects-intro">Projects</h1>
     <p class="projects-subtitle">Explore my recent work in mechanical design, 3D modeling, and innovative prototyping.</p>
     <div class="project-grid">
-      <div class="project-card">
-        <img src="images/solar-cell.jpg" alt="Dye-Sensitized Solar Cell Prototype" loading="lazy">
-        <h3>Dye-Sensitized Solar Cell Research</h3>
-        <p>Designed and tested a prototype using TiO2 nanoparticles to enhance solar energy efficiency. Conducted experiments to optimize dye absorption for sustainable energy solutions.</p>
-        <a href="#" class="btn project-link">View Project</a>
+      <!-- CookNup Project -->
+      <div class="project-card" onclick="toggleProjectDetails('cooknup')">
+        <img src="assets/THUMNAIL_COOKNUP.png" alt="CookNup AI Meal Companion" loading="lazy">
+        <div class="project-card-content">
+          <h3>CookNup — AI Meal Companion</h3>
+          <p>An AI-powered cooking assistant that transforms ingredients into personalized recipes through computer vision and smart recommendations.</p>
+          <span class="view-more-prompt">Click to view details →</span>
+        </div>
       </div>
-      <div class="project-card">
-        <img src="images/humidifier.jpg" alt="Automated Humidifier System" loading="lazy">
-        <h3>Automated Humidifier Control</h3>
-        <p>Developed a Raspberry Pi-based system to monitor and control humidity levels, integrating sensors and automation for precise environmental control.</p>
-        <a href="#" class="btn project-link">View Project</a>
+
+      <!-- Project 2 -->
+      <div class="project-card" onclick="toggleProjectDetails('solar')">
+        <img src="assets/DSSCS_THMB.jpg" alt="Solar Cell Project" loading="lazy">
+        <div class="project-card-content">
+          <h3>Dye-Sensitized Solar Cell Research</h3>
+          <p>Designed and tested a prototype using TiO2 nanoparticles to enhance solar energy efficiency.</p>
+          <span class="view-more-prompt">Click to view details →</span>
+        </div>
       </div>
-      <div class="project-card">
-        <img src="images/cad-design.jpg" alt="3D CAD Model" loading="lazy">
-        <h3>CAD Mechanical Design</h3>
-        <p>Created 3D models for mechanical components using SolidWorks, optimizing designs for manufacturability and prototyping efficiency.</p>
-        <a href="#" class="btn project-link">View Project</a>
+
+      <!-- Project 3 -->
+      <div class="project-card" onclick="toggleProjectDetails('humidifier')">
+        <img src="assets/Humidifier.jpeg" alt="Humidifier Control System" loading="lazy">
+        <div class="project-card-content">
+          <h3>Automated Humidifier Control</h3>
+          <p>Developed a Raspberry Pi-based system for precise humidity management.</p>
+          <span class="view-more-prompt">Click to view details →</span>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project-card" onclick="toggleProjectDetails('cad')">
+        <img src="assets/CAD_THUMB.jpg" alt="3D Printed Prototype" loading="lazy">
+        <div clas="project-card-content">
+          <h3>CAD Mechanical Design</h3>
+          <p>Created 3D models and prototypes using SolidWorks and advanced manufacturing techniques.</p>
+          <span class="view-more-prompt">Click to view details →</span>
+        </div>
+      </div>
+
+      <!-- Coming Soon Card -->
+      <div class="project-card coming-soon-card">
+        <h3>More Projects Coming Soon</h3>
+        <p>Stay tuned for exciting new projects! I'm always working on something innovative and can't wait to share it with you.</p>
       </div>
     </div>
+
+    <!-- Project Details Sections -->
+    <div id="cooknup-details" class="project-details">
+      <div class="project-details-inner">
+        <button class="close-details" onclick="closeProjectDetails('cooknup')">&times;</button>
+        <div class="project-gallery">
+          <img src="assets/COOKNUP.png" alt="CookNup App Interface">
+          <img src="assets/COOKNUP2.png" alt="CookNup Recipe Generation">
+          <img src="assets/IMG_4728.png" alt="CookNup AI Analysis">
+        </div>
+        <div class="project-description">
+          <h2><a href="https://foodies-e099a.web.app" target="_blank" rel="noopener noreferrer" class="live-link">CookNup — Your AI Meal Companion</a></h2>
+          <p>Bringing People and AI Together Through Everyday Cooking</p>
+          
+          <h3>Overview</h3>
+          <p>CookNup is an AI-powered cooking assistant that transforms everyday decision-making in the kitchen. By analyzing a simple photo of your fridge or pantry, CookNup generates personalized recipes that are practical, intuitive, and tailored to what you already have.</p>
+          
+          <h3>Key Features</h3>
+          <ul>
+            <li>Computer vision for ingredient recognition</li>
+            <li>Personalized recipe recommendations</li>
+            <li>Dietary preference adaptation</li>
+            <li>Time and skill level consideration</li>
+          </ul>
+          
+          <h3>Technology</h3>
+          <ul>
+            <li>Built with Flutter and Firebase</li>
+            <li>AI-powered image recognition</li>
+            <li>Natural language processing</li>
+            <li>Real-time recipe generation</li>
+          </ul>
+          
+                    <h3>Impact</h3>
+          <ul>
+            <li>Reduces food waste through smart ingredient usage</li>
+            <li>Makes cooking accessible and enjoyable</li>
+            <li>Promotes sustainable cooking practices</li>
+            <li>Empowers users to cook confidently</li>
+          </ul>
+          
+          <div class="try-it-out">
+            <h3>Try It Out!</h3>
+            <p>Ready to transform your cooking experience? Visit <a href="https://foodies-e099a.web.app" target="_blank" rel="noopener noreferrer">CookNup</a> and start creating amazing dishes with what you have!</p>
+            <p>I'm always excited to hear your feedback - whether you enjoyed using it or encountered any issues. Feel free to reach out and let me know about your experience. I'm here to help!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other project details sections -->
+    <div id="solar-details" class="project-details">
+      <div class="project-details-inner">
+        <button class="close-details" onclick="closeProjectDetails('solar')">&times;</button>
+        <div class="project-gallery">
+          <img src="assets/DSSCS_THMB.jpg" alt="DSSC Assembly Process">
+          <img src="assets/IMG_5826.jpeg" alt="Natural Dye Extraction">
+          <img src="assets/IMG_5825.jpeg" alt="Solar Cell Testing">
+        </div>
+        <div class="project-description">
+          <h2><a href="#solar">Dye-Sensitized Solar Cell Research</a></h2>
+          <p>Exploring sustainable and cost-effective solar energy solutions using natural dyes.</p>
+          
+          <h3>Project Overview</h3>
+          <p>Solar energy is one of our best options for sustainable power, but traditional solar panels can be expensive and environmentally costly to produce. My research focuses on a promising alternative: dye-sensitized solar cells (DSSCs) that use natural dyes from plants to capture sunlight.</p>
+          
+          <h3>What Makes This Special?</h3>
+          <ul>
+            <li>Uses eco-friendly dyes from plants like beetroot and sumac</li>
+            <li>Much cheaper to produce than traditional solar cells</li>
+            <li>Can work well even in low-light conditions</li>
+            <li>Helps move us toward more sustainable energy solutions</li>
+          </ul>
+          
+          <h3>Technical Highlights</h3>
+          <ul>
+            <li>Conducted detailed analysis using Electrochemical Impedance Spectroscopy (EIS)</li>
+            <li>Studied how different natural dyes affect solar cell performance</li>
+            <li>Optimized the cell design for better power conversion</li>
+            <li>Documented comprehensive findings in a research paper</li>
+          </ul>
+          
+          <h3>Impact</h3>
+          <ul>
+            <li>Contributes to making solar energy more accessible</li>
+            <li>Supports the development of eco-friendly energy solutions</li>
+            <li>Helps advance understanding of natural dye applications</li>
+            <li>Creates opportunities for low-cost solar technology</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="humidifier-details" class="project-details">
+      <div class="project-details-inner">
+        <button class="close-details" onclick="closeProjectDetails('humidifier')">&times;</button>
+        <div class="project-gallery">
+          <img src="assets/Humidifier.jpeg" alt="Humidifier System Setup">
+        </div>
+        <div class="project-description">
+          <h2><a href="#humidifier">Smart Humidifier Control System</a></h2>
+          <p>Automated climate control system using Raspberry Pi and smart sensors.</p>
+          
+          <h3>Project Overview</h3>
+          <p>Created an intelligent humidifier control system that automatically maintains optimal humidity levels. This project combines hardware automation with smart monitoring to create a responsive and efficient climate control solution.</p>
+          
+          <h3>Technical Implementation</h3>
+          <ul>
+            <li>Raspberry Pi as the main control unit</li>
+            <li>Temperature and humidity sensors for real-time monitoring</li>
+            <li>5V relay for controlling the humidifier</li>
+            <li>Custom Python code for automation logic</li>
+          </ul>
+          
+          <h3>Key Features</h3>
+          <ul>
+            <li>Real-time humidity and temperature monitoring</li>
+            <li>Automated control based on sensor readings</li>
+            <li>Custom thresholds and scheduling options</li>
+            <li>Data logging for environment tracking</li>
+          </ul>
+          
+          <h3>Applications</h3>
+          <ul>
+            <li>Home climate control automation</li>
+            <li>Plant growth environments</li>
+            <li>Laboratory humidity management</li>
+            <li>Comfortable living spaces maintenance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="cad-details" class="project-details">
+      <div class="project-details-inner">
+        <button class="close-details" onclick="closeProjectDetails('cad')">&times;</button>
+        <div class="project-gallery">
+          <img src="assets/CAD_THUMB.jpg" alt="3D Model Design">
+          <img src="assets/CAD_TEMPLE.jpeg" alt="3D Model Design">
+          <img src="assets/cad_temple2.jpeg" alt="3D Model Design">
+          <img src="assets/CAD_TEMPLE3.jpeg" alt="3D Model Design">
+          <img src="assets/CAD_SNACKUP1.jpeg" alt="3D Model Design">
+          <img src="assets/CAD_SNACKUP2.jpeg" alt="3D Model Design">
+          <img src="assets/CAD_TRUCK.jpeg" alt="3D Model Design">
+          <img src="assets/CAD_WATCH.jpeg" alt="3D Model Design">
+        </div>
+        <div class="project-description">
+          <h2><a href="#cad">Mechanical Design & CAD Projects</a></h2>
+          <p>Engineering solutions through advanced 3D modeling and prototyping.</p>
+          
+          <h3>Engineering Expertise</h3>
+          <p>As a mechanical engineering student, I specialize in creating detailed 3D models and prototypes using industry-standard CAD software. My work focuses on designing functional, manufacturable components while considering assembly requirements and material properties.</p>
+          
+          <h3>Technical Skills</h3>
+          <ul>
+            <li>Advanced 3D modeling in SolidWorks</li>
+            <li>Design for Manufacturing (DFM) principles</li>
+            <li>Geometric Dimensioning & Tolerancing (GD&T)</li>
+            <li>FEA and motion analysis</li>
+          </ul>
+          
+          <h3>Project Highlights</h3>
+          <ul>
+            <li>Complex assembly design and optimization</li>
+            <li>Prototype development using 3D printing</li>
+            <li>Mechanical system simulations</li>
+            <li>Design documentation and technical drawings</li>
+          </ul>
+          
+          <h3>Manufacturing Expertise</h3>
+          <ul>
+            <li>Experience with FDM 3D printing</li>
+            <li>CNC machining fundamentals</li>
+            <li>Material selection for various applications</li>
+            <li>Quality control and inspection methods</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+
   </section>
 
   <footer>
     <div class="footer-section">
       <h3>Contact Info</h3>
-      <p>Email: <a href="mailto:navin.bhattarai515@gmail.com" aria-label="Email Navin Bhattarai">navin.bhattarai515@gmail.com</a></p>
+  <p>Email: <a href="mailto:b.navin@wustl.edu" aria-label="Email Navin Bhattarai">b.navin@wustl.edu</a></p>
       <p>Phone: <a href="tel:+1-555-555-5555" aria-label="Call Navin Bhattarai">+1 (555) 555-5555</a></p>
     </div>
     <div class="footer-section">
@@ -78,5 +493,45 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    let activeProject = null;
+
+    function toggleProjectDetails(projectId) {
+      const detailsSection = document.getElementById(`${projectId}-details`);
+      
+      // If clicking the same project, just close it
+      if (activeProject === projectId) {
+        closeProjectDetails(projectId);
+        return;
+      }
+      
+      // Close any open project details
+      if (activeProject) {
+        closeProjectDetails(activeProject);
+      }
+      
+      // Open the clicked project details
+      detailsSection.classList.add('active');
+      activeProject = projectId;
+      
+      // Smooth scroll to the details section
+      setTimeout(() => {
+        detailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+    
+    function closeProjectDetails(projectId) {
+      const detailsSection = document.getElementById(`${projectId}-details`);
+      detailsSection.classList.remove('active');
+      activeProject = null;
+    }
+    
+    // Close details on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && activeProject) {
+        closeProjectDetails(activeProject);
+      }
+    });
+  </script>
 </body>
 </html>

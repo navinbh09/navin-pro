@@ -11,10 +11,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="background-animation"></div>
+  <canvas id="hyperspeed-bg"></canvas>
 
   <header class="navbar">
-    <div class="logo">Navin Bhattarai</div>
+    <a href="index.html" class="logo">
+      <img src="./assets/navin-headshot.jpg" alt="" class="logo-thumbnail">
+      <span>Navin Bhattarai</span>
+    </a>
     <nav>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
@@ -36,6 +39,9 @@
       <div class="intro-text">
         <h1 class="gradient-text">Hi, I'm Navin</h1>
         <p>Engineering student passionate about 3D modeling, mechanical design, and turning ideas into prototypes.</p>
+        <div class="resume-links">
+          <a href="assets/Resume_NAVIN_B.pdf" target="_blank" rel="noopener noreferrer" class="resume-btn">View Resume</a>
+        </div>
       </div>
     </div>
   </section>
@@ -44,31 +50,139 @@
   <section id="about">
     <div class="about-text container">
       <h2>My Journey</h2>
-      <p>I’m a junior at Washington University in St. Louis, transitioning from Physics to Mechanical Engineering. My passion lies in creating innovative solutions through 3D modeling, CAD design, and prototyping.</p>
-      <p>I’ve worked on projects like dye-sensitized solar cells to improve energy efficiency and built an automated humidifier control system using Raspberry Pi. As a Building Operations Manager at Truman State University, I honed my problem-solving skills, managing facility operations and safety protocols.</p>
-      <p>I’m also dedicated to inspiring others through STEM outreach, volunteering with programs like Girl Scouts to teach young students about science and engineering. My goal is to design impactful solutions that blend technical precision with creative ingenuity.</p>
-      <a href="projects.html" class="btn">See My Projects</a>
-    </div>
-  </section>
+      <p>I'm pursuing a Bachelor of Science in Mechanical Engineering at Washington University in St. Louis, with a strong foundation in physics and a passion for innovative design. My academic journey has equipped me with expertise in CAD/CAM technologies, mechanical design, and prototyping.</p>
+      
+      <!-- Education: Road Timeline (keep this first for priority) -->
+      <section class="education-timeline-wrap">
+        <div class="education-timeline">
+          <h3 class="gradient-text" style="font-family:'Rajdhani',sans-serif; font-size:2rem; margin: 0 0 1rem 0;">Education</h3>
 
-  <!-- Education: Road Timeline -->
-  <section class="education-timeline-wrap">
-    <div class="education-timeline">
-      <h3 class="gradient-text" style="font-family:'Rajdhani',sans-serif; font-size:2rem; margin: 0 0 1rem 0;">Education</h3>
+          <div class="timeline-item left">
+            <h4>Washington University in St. Louis</h4>
+            <span>2025 – Present · McKelvey School of Engineering</span>
+            <p>B.S. Mechanical &amp; Aerospace Engineering (4.0/4.0)<br>Coursework: Engineering Analysis, CAD/CAM, Fluid Mechanics</p>
+          </div>
 
-      <div class="timeline-item left">
-        <h4>Washington University in St. Louis</h4>
-        <span>2023 – 2026 · B.S. Mechanical &amp; Aerospace Engineering · GPA&nbsp;3.9</span>
-        <p>Coursework in structural analysis, aerospace propulsion, and advanced CAD. Member of Design/Build/Fly (Structures).</p>
-      </div>
+          <div class="timeline-item right">
+            <h4>Truman State University</h4>
+            <span>2022 – 2025 · College of Arts &amp; Sciences</span>
+            <p>B.A. Physics (4.0/4.0)<br>Coursework: Classical Mechanics, Materials Science, Advanced Physics Lab</p>
+          </div>
+        </div>
+      </section>
 
-      <div class="timeline-item right">
-        <h4>Truman State University</h4>
-        <span>2020 – 2023 · B.A. Physics · GPA&nbsp;4.0</span>
-        <p>Classical mechanics, materials, and lab leadership. Building Operations Manager and STEM outreach volunteer.</p>
-      </div>
-    </div>
-  </section>
+      <!-- Experience Timeline (short & same format as Education) -->
+      <section class="education-timeline-wrap">
+        <div class="education-timeline">
+          <h3 class="gradient-text" style="font-family:'Rajdhani',sans-serif; font-size:2rem; margin: 2rem 0 1rem 0;">Experience</h3>
+
+          <div class="timeline-item left">
+            <h4>Design-Build-Fly — Structures Engineer</h4>
+            <span>Aug 2025 – Present · Washington University in St. Louis</span>
+            <p>Structures engineering &amp; prototyping for competition aircraft.</p>
+          </div>
+
+          <div class="timeline-item right">
+            <h4>Dye-Sensitized Solar Cells — Research Associate</h4>
+            <span>Feb 2024 – Aug 2025 · Truman State University</span>
+            <p>Fabrication and testing of plant-based dye solar cells.</p>
+          </div>
+
+          <div class="timeline-item left">
+            <h4>McKelvey School of Engineering — Course Assistant</h4>
+            <span>Aug 2025 – Present · Washington University in St. Louis</span>
+            <p>Assisting Statics &amp; Mechanics courses; student support and grading.</p>
+          </div>
+
+          <div class="timeline-item right">
+            <h4>Center of Academic Excellence — Academic Peer Tutor</h4>
+            <span>Aug 2023 – May 2025 · Truman State University</span>
+            <p>Tutoring in Physics, Math, and Statistics; group and individual sessions.</p>
+          </div>
+
+          <div class="timeline-item left">
+            <h4>Student Union &amp; Involvement Services — Building Operations Manager</h4>
+            <span>Aug 2022 – Aug 2025 · Truman State University</span>
+            <p>Managed facilities operations and supervised event.</p>
+          </div>
+
+        </div>
+      </section>
+
+        <!-- Detailed Experience (from resume) -->
+        <section class="detailed-experience container" style="margin-top:1.5rem;">
+          <h2 class="timeline-header">Detailed Experience</h2>
+          <p class="muted" style="margin-top:6px;">Display controls (⚙ bottom-right): adjust background animation speed, contrast, or switch Light/Dark for readability.</p>
+
+            <details class="experience-block">
+            <summary>
+              <strong>Design-Build-Fly, Structures Sub-Team — Structures Engineer</strong>
+              <div class="muted">Aug 2025 – Present · Washington University in St. Louis</div>
+            </summary>
+            <div class="exp-body">
+              <ul>
+                <li>Design and analyze wing spars and fuselage frame for competition RC aircraft using SolidWorks.</li>
+                <li>Optimize structures to ensure CAD designs are manufacturing-ready for laser cutting.</li>
+                <li>Collaborate with aerodynamics &amp; propulsion sub-team to meet flight performance specifications.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="experience-block">
+            <summary>
+              <strong>Dye-Sensitized Solar Cells (DSSCs) — Research Associate</strong>
+              <div class="muted">Feb 2024 – Aug 2025 · Truman State University</div>
+            </summary>
+            <div class="exp-body">
+              <ul>
+                <li>Fabricated and tested 30+ solar cell prototypes (max PCE ≈ 9.90%, 55% FF).</li>
+                <li>Conducted UV-Vis spectroscopy and I–V measurements comparing plant-based dyes.</li>
+                <li>Developed repeatable assembly processes to improve consistency across prototypes.</li>
+                <li>Presented findings at the 2025 APS Prairie Section.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="experience-block">
+            <summary>
+              <strong>McKelvey School of Engineering — Course Assistant, Statics and Mechanics of Materials</strong>
+              <div class="muted">Aug 2025 – Present · Washington University in St. Louis</div>
+            </summary>
+            <div class="exp-body">
+              <ul>
+                <li>Support 150+ students via office hours, exam reviews, and homework assistance.</li>
+                <li>Grade assignments and provide feedback to improve problem-solving approaches.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="experience-block">
+            <summary>
+              <strong>Center of Academic Excellence — Academic Peer Tutor</strong>
+              <div class="muted">Aug 2023 – May 2025 · Truman State University</div>
+            </summary>
+            <div class="exp-body">
+              <ul>
+                <li>Tutored 125+ students in Physics, Mathematics, and Statistics.</li>
+                <li>Led individual and group sessions focused on exam prep and concept mastery.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="experience-block">
+            <summary>
+              <strong>Student Union &amp; Involvement Services — Building Operations Manager</strong>
+              <div class="muted">Aug 2022 – Aug 2025 · Truman State University</div>
+            </summary>
+            <div class="exp-body">
+              <ul>
+                <li>Coordinated 100+ events over 3 years for 45+ organizations; managed setup and emergency response.</li>
+                <li>Trained and supervised assistants to ensure safety and operational standards.</li>
+              </ul>
+            </div>
+          </details>
+        </section>
+      </section>
 
   <!-- Skills -->
   <section class="skills-section">
@@ -122,10 +236,16 @@
     </div>
   </section>
 
+  <div class="cta-buttons container" style="margin:2rem auto; max-width:900px;">
+    <a href="projects.html" class="btn">View My Projects</a>
+    <a href="contact.html" class="btn btn-outline">Get in Touch</a>
+    <a href="assets/Resume_NAVIN_B.pdf" class="btn" download>Download Resume</a>
+  </div>
+
   <footer>
     <div class="footer-section">
       <h3>Contact Info</h3>
-      <p>Email: <a href="mailto:navin.bhattarai515@gmail.com" aria-label="Email Navin Bhattarai">navin.bhattarai515@gmail.com</a></p>
+  <p>Email: <a href="mailto:b.navin@wustl.edu" aria-label="Email Navin Bhattarai">b.navin@wustl.edu</a></p>
       <p>Phone: <a href="tel:+1-660-280-5163" aria-label="Call Navin Bhattarai">+1 (660) 280-5163</a></p>
     </div>
     <div class="footer-section">

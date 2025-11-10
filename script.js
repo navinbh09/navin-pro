@@ -8,6 +8,10 @@ if (!canvas || !canvas.getContext) {
   let numStars = window.innerWidth < 768 ? 100 : 180;
   let speed = window.innerWidth < 768 ? 0.0015 : 0.002;
   let animationFrameId;
+  let contrast = 1;
+  let theme = 'dark';
+  const darkBase = [11,19,43];
+  const lightBase = [250,250,250];
 
   function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -32,7 +36,11 @@ if (!canvas || !canvas.getContext) {
 
   function drawStars() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#0b132b";
+    // compute background based on theme and contrast
+    const base = theme === 'dark' ? darkBase : lightBase;
+    const br = (v) => Math.min(255, Math.round(v * contrast));
+    const [rBg, gBg, bBg] = base.map(br);
+    ctx.fillStyle = `rgb(${rBg},${gBg},${bBg})`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < numStars; i++) {
@@ -54,9 +62,12 @@ if (!canvas || !canvas.getContext) {
         ctx.save();
         ctx.translate(px, py);
         ctx.rotate(Math.PI / 4);
-        ctx.fillStyle = `rgba(255,215,0,${alpha})`;
+        // choose star color based on theme and contrast
+        const starRGB = theme === 'dark' ? [255,215,0] : [40,40,40];
+        const starColor = `rgba(${starRGB[0]},${starRGB[1]},${starRGB[2]},${alpha * Math.min(1,contrast)})`;
+        ctx.fillStyle = starColor;
         ctx.shadowBlur = 10;
-        ctx.shadowColor = `rgba(255,215,0,0.8)`;
+        ctx.shadowColor = `rgba(${starRGB[0]},${starRGB[1]},${starRGB[2]},${0.8 * Math.min(1,contrast)})`;
         ctx.beginPath();
         ctx.moveTo(0, -size);
         ctx.lineTo(size, 0);
@@ -81,23 +92,83 @@ if (!canvas || !canvas.getContext) {
   createStars();
   drawStars();
 
-  const speedSlider = document.createElement("input");
-  speedSlider.type = "range";
-  speedSlider.min = "0.001";
-  speedSlider.max = "0.005";
-  speedSlider.step = "0.0005";
-  speedSlider.value = speed;
-  speedSlider.style.position = "fixed";
-  speedSlider.style.bottom = "20px";
-  speedSlider.style.right = "20px";
-  speedSlider.style.width = "150px";
-  speedSlider.style.opacity = "0.7";
-  speedSlider.style.zIndex = "1000";
-  speedSlider.setAttribute("aria-label", "Adjust animation speed");
-  speedSlider.addEventListener("input", () => {
-    speed = parseFloat(speedSlider.value);
+  /* Small display controls panel: Speed, Contrast, Theme */
+  const controls = document.createElement('div');
+  controls.className = 'display-controls';
+  controls.innerHTML = `
+    <div class="dc-container">
+      <button class="dc-toggle" aria-expanded="false" title="Display settings">
+        <span style="display:inline-block">⚙</span>
+        <small class="dc-always-visible">✨ Customize view</small>
+      </button>
+      <div class="dc-panel" hidden>
+        <div class="dc-row">
+          <div class="dc-control">
+            <label for="dc-speed">✨ Speed</label>
+            <small class="dc-tooltip">Animation speed</small>
+          </div>
+          <input id="dc-speed" class="dc-speed" type="range" 
+            min="0.0005" max="0.01" step="0.0005" value="${speed}">
+        </div>
+        <div class="dc-row">
+          <div class="dc-control">
+            <label for="dc-contrast">🌟 Look</label>
+            <small class="dc-tooltip">Background brightness</small>
+          </div>
+          <input id="dc-contrast" class="dc-contrast" type="range" 
+            min="0.5" max="1.6" step="0.05" value="${contrast}">
+        </div>
+        <div class="dc-row">
+          <div class="dc-control">
+            <label>🎨 Mode</label>
+            <small class="dc-tooltip">Dark/Light theme</small>
+          </div>
+          <button class="dc-theme" type="button">Light</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(controls);
+
+  const toggleBtn = controls.querySelector('.dc-toggle');
+  const panel = controls.querySelector('.dc-panel');
+  const speedInput = controls.querySelector('.dc-speed');
+  const contrastInput = controls.querySelector('.dc-contrast');
+  const themeBtn = controls.querySelector('.dc-theme');
+
+  toggleBtn.addEventListener('click', () => {
+    const open = panel.hidden;
+    panel.hidden = !open;
+    toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    
+    // Start continuous rotation when panel is open
+    const gear = toggleBtn.querySelector('span');
+    if (open) {
+      gear.style.animation = 'spin 4s linear infinite';
+    } else {
+      gear.style.animation = '';
+    }
   });
-  document.body.appendChild(speedSlider);
+
+  speedInput.addEventListener('input', () => {
+    speed = parseFloat(speedInput.value);
+  });
+
+  contrastInput.addEventListener('input', () => {
+    contrast = parseFloat(contrastInput.value);
+  });
+
+  themeBtn.addEventListener('click', () => {
+    if (theme === 'dark') {
+      theme = 'light';
+      themeBtn.textContent = 'Dark';
+      document.body.classList.add('light-theme');
+    } else {
+      theme = 'dark';
+      themeBtn.textContent = 'Light';
+      document.body.classList.remove('light-theme');
+    }
+  });
 }
 
 function toggleMenu() {
