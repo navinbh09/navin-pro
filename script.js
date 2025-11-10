@@ -13,11 +13,20 @@ if (!canvas || !canvas.getContext) {
   const darkBase = [11,19,43];
   const lightBase = [250,250,250];
 
+  // Restore saved display preferences (persist across pages)
+  try {
+    const savedSpeed = localStorage.getItem('display_speed');
+    const savedContrast = localStorage.getItem('display_contrast');
+    if (savedSpeed !== null) speed = parseFloat(savedSpeed);
+    if (savedContrast !== null) contrast = parseFloat(savedContrast);
+  } catch (e) {
+    // localStorage may be unavailable in some contexts; silently ignore
+  }
+
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     numStars = window.innerWidth < 768 ? 100 : 180;
-    speed = window.innerWidth < 768 ? 0.0015 : 0.002;
     createStars();
   }
   window.addEventListener("resize", resizeCanvas);
@@ -99,7 +108,7 @@ if (!canvas || !canvas.getContext) {
     <div class="dc-container">
       <button class="dc-toggle" aria-expanded="false" title="Display settings">
         <span style="display:inline-block">⚙</span>
-        <small class="dc-always-visible">✨ Customize view</small>
+        <small class="dc-always-visible"> Customize view</small>
       </button>
       <div class="dc-panel" hidden>
         <div class="dc-row">
@@ -119,12 +128,9 @@ if (!canvas || !canvas.getContext) {
             min="0.5" max="1.6" step="0.05" value="${contrast}">
         </div>
         <div class="dc-row">
-          <div class="dc-control">
-            <label>🎨 Mode</label>
-            <small class="dc-tooltip">Dark/Light theme</small>
-          </div>
-          <button class="dc-theme" type="button">Light</button>
+          <button class="dc-reset" type="button">Reset to defaults</button>
         </div>
+        <!-- Theme toggle removed (fixed dark mode) -->
       </div>
     </div>
   `;
@@ -134,41 +140,66 @@ if (!canvas || !canvas.getContext) {
   const panel = controls.querySelector('.dc-panel');
   const speedInput = controls.querySelector('.dc-speed');
   const contrastInput = controls.querySelector('.dc-contrast');
-  const themeBtn = controls.querySelector('.dc-theme');
 
-  toggleBtn.addEventListener('click', () => {
-    const open = panel.hidden;
-    panel.hidden = !open;
-    toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    
-    // Start continuous rotation when panel is open
-    const gear = toggleBtn.querySelector('span');
-    if (open) {
-      gear.style.animation = 'spin 4s linear infinite';
-    } else {
-      gear.style.animation = '';
-    }
-  });
+  // Ensure sliders reflect restored values
+  if (speedInput) speedInput.value = speed;
+  if (contrastInput) contrastInput.value = contrast;
 
-  speedInput.addEventListener('input', () => {
-    speed = parseFloat(speedInput.value);
-  });
+  const resetBtn = controls.querySelector('.dc-reset');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      // compute default speed based on viewport
+      const defaultSpeed = window.innerWidth < 768 ? 0.0015 : 0.002;
+      speed = defaultSpeed;
+      contrast = 1;
+      if (speedInput) speedInput.value = speed;
+      if (contrastInput) contrastInput.value = contrast;
+      try {
+        localStorage.setItem('display_speed', String(speed));
+        localStorage.setItem('display_contrast', String(contrast));
+      } catch (e) {}
+      // brief visual cue: open panel briefly if closed
+      if (panel.hidden) {
+        panel.hidden = false;
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        const gear = toggleBtn.querySelector('span');
+        gear.style.animation = 'spin 1s linear 1';
+        setTimeout(() => { gear.style.animation = ''; }, 1100);
+      }
+    });
+  }
 
-  contrastInput.addEventListener('input', () => {
-    contrast = parseFloat(contrastInput.value);
-  });
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      const open = panel ? panel.hidden : true;
+      if (panel) panel.hidden = !open;
+      toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
 
-  themeBtn.addEventListener('click', () => {
-    if (theme === 'dark') {
-      theme = 'light';
-      themeBtn.textContent = 'Dark';
-      document.body.classList.add('light-theme');
-    } else {
-      theme = 'dark';
-      themeBtn.textContent = 'Light';
-      document.body.classList.remove('light-theme');
-    }
-  });
+      // Start continuous rotation when panel is open
+      const gear = toggleBtn.querySelector('span');
+      if (gear) {
+        if (open) {
+          gear.style.animation = 'spin 4s linear infinite';
+        } else {
+          gear.style.animation = '';
+        }
+      }
+    });
+  }
+
+  if (speedInput) {
+    speedInput.addEventListener('input', () => {
+      speed = parseFloat(speedInput.value);
+      try { localStorage.setItem('display_speed', String(speed)); } catch (e) {}
+    });
+  }
+
+  if (contrastInput) {
+    contrastInput.addEventListener('input', () => {
+      contrast = parseFloat(contrastInput.value);
+      try { localStorage.setItem('display_contrast', String(contrast)); } catch (e) {}
+    });
+  }
 }
 
 function toggleMenu() {
@@ -180,9 +211,108 @@ function toggleMenu() {
   hamburger.setAttribute("aria-expanded", navLinks.classList.contains("active"));
 }
 
-document.querySelector(".hamburger").addEventListener("keydown", (e) => {
-  if (e.key === "Enter" || e.key === " ") {
-    e.preventDefault();
-    toggleMenu();
+const hamb = document.querySelector(".hamburger");
+if (hamb) {
+  hamb.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggleMenu();
+    }
+  });
+}
+
+/* Image lightbox: open project detail images in a modal with a close button */
+(() => {
+  // create modal DOM
+  const modal = document.createElement('div');
+  modal.className = 'img-modal';
+  modal.setAttribute('hidden', '');
+  modal.innerHTML = `
+    <div class="img-modal-content" role="dialog" aria-modal="true">
+      <button class="img-modal-close" aria-label="Close image">×</button>
+      <img src="" alt="Expanded project image">
+      <div class="img-modal-caption" aria-hidden="true"></div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  const modalImg = modal.querySelector('img');
+  const modalClose = modal.querySelector('.img-modal-close');
+  const modalCaption = modal.querySelector('.img-modal-caption');
+
+  function openModal(src, alt) {
+    if (!modal) return;
+    modalImg.src = src;
+    modalImg.alt = alt || 'Project image';
+    modalCaption.textContent = alt || '';
+    modal.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+    // focus close button for accessibility
+    if (modalClose) modalClose.focus();
   }
-});
+
+  function closeModal() {
+    if (!modal) return;
+    modal.setAttribute('hidden', '');
+    modalImg.src = '';
+    modalCaption.textContent = '';
+    document.body.style.overflow = '';
+  }
+
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+
+  // close on backdrop click (but not when clicking the image or close button)
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal();
+  });
+
+  // Detach any previously attached handlers on project-card thumbnails by replacing nodes
+  document.querySelectorAll('.project-card img').forEach(img => {
+    if (img.dataset && img.dataset.lightboxAttached) {
+      const clone = img.cloneNode(true); // removes event listeners
+      img.parentNode.replaceChild(clone, img);
+    }
+  });
+
+  // attach click handlers to project-detail & gallery images, and the about headshot (.intro-image)
+  const selectors = ['.project-details img', '.project-gallery img', '.intro-image'];
+  selectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(img => {
+      // avoid attaching multiple handlers
+      if (img.dataset.lightboxAttached) return;
+      img.dataset.lightboxAttached = '1';
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openModal(img.currentSrc || img.src, img.alt || 'Project image');
+      });
+    });
+  });
+
+  // In case project details are toggled later, observe DOM for added images
+  const obs = new MutationObserver((mutations) => {
+    mutations.forEach(m => {
+      m.addedNodes.forEach(node => {
+        if (node.nodeType === 1) {
+          selectors.forEach(sel => {
+            node.querySelectorAll && node.querySelectorAll(sel).forEach(img => {
+              if (img.dataset.lightboxAttached) return;
+              img.dataset.lightboxAttached = '1';
+              img.style.cursor = 'zoom-in';
+              img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openModal(img.currentSrc || img.src, img.alt || 'Project image');
+              });
+            });
+          });
+        }
+      });
+    });
+  });
+  obs.observe(document.body, { childList: true, subtree: true });
+})();

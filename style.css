@@ -334,10 +334,112 @@ h1,h2,h3,h4{color:#fff}
 .hero-text h1{
   font-family:'Rajdhani',sans-serif; font-size:clamp(2.2rem,5.2vw,3.8rem); font-weight:700; margin-bottom:1rem;
 }
-.hero-text h1 span{background:linear-gradient(90deg,var(--gold-1),var(--gold-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent}
+.hero-text h1 span{
+  background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
+  -webkit-background-clip:text;
+  background-clip: text;
+  -webkit-text-fill-color:transparent;
+}
 .hero-text p{font-family:'Inter',sans-serif; font-weight:500; font-size:clamp(1.05rem,2.2vw,1.4rem); margin-bottom:.75rem; text-shadow:0 1px 2px rgba(0,0,0,.5)}
 .hero-buttons{display:flex; gap:1rem; justify-content:center}
 @media (max-width:768px){.hero-buttons{flex-direction:column; gap:.8rem}}
+
+/* Golden resume box in hero */
+.resume-gold-box {
+  position: fixed;
+  bottom: 120px; /* Adjust this value to position above footer */
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 2rem 0;
+  background: linear-gradient(
+    to right,
+    rgba(255, 215, 0, 0.1),
+    rgba(218, 165, 32, 0.15)
+  );
+  border-top: 1px solid rgba(255, 215, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10;
+}
+
+.gold-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resume-content {
+  flex: 1;
+}
+
+.resume-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .gold-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .resume-gold-box {
+    bottom: 80px;
+    padding: 1.5rem 0;
+  }
+}
+.resume-gold-box h3{
+  margin:0; font-size:1.05rem; font-weight:700;
+  background: linear-gradient(90deg, var(--gold-1), var(--gold-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--gold-1); /* fallback for older browsers */
+  text-shadow: 0 2px 8px rgba(255,215,0,0.08);
+}
+
+/* Golden button styles for resume box */
+.resume-gold-box .btn-primary{
+  background: linear-gradient(90deg, var(--gold-1), var(--gold-2));
+  color: var(--bg-1);
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  font-weight:700;
+  box-shadow: 0 8px 24px rgba(255,165,0,0.08);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.resume-gold-box .btn-primary:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px rgba(255,165,0,0.14);
+}
+
+.resume-gold-box .btn-secondary{
+  background: transparent;
+  color: var(--gold-1);
+  border: 2px solid rgba(255,215,0,0.23);
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-weight:600;
+  transition: background .18s ease, transform .18s ease;
+}
+.resume-gold-box .btn-secondary:hover{
+  background: rgba(255,215,0,0.06);
+  transform: translateY(-2px);
+}
+
+/* ensure paragraph text inside the gold box is readable on the warm gradient */
+.resume-gold-box p{
+  color: var(--text);
+  opacity: 0.95;
+  margin: 0.25rem 0 0;
+}
 
 /* ======================================
    ABOUT — intro banner
@@ -355,7 +457,12 @@ h1,h2,h3,h4{color:#fff}
 }
 .intro-image:hover{transform:scale(1.03) rotate(-1deg); filter:saturate(1.06); box-shadow:var(--shadow-2)}
 .intro-text h1{font-family:'Rajdhani',sans-serif; font-size:clamp(1.8rem,4.2vw,2.6rem); margin-bottom:.35rem}
-.intro-text h1{background:linear-gradient(90deg,var(--gold-1),var(--gold-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent}
+.intro-text h1{
+  background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
+  -webkit-background-clip:text;
+  background-clip: text;
+  -webkit-text-fill-color:transparent;
+}
 .intro-text p{font-family:'Inter',sans-serif; color:var(--text); font-size:1.05rem; text-shadow:0 1px 2px rgba(0,0,0,.5)}
 
 @media (max-width:820px){
@@ -374,7 +481,10 @@ section{scroll-margin-top:84px}
 .about-text{flex:1; min-width:300px; width:min(900px,92%); margin-inline:auto}
 .about-text h2{
   font-family:'Rajdhani',sans-serif; font-size:clamp(1.8rem,3.8vw,2.5rem); margin-bottom:.8rem;
-  background:linear-gradient(90deg,var(--gold-1),var(--gold-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
+  -webkit-background-clip:text;
+  background-clip: text;
+  -webkit-text-fill-color:transparent;
 }
 .about-text p{
   font-family:'Inter',sans-serif; color:var(--text); font-size:1.05rem; line-height:1.75;
@@ -509,7 +619,9 @@ section{scroll-margin-top:84px}
   font-family:'Rajdhani',sans-serif; font-size:2rem; margin-bottom:1rem;
 }
 .skills-section h2{background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent}
+  -webkit-background-clip:text;
+  background-clip: text;
+  -webkit-text-fill-color:transparent}
 
 .skills-list{
   list-style:none; display:flex; flex-wrap:wrap; justify-content:center; gap:.8rem; margin-bottom:1.2rem;
@@ -573,6 +685,7 @@ section{scroll-margin-top:84px}
 .detailed-experience summary strong{
   background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
   -webkit-background-clip:text;
+  background-clip: text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
   color:var(--gold-1);
@@ -591,7 +704,9 @@ section{scroll-margin-top:84px}
 .projects-intro{
   font-family:'Rajdhani',sans-serif; font-size:clamp(2rem,5vw,3rem); text-align:center; margin-bottom:.5rem;
   background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;
+  background-clip: text;
+  -webkit-text-fill-color:transparent;
   animation:fadeInUp .8s ease-out forwards;
 }
 .projects-subtitle{
@@ -623,7 +738,9 @@ footer{
 .footer-section h3{
   font-family:'Rajdhani',sans-serif; font-size:1.25rem; margin-bottom:.9rem;
   background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;
+  background-clip: text;
+  -webkit-text-fill-color:transparent;
 }
 .footer-section p,.footer-section a{
   font-family:'Inter',sans-serif; font-size:.92rem; color:var(--text); text-decoration:none; margin-bottom:.45rem; display:block;
@@ -662,35 +779,57 @@ footer{
 }
 .display-controls .dc-toggle{
   background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
-  color:var(--bg-1); border:none; width:48px; height:48px; border-radius:14px;
-  display:inline-flex; align-items:center; justify-content:center; 
-  cursor:pointer; font-size:24px;
-  transition:transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color:var(--bg-1);
+  border:none;
+  min-width:200px;
+  max-width:70vw;
+  height:46px;
+  padding:0 18px;
+  border-radius:14px;
+  display:inline-flex; align-items:center; justify-content:flex-start;
+  gap:10px;
+  cursor:pointer;
+  font-size:0.95rem;
+  white-space:nowrap;
+  overflow:visible;
+  transition:transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
   transform-origin:center;
 }
 .display-controls .dc-toggle:hover{
   transform:scale(1.1) rotate(180deg);
 }
+.dc-always-visible{
+  font-size:0.92rem;
+  color:var(--bg-1);
+  opacity:0.95;
+  font-weight:600;
+  margin-left:8px;
+  display:inline-block;
+  line-height:1;
+}
 .display-controls .dc-panel{
   position:absolute;
   right:0;
   bottom:calc(100% + 12px);
-  background:linear-gradient(135deg, 
-    rgba(255,255,255,0.12) 0%,
-    rgba(255,255,255,0.06) 100%);
+  background:linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
   color:var(--text);
-  border-radius:20px;
-  padding:20px;
-  width:280px;
+  border-radius:16px;
+  padding:16px;
+  width:240px;
   backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);
   border:1px solid rgba(255,255,255,0.12);
-  box-shadow:
-    0 10px 40px -10px rgba(0,0,0,0.3),
-    0 4px 8px -4px rgba(0,0,0,0.1),
-    inset 0 -1px 1px rgba(255,255,255,0.1);
+  box-shadow: 0 8px 32px -8px rgba(0,0,0,0.3), 0 4px 8px -4px rgba(0,0,0,0.1), inset 0 -1px 1px rgba(255,255,255,0.1);
   transform-origin:bottom right;
-  animation:panelSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation:panelSlideIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (max-width:420px){
+  .display-controls .dc-toggle{
+    min-width:120px; /* keep a compact size on very small screens */
+    padding:0 10px;
+    font-size:0.85rem;
+  }
 }
 
 .display-controls .dc-row{
@@ -707,6 +846,26 @@ footer{
 .display-controls .dc-row:hover{
   background:rgba(255,255,255,0.03);
   transform:translateX(2px);
+}
+
+.display-controls .dc-reset{
+  appearance:none;
+  -webkit-appearance:none;
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  color:var(--gold-2);
+  padding:0.35rem 0.6rem;
+  border-radius:0.45rem;
+  font-size:0.9rem;
+  cursor:pointer;
+  transition:background 140ms ease, transform 120ms ease;
+}
+.display-controls .dc-reset:hover{
+  background:rgba(255,255,255,0.03);
+  transform:translateY(-1px);
+}
+.display-controls .dc-reset:active{
+  transform:translateY(0);
 }
 
 .display-controls .dc-control{
@@ -775,15 +934,6 @@ footer{
     0 2px 8px rgba(0,0,0,0.2),
     0 0 0 2px rgba(255,215,0,0.1);
   transition:all 0.2s ease;
-  position:relative;
-  z-index:1;
-}
-
-.display-controls input[type=range]::-webkit-slider-thumb:hover{
-  transform:scale(1.15);
-  box-shadow:
-    0 2px 12px rgba(255,215,0,0.3),
-    0 0 0 4px rgba(255,215,0,0.15);
 }
 
 .display-controls .dc-theme{
@@ -846,9 +996,34 @@ footer{
 
 /* Light theme overrides (used by JS toggle) */
 body.light-theme{
-  --bg-1:#fbfbff; --bg-2:#f5f7fb; --bg-3:#e9eef6;
-  --text:#111111; --text-dim:#444444; --nav-glass:rgba(255,255,255,0.9);
+  /* Creamy vanilla / warm light theme */
+  --bg-1:#fff9f0; /* warm cream */
+  --bg-2:#fff4e6;
+  --bg-3:#fff0dc;
+  --text:#111111; --text-dim:#4a4a4a; --nav-glass:rgba(255,255,255,0.92);
   --glass:rgba(0,0,0,0.06); --glass-strong:rgba(0,0,0,0.08);
+}
+
+/* make headings readable in light mode (override default white) */
+body.light-theme h1, body.light-theme h2, body.light-theme h3, body.light-theme h4{
+  color:var(--text) !important;
+}
+
+/* Other white-on-dark elements that need readable colors in light mode */
+body.light-theme .hero-overlay,
+body.light-theme #projects,
+body.light-theme .project-card h3,
+body.light-theme .btn,
+body.light-theme .intro-text h1,
+body.light-theme h1 span{
+  color:var(--text) !important;
+}
+
+/* larger gear icon relative to the toggle font size */
+.display-controls .dc-toggle > span{
+  font-size: calc(0.95rem * 1.6);
+  line-height:1;
+  display:inline-block;
 }
 
 /* small responsive tweak */
@@ -856,3 +1031,22 @@ body.light-theme{
   .display-controls .dc-panel{width:190px}
   .display-controls input[type=range]{width:90px}
 }
+
+/* Image lightbox/modal */
+.img-modal{
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+  background:rgba(0,0,0,0.6); z-index:1200; padding:24px;
+}
+.img-modal[hidden]{display:none}
+.img-modal-content{
+  position:relative; max-width:min(95%,1200px); width:auto; background:transparent; border-radius:10px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6); overflow:hidden;
+}
+.img-modal-content img{display:block; width:100%; height:auto; border-radius:8px; max-height:80vh; object-fit:contain}
+.img-modal-close{
+  position:absolute; top:8px; right:8px; z-index:2; background:rgba(0,0,0,0.6); color:#fff; border:0;
+  width:40px; height:40px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
+  font-size:20px; cursor:pointer; transition:transform .12s ease, background .12s ease;
+}
+.img-modal-close:hover{transform:scale(1.06); background:rgba(0,0,0,0.8)}
+.img-modal-caption{color:var(--text-dim); font-size:0.9rem; margin-top:8px; text-align:center}
