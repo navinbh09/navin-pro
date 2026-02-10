@@ -271,9 +271,18 @@
       </div>
 
       <!-- Project 4 -->
+       <div class="project-card" onclick="toggleProjectDetails('pencil')">
+        <img src="assets/PENCIL_THUMB.png" alt="Mechanical Pencil Assembly" loading="lazy">
+        <div class="project-card-content">
+          <h3>Mechanical Pencil Assembly</h3>
+          <p>Complete mechanical design and multi-part assembly featuring industrial-standard documentation and material selection.</p>
+          <span class="view-more-prompt">Click to view details →</span>
+       </div>
+      </div>
+      <!-- Project 5 -->
       <div class="project-card" onclick="toggleProjectDetails('cad')">
         <img src="assets/CAD_THUMB.jpg" alt="3D Printed Prototype" loading="lazy">
-        <div clas="project-card-content">
+        <div class="project-card-content">
           <h3>CAD Mechanical Design</h3>
           <p>Created 3D models and prototypes using SolidWorks and advanced manufacturing techniques.</p>
           <span class="view-more-prompt">Click to view details →</span>
@@ -421,7 +430,34 @@
         </div>
       </div>
     </div>
-
+    <div id="pencil-details" class="project-details">
+  <div class="project-details-inner">
+    <button class="close-details" onclick="closeProjectDetails('pencil')">&times;</button>
+    <div class="project-gallery">
+      <img src="assets/PENCIL_ASSEMBLY.png" alt="Pencil Assembly Exploded View">
+      <img src="assets/PENCIL_DRAWING.png" alt="Technical Drawing and BOM">
+    </div>
+    <div class="project-description">
+      <h2><a href="#pencil">Mechanical Pencil Assembly Design</a></h2>
+      <p>A comprehensive design project focusing on precision assembly and manufacturing readiness.</p>
+      
+      <h3>Industrial Skills Applied</h3>
+      <ul>
+        <li><strong>Detailed Technical Drawings:</strong> Created professional 2D engineering drawings with precise dimensions and tolerances.</li>
+        <li><strong>Bill of Materials (BOM):</strong> Generated a complete BOM to manage part hierarchies and procurement specifications.</li>
+        <li><strong>Material Selection:</strong> Evaluated and assigned materials based on mechanical properties, weight, and durability.</li>
+        <li><strong>Assembly Modeling:</strong> Developed a multi-part assembly in SolidWorks using bottom-up design techniques.</li>
+      </ul>
+      
+      <h3>Technical Highlights</h3>
+      <ul>
+        <li>Optimized tolerances for smooth internal mechanism movement.</li>
+        <li>Utilized Design for Manufacturing (DFM) principles to ensure part feasibility.</li>
+        <li>Applied Geometric Dimensioning and Tolerancing (GD&T) for critical components[cite: 1].</li>
+      </ul>
+    </div>
+  </div>
+</div>
     <div id="cad-details" class="project-details">
       <div class="project-details-inner">
         <button class="close-details" onclick="closeProjectDetails('cad')">&times;</button>
