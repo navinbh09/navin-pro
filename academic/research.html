@@ -207,6 +207,16 @@
       position: absolute;
       left: 0;
     }
+
+    .project-description li a {
+      color: var(--gold-2);
+      text-decoration: underline;
+      text-decoration-color: rgba(255,233,168,.5);
+    }
+
+    .project-description li a:hover {
+      opacity: 0.8;
+    }
   </style>
 </head>
 <body data-site="academic">
@@ -241,7 +251,7 @@
         <div class="research-visual" aria-hidden="true">🌊</div>
         <div class="project-card-content">
           <h3>Flow-Channel Optimization for Heat &amp; Mass Transfer</h3>
-          <p>CFD and topology optimization research on flow-channel architectures, using OpenFOAM and the Method of Moving Asymptotes.</p>
+          <p>Adjoint-based topology optimization of flow-channel geometries for battery cold-plate thermal management — up to 15.7% pressure-drop reduction via corner-curvature optimization, using OpenFOAM.</p>
           <span class="view-more-prompt">Click to view details →</span>
         </div>
       </div>
@@ -251,7 +261,7 @@
         <img src="../assets/DSSCS_THMB.jpg" alt="Dye-Sensitized Solar Cell Research" loading="lazy">
         <div class="project-card-content">
           <h3>Dye-Sensitized Solar Cells from Natural Dyes</h3>
-          <p>Fabricated and characterized 30+ DSSCs using plant-derived dyes as low-cost, sustainable sensitizers.</p>
+          <p>Fabricated and tested 30 lab-scale DSSCs using beetroot- and sumac-derived natural dyes; the best-performing cell reached 0.099% efficiency and a 55.2% fill factor.</p>
           <span class="view-more-prompt">Click to view details →</span>
         </div>
       </div>
@@ -263,26 +273,26 @@
         <button class="close-details" aria-label="Close project details" onclick="closeProjectDetails('surge')">&times;</button>
         <div class="project-description">
           <h2><a href="#surge">Flow-Channel Optimization for Heat &amp; Mass Transfer</a></h2>
-          <p>SURGE Program, Undergraduate Researcher · May 2026 – Present · Advisor: Dr. Xianglin Li · Washington University in St. Louis</p>
+          <p>SURGE Program, Undergraduate Researcher · May 2026 – Present · PI: Dr. Xianglin Li · Washington University in St. Louis</p>
 
           <h3>Overview</h3>
-          <p>This project applies computational fluid dynamics and topology optimization to design flow-channel architectures that improve heat and mass transfer performance — work that sits at the intersection of thermal-fluid systems, numerical methods, and computational mechanics.</p>
+          <p>This project applies CFD and topology optimization to flow-channel geometries for battery cold-plate thermal management, targeting reduced pressure drop while maintaining flow uniformity — work that sits at the intersection of thermal-fluid systems, numerical methods, and computational mechanics.</p>
 
           <h3>Method</h3>
           <ul>
-            <li>Built OpenFOAM workflows spanning geometry creation, mesh generation, solver configuration, and convergence monitoring.</li>
-            <li>Post-processed and visualized flow &amp; temperature fields in ParaView.</li>
-            <li>Implemented topology optimization using the Method of Moving Asymptotes (MMA) to generate optimized channel geometries.</li>
+            <li>Developed OpenFOAM workflows spanning mesh generation (blockMesh, snappyHexMesh), solver configuration, turbulence modeling, and ParaView post-processing.</li>
+            <li>Implemented adjoint-based topology optimization, achieving 70+ stable design iterations; now extending the method to handle more complex design problems.</li>
           </ul>
 
-          <h3>Evaluation</h3>
+          <h3>Results</h3>
           <ul>
-            <li>Designs assessed on pressure drop, temperature distribution, heat-transfer performance, and thermal uniformity.</li>
-            <li>Computational models validated against published benchmark studies.</li>
+            <li>Quantified up to 15.7% pressure-drop reduction via corner-curvature (fillet) optimization of sharp channel turns; curvature proved beneficial above Re ≈ 3000.</li>
+            <li>Validated baseline CFD methodology against Ghia et al.'s (1982) lid-driven cavity benchmark.</li>
+            <li>Executed OpenFOAM simulations with over 72,000 computational cells across 60 CPU cores using shell-scripted workflows.</li>
           </ul>
 
           <h3>Status</h3>
-          <p>Active, ongoing research — results and figures will be added here as the project progresses.</p>
+          <p>Active, ongoing research — extending the adjoint-based method to more complex design problems.</p>
         </div>
       </div>
     </div>
@@ -297,22 +307,22 @@
         </div>
         <div class="project-description">
           <h2><a href="#solar">Dye-Sensitized Solar Cells Using Natural-Dye Sensitizers</a></h2>
-          <p>Research Assistant, Department of Physics · Feb 2024 – Aug 2025 · Advisor: Dr. Rasanjali Jayathissa · Truman State University</p>
+          <p>Research Assistant, Department of Physics · Feb 2024 – Aug 2025 · PI: Dr. Rasanjali Jayathissa · Truman State University</p>
 
           <h3>Overview</h3>
-          <p>Investigated plant-derived natural dyes as alternative sensitizers for dye-sensitized solar cells (DSSCs) — a lower-cost, more sustainable path to solar energy conversion than traditional silicon panels or synthetic sensitizers.</p>
+          <p>Investigated beetroot- and sumac-derived natural dyes as sustainable alternatives to conventional metal-complex sensitizers in dye-sensitized solar cells (DSSCs) — a lower-cost, more sustainable path to solar energy conversion than traditional silicon panels or synthetic sensitizers.</p>
 
           <h3>Method</h3>
           <ul>
-            <li>Designed experiments for natural-dye extraction and characterization using UV-Visible spectroscopy and Fourier Transform Infrared Spectroscopy (FTIR).</li>
-            <li>Fabricated and tested 30+ laboratory-scale DSSCs.</li>
-            <li>Characterized performance using Electrochemical Impedance Spectroscopy (EIS) and current-voltage measurements from a solar simulator (max PCE ≈ 9.90%, 55% FF).</li>
+            <li>Designed experiments for natural-dye extraction and characterization using UV-Vis, Fourier Transform Infrared (FTIR), and Electrochemical Impedance (EIS) spectroscopy.</li>
+            <li>Fabricated and tested 30 laboratory-scale DSSCs using solar-simulator I–V measurements.</li>
           </ul>
 
           <h3>Findings</h3>
           <ul>
-            <li>Analyzed relationships among dye properties, material characteristics, and photovoltaic performance.</li>
-            <li>Presented findings at the 2025 APS Prairie Section Meeting.</li>
+            <li>The best-performing sumac-based cell achieved 0.099% efficiency and a 55.2% fill factor.</li>
+            <li>Linked higher photocurrent in sumac-based cells to stronger light absorption, and higher open-circuit voltage in beetroot-based cells to lower recombination.</li>
+            <li>Presented findings at the <a href="https://meetings-archive.aps.org/pss/2025/j02/4" target="_blank" rel="noopener">2025 APS Prairie Section Meeting</a> (Feb. 21, 2025).</li>
           </ul>
 
           <h3>Acknowledgment</h3>

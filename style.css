@@ -260,6 +260,7 @@ h1,h2,h3,h4{color:#fff}
   text-decoration:none; font-weight:600; color:#fff;
   border:1px solid rgba(255,255,255,.6);
   background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.06));
+  -webkit-backdrop-filter:blur(6px);
   backdrop-filter:blur(6px);
   transition:transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
 }
@@ -351,6 +352,12 @@ h1,h2,h3,h4{color:#fff}
 #hero{
   position:relative; height:100vh; display:flex; align-items:center; justify-content:center;
   overflow:hidden; animation:fadeInUp .8s ease-out forwards;
+}
+@supports (height: 100dvh){
+  /* dvh accounts for mobile browser toolbars showing/hiding (Safari/Chrome on
+     phones and tablets), so the hero doesn't jump or clip as the address bar
+     collapses -- 100vh above still applies as the fallback everywhere else */
+  #hero{ height:100dvh; }
 }
 .hero-overlay{position:relative; z-index:2; text-align:center; color:#fff; padding:0 2rem}
 .hero-text h1{
@@ -970,6 +977,23 @@ footer{
     0 2px 8px rgba(0,0,0,0.2),
     0 0 0 2px rgba(255,106,61,0.1);
   transition:all 0.2s ease;
+}
+
+.display-controls input[type=range]::-moz-range-thumb{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--gold-1), var(--gold-2));
+  cursor:pointer;
+  border:2px solid rgba(255,255,255,0.9);
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.2),
+    0 0 0 2px rgba(255,106,61,0.1);
+  transition:all 0.2s ease;
+}
+
+.display-controls input[type=range]::-moz-range-track{
+  background:transparent;
 }
 
 .display-controls .dc-theme{

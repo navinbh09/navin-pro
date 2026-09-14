@@ -174,6 +174,21 @@
       opacity: 1;
     }
 
+    .research-visual {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, rgba(255,106,61,0.18), rgba(58,80,107,0.5));
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .research-visual {
+      transform: scale(1.05);
+    }
+
     .coming-soon-card {
       display: flex;
       flex-direction: column;
@@ -245,6 +260,16 @@
     <h1 class="projects-intro">Projects</h1>
     <p class="projects-subtitle">Explore my recent work in mechanical design, 3D modeling, and innovative prototyping.</p>
     <div class="project-grid">
+      <!-- SURGE / Flow-Channel Optimization -->
+      <div class="project-card" onclick="toggleProjectDetails('surge')">
+        <div class="research-visual" aria-hidden="true">🌊</div>
+        <div class="project-card-content">
+          <h3>Flow-Channel Optimization (SURGE)</h3>
+          <p>CFD and adjoint-based topology optimization of flow-channel geometries for battery cold-plate thermal management, using OpenFOAM.</p>
+          <span class="view-more-prompt">Click to view details →</span>
+        </div>
+      </div>
+
       <!-- CookNup Project -->
       <div class="project-card" onclick="toggleProjectDetails('cooknup')">
         <img src="../assets/THUMNAIL_COOKNUP.png" alt="CookNup AI Meal Companion" loading="lazy">
@@ -302,6 +327,32 @@
     </div>
 
     <!-- Project Details Sections -->
+    <div id="surge-details" class="project-details">
+      <div class="project-details-inner">
+        <button class="close-details" aria-label="Close project details" onclick="closeProjectDetails('surge')">&times;</button>
+        <div class="project-description">
+          <h2><a href="#surge">Flow-Channel Optimization for Heat &amp; Mass Transfer</a></h2>
+          <p>SURGE Program, Undergraduate Researcher · May 2026 – Present · PI: Dr. Xianglin Li · Washington University in St. Louis</p>
+
+          <h3>Overview</h3>
+          <p>Ongoing computational research applying CFD and topology optimization to flow-channel geometries for battery cold-plate thermal management, targeting reduced pressure drop while maintaining flow uniformity.</p>
+
+          <h3>Engineering Workflow</h3>
+          <ul>
+            <li>Built OpenFOAM workflows spanning mesh generation (blockMesh, snappyHexMesh), solver configuration, turbulence modeling, and ParaView post-processing.</li>
+            <li>Implemented adjoint-based topology optimization, achieving 70+ stable design iterations; now extending the method to more complex design problems.</li>
+            <li>Executed simulations with over 72,000 computational cells across 60 CPU cores using shell-scripted workflows.</li>
+          </ul>
+
+          <h3>Results</h3>
+          <ul>
+            <li>Quantified up to 15.7% pressure-drop reduction via corner-curvature (fillet) optimization of sharp channel turns; curvature proved beneficial above Re ≈ 3000.</li>
+            <li>Validated baseline CFD methodology against Ghia et al.'s (1982) lid-driven cavity benchmark.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <div id="cooknup-details" class="project-details">
       <div class="project-details-inner">
         <button class="close-details" aria-label="Close project details" onclick="closeProjectDetails('cooknup')">&times;</button>
