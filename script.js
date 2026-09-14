@@ -419,16 +419,16 @@ function trapModalTabKey(modalEl, e) {
   modal.className = 'img-modal doc-picker-modal';
   modal.setAttribute('hidden', '');
   modal.innerHTML = `
-    <div class="img-modal-content doc-picker-content" role="dialog" aria-modal="true" aria-label="Choose a document to download">
+    <div class="img-modal-content doc-picker-content" role="dialog" aria-modal="true" aria-label="Choose a document to view">
       <button class="img-modal-close" aria-label="Close">×</button>
       <h3 class="doc-picker-title gradient-text">Which one would you like?</h3>
       <div class="doc-picker-options">
-        <a class="doc-picker-card" data-doc="resume" download>
+        <a class="doc-picker-card" data-doc="resume" target="_blank" rel="noopener">
           <span class="doc-picker-icon">${RESUME_SVG}</span>
           <span class="doc-picker-name">Resume</span>
           <span class="doc-picker-desc">Great for internships &amp; industry roles</span>
         </a>
-        <a class="doc-picker-card" data-doc="cv" download>
+        <a class="doc-picker-card" data-doc="cv" target="_blank" rel="noopener">
           <span class="doc-picker-icon">${CV_SVG}</span>
           <span class="doc-picker-name">Academic CV</span>
           <span class="doc-picker-desc">Full research, teaching &amp; publication record</span>
