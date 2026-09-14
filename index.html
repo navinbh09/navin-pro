@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Navin Bhattarai's portfolio - an engineering student crafting innovative solutions in 3D modeling and mechanical design.">
-  <meta name="keywords" content="mechanical engineering, 3D modeling, CAD, prototyping, portfolio">
+  <meta name="description" content="Navin Bhattarai's portfolio - mechanical engineer and thermal-fluid researcher. Choose the engineering portfolio or the research/academic portfolio.">
+  <meta name="keywords" content="mechanical engineering, thermal-fluid systems, CFD, portfolio, Navin Bhattarai">
   <meta name="author" content="Navin Bhattarai">
-  <title>Er. Navin Bhattarai - Portfolio Website</title>
+  <title>Navin Bhattarai - Portfolio</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     footer {
       padding: 2rem 5%;
@@ -23,7 +23,7 @@
       font-family: 'Rajdhani', sans-serif;
       font-size: 1.3rem;
       margin-bottom: 1rem;
-      background: linear-gradient(90deg, #FFD700, #FFA500);
+      background: linear-gradient(90deg, var(--gold-1), var(--gold-2));
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -37,7 +37,7 @@
       display: block;
     }
     .footer-section a:hover {
-      color: #FFD700;
+      color: var(--gold-1);
       text-decoration: underline;
     }
     .footer-bottom {
@@ -53,6 +53,46 @@
         text-align: center;
       }
     }
+
+    /* Landing "choose your portfolio" cards */
+    .portal-section{
+      min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      padding:clamp(32px,6vw,64px) 5%; animation:fadeInUp .8s ease-out forwards;
+    }
+    .portal-intro{text-align:center; max-width:720px; margin-bottom:clamp(28px,4vw,48px)}
+    .portal-intro h1{
+      font-family:'Rajdhani',sans-serif; font-size:clamp(2rem,5vw,3.2rem); margin-bottom:.6rem; color:#fff;
+    }
+    .portal-intro h1 span{
+      background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .portal-intro p{
+      font-family:'Inter',sans-serif; color:var(--text); font-size:clamp(1rem,2vw,1.2rem);
+      text-shadow:0 1px 2px rgba(0,0,0,.5);
+    }
+    .portal-grid{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.8rem;
+      width:min(920px,94%);
+    }
+    .portal-card{
+      display:block; text-decoration:none; padding:clamp(28px,4vw,40px) clamp(20px,3vw,28px);
+      background:var(--glass); border:1px solid rgba(255,255,255,.14); border-radius:var(--radius-lg);
+      text-align:center; transition:transform .3s ease, box-shadow .3s ease, background .3s ease;
+    }
+    .portal-card:hover,.portal-card:focus{
+      transform:translateY(-6px); background:var(--glass-strong); box-shadow:0 14px 34px rgba(255,106,61,.24);
+    }
+    .portal-icon{font-size:2.6rem; display:block; margin-bottom:.8rem}
+    .portal-card h2{
+      font-family:'Rajdhani',sans-serif; font-size:1.5rem; margin-bottom:.6rem;
+      background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .portal-card p{font-family:'Inter',sans-serif; color:var(--text); font-size:.98rem; line-height:1.55}
+    .portal-card .portal-go{
+      display:inline-block; margin-top:1rem; color:var(--gold-2); font-weight:600; font-size:.92rem;
+    }
   </style>
 </head>
 <body>
@@ -61,48 +101,29 @@
   </div>
   <header class="navbar">
     <a href="index.html" class="logo">
-      <img src="./assets/navin-headshot.jpg" alt="" class="logo-thumbnail">
+      <img src="assets/navin-headshot.jpg" alt="" class="logo-thumbnail">
       <span>Navin Bhattarai</span>
     </a>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="index.html" aria-current="page">Home</a></li>
-        <li><a href="about.html">About</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </nav>
   </header>
 
-  <section id="hero">
-    <div class="hero-overlay">
-      <div class="hero-text">
-        <h1>Welcome, I’m <span>Navin Bhattarai</span></h1>
-        <p>Engineering Student • 3D Designer • Innovator</p>
-        <p>Designing the future with precision in 3D modeling and mechanical prototyping</p>
-      </div>
-      <div class="hero-buttons">
-        <a href="projects.html" class="btn">Explore My Projects</a>
-        <a href="contact.html" class="btn">Connect With Me</a>
-      </div>
-      <!-- Golden resume box -->
-      <div class="resume-gold-box">
-        <div class="gold-inner">
-          <div class="resume-content">
-            <h3>View My Resume</h3>
-            <p>Check out my qualifications and experience</p>
-          </div>
-          <div class="resume-buttons">
-            <a href="assets/Resume_NAVIN_B.pdf" target="_blank" class="btn btn-primary">View Resume</a>
-            <a href="assets/Resume_NAVIN_B.pdf" download class="btn btn-secondary">Download</a>
-          </div>
-        </div>
-      </div>
+  <section class="portal-section">
+    <div class="portal-intro">
+      <h1>Hi, I'm <span>Navin Bhattarai</span></h1>
+      <p>Mechanical engineer, thermal-fluid researcher, and lifelong tinkerer. I split my work into two portfolios below — pick whichever fits why you're here.</p>
+    </div>
+    <div class="portal-grid">
+      <a href="engineering/index.html" class="portal-card">
+        <span class="portal-icon" aria-hidden="true">⚙️</span>
+        <h2>Engineering &amp; Design</h2>
+        <p>CAD, mechanical design, prototyping, and hands-on projects — SolidWorks assemblies, 3D printing, and Design/Build/Fly.</p>
+        <span class="portal-go">Enter Engineering Site →</span>
+      </a>
+      <a href="academic/index.html" class="portal-card">
+        <span class="portal-icon" aria-hidden="true">🎓</span>
+        <h2>Research &amp; Academics</h2>
+        <p>Thermal-fluid systems, CFD, topology optimization, and teaching — SURGE research, publications, and coursework.</p>
+        <span class="portal-go">Enter Academic Site →</span>
+      </a>
     </div>
   </section>
 
@@ -114,17 +135,16 @@
     </div>
     <div class="footer-section">
       <h3>Connect</h3>
-      <a href="https://linkedin.com/in/navin-bhattarai" target="_blank" rel="noopener" aria-label="Navin Bhattarai's LinkedIn">LinkedIn</a>
+      <a href="https://linkedin.com/in/navin-bh" target="_blank" rel="noopener" aria-label="Navin Bhattarai's LinkedIn">LinkedIn</a>
       <a href="https://github.com/navinbhattarai" target="_blank" rel="noopener" aria-label="Navin Bhattarai's GitHub">GitHub</a>
     </div>
     <div class="footer-section">
       <h3>Quick Links</h3>
-      <a href="about.html" aria-label="About Navin Bhattarai">About</a>
-      <a href="projects.html" aria-label="Navin's Projects">Projects</a>
-      <a href="contact.html" aria-label="Contact Navin Bhattarai">Contact</a>
+      <a href="engineering/index.html" aria-label="Engineering Portfolio">Engineering Portfolio</a>
+      <a href="academic/index.html" aria-label="Academic Portfolio">Academic Portfolio</a>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 Navin Bhattarai | Built with ❤️</p>
+      <p>© 2026 Navin Bhattarai | Built with ❤️</p>
     </div>
   </footer>
 

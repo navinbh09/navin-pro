@@ -7,8 +7,8 @@
   <meta name="keywords" content="mechanical engineering, 3D modeling, CAD, prototyping, projects">
   <meta name="author" content="Navin Bhattarai">
   <title>Projects - Navin Bhattarai</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     /* Project card and grid styles */
     .project-card h3 {
@@ -125,6 +125,10 @@
     .close-details:hover {
       background: rgba(255,255,255,0.2);
     }
+
+    @media (max-width:480px){
+      .close-details{ width:44px; height:44px; font-size:24px; }
+    }
     
     .project-description {
       color: var(--text);
@@ -178,8 +182,8 @@
       text-align: center;
       padding: 2rem;
       min-height: 300px;
-      background: linear-gradient(45deg, rgba(255,215,0,0.1), rgba(255,165,0,0.1));
-      border: 2px dashed rgba(255,215,0,0.3);
+      background: linear-gradient(45deg, rgba(255,106,61,0.1), rgba(255,233,168,0.1));
+      border: 2px dashed rgba(255,106,61,0.3);
     }
 
     .coming-soon-card h3 {
@@ -214,21 +218,22 @@
     }
   </style>
 </head>
-<body>
+<body data-site="engineering">
   <canvas id="hyperspeed-bg"></canvas>
   <header class="navbar">
     <a href="index.html" class="logo">
-      <img src="./assets/navin-headshot.jpg" alt="" class="logo-thumbnail">
+      <img src="../assets/navin-headshot.jpg" alt="" class="logo-thumbnail">
       <span>Navin Bhattarai</span>
     </a>
     <nav>
-      <ul class="nav-links">
+      <ul class="nav-links" id="primary-nav">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="projects.html" aria-current="page">Projects</a></li>
         <li><a href="contact.html">Contact</a></li>
+        <li><a href="../academic/index.html" class="site-switch">Academic Site ↗</a></li>
       </ul>
-      <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0" onclick="toggleMenu()">
+      <div class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" role="button" tabindex="0" onclick="toggleMenu()">
         <span></span>
         <span></span>
         <span></span>
@@ -242,7 +247,7 @@
     <div class="project-grid">
       <!-- CookNup Project -->
       <div class="project-card" onclick="toggleProjectDetails('cooknup')">
-        <img src="assets/THUMNAIL_COOKNUP.png" alt="CookNup AI Meal Companion" loading="lazy">
+        <img src="../assets/THUMNAIL_COOKNUP.png" alt="CookNup AI Meal Companion" loading="lazy">
         <div class="project-card-content">
           <h3>CookNup — AI Meal Companion</h3>
           <p>An AI-powered cooking assistant that transforms ingredients into personalized recipes through computer vision and smart recommendations.</p>
@@ -252,7 +257,7 @@
 
       <!-- Project 2 -->
       <div class="project-card" onclick="toggleProjectDetails('solar')">
-        <img src="assets/DSSCS_THMB.jpg" alt="Solar Cell Project" loading="lazy">
+        <img src="../assets/DSSCS_THMB.jpg" alt="Solar Cell Project" loading="lazy">
         <div class="project-card-content">
           <h3>Dye-Sensitized Solar Cell Research</h3>
           <p>Designed and tested a prototype using TiO2 nanoparticles to enhance solar energy efficiency.</p>
@@ -262,7 +267,7 @@
 
       <!-- Project 3 -->
       <div class="project-card" onclick="toggleProjectDetails('humidifier')">
-        <img src="assets/Humidifier.jpeg" alt="Humidifier Control System" loading="lazy">
+        <img src="../assets/Humidifier.jpeg" alt="Humidifier Control System" loading="lazy">
         <div class="project-card-content">
           <h3>Automated Humidifier Control</h3>
           <p>Developed a Raspberry Pi-based system for precise humidity management.</p>
@@ -272,7 +277,7 @@
 
       <!-- Project 4 -->
        <div class="project-card" onclick="toggleProjectDetails('pencil')">
-        <img src="assets/PENCIL_THUMB.png" alt="Mechanical Pencil Assembly" loading="lazy">
+        <img src="../assets/PENCIL_THUMB.png" alt="Mechanical Pencil Assembly" loading="lazy">
         <div class="project-card-content">
           <h3>Mechanical Pencil Assembly</h3>
           <p>Complete mechanical design and multi-part assembly featuring industrial-standard documentation and material selection.</p>
@@ -281,7 +286,7 @@
       </div>
       <!-- Project 5 -->
       <div class="project-card" onclick="toggleProjectDetails('cad')">
-        <img src="assets/CAD_THUMB.jpg" alt="3D Printed Prototype" loading="lazy">
+        <img src="../assets/CAD_THUMB.jpg" alt="3D Printed Prototype" loading="lazy">
         <div class="project-card-content">
           <h3>CAD Mechanical Design</h3>
           <p>Created 3D models and prototypes using SolidWorks and advanced manufacturing techniques.</p>
@@ -299,11 +304,11 @@
     <!-- Project Details Sections -->
     <div id="cooknup-details" class="project-details">
       <div class="project-details-inner">
-        <button class="close-details" onclick="closeProjectDetails('cooknup')">&times;</button>
+        <button class="close-details" aria-label="Close project details" onclick="closeProjectDetails('cooknup')">&times;</button>
         <div class="project-gallery">
-          <img src="assets/COOKNUP.png" alt="CookNup App Interface">
-          <img src="assets/COOKNUP2.png" alt="CookNup Recipe Generation">
-          <img src="assets/IMG_4728.png" alt="CookNup AI Analysis">
+          <img src="../assets/COOKNUP.png" alt="CookNup App Interface">
+          <img src="../assets/COOKNUP2.png" alt="CookNup Recipe Generation">
+          <img src="../assets/IMG_4728.png" alt="CookNup AI Analysis">
         </div>
         <div class="project-description">
           <h2><a href="https://foodies-e099a.web.app" target="_blank" rel="noopener noreferrer" class="live-link">CookNup — Your AI Meal Companion</a></h2>
@@ -336,11 +341,11 @@
             <li>Empowers users to cook confidently</li>
           </ul>
           
-          < class="try-it-out">
+          <div class="try-it-out">
             <h3>Try It Out!</h3>
             <p>Ready to transform your cooking experience? Visit <a href="https://foodies-e099a.web.app" target="_blank" rel="noopener noreferrer">CookNup</a> and start creating amazing dishes with what you have!</p>
             <p>I'm always excited to hear your feedback - whether you enjoyed using it or encountered any issues. Feel free to reach out and let me know about your experience. I'm here to help!</p>
-            <p> Special thanks to  Anthony Stewart and Elijah Brown for their huge effort and contribution in AI integration and web development.</p></p>
+            <p> Special thanks to  Anthony Stewart and Elijah Brown for their huge effort and contribution in AI integration and web development.</p>
           </div>
         </div>
       </div>
@@ -349,11 +354,11 @@
     <!-- Other project details sections -->
     <div id="solar-details" class="project-details">
       <div class="project-details-inner">
-        <button class="close-details" onclick="closeProjectDetails('solar')">&times;</button>
+        <button class="close-details" aria-label="Close project details" onclick="closeProjectDetails('solar')">&times;</button>
         <div class="project-gallery">
-          <img src="assets/DSSCS_THMB.jpg" alt="DSSC Assembly Process">
-          <img src="assets/IMG_5826.jpeg" alt="Solar Cell Testing Setup">
-          <img src="assets/IMG_5825.jpeg" alt="Solar Cell Testing">
+          <img src="../assets/DSSCS_THMB.jpg" alt="DSSC Assembly Process">
+          <img src="../assets/IMG_5826.jpeg" alt="Solar Cell Testing Setup">
+          <img src="../assets/IMG_5825.jpeg" alt="Solar Cell Testing">
         </div>
         <div class="project-description">
           <h2><a href="#solar">Dye-Sensitized Solar Cell Research</a></h2>
@@ -393,9 +398,9 @@
 
     <div id="humidifier-details" class="project-details">
       <div class="project-details-inner">
-        <button class="close-details" onclick="closeProjectDetails('humidifier')">&times;</button>
+        <button class="close-details" aria-label="Close project details" onclick="closeProjectDetails('humidifier')">&times;</button>
         <div class="project-gallery">
-          <img src="assets/Humidifier.jpeg" alt="Humidifier System Setup">
+          <img src="../assets/Humidifier.jpeg" alt="Humidifier System Setup">
         </div>
         <div class="project-description">
           <h2><a href="#humidifier">Smart Humidifier Control System</a></h2>
@@ -432,10 +437,10 @@
     </div>
     <div id="pencil-details" class="project-details">
   <div class="project-details-inner">
-    <button class="close-details" onclick="closeProjectDetails('pencil')">&times;</button>
+    <button class="close-details" aria-label="Close project details" onclick="closeProjectDetails('pencil')">&times;</button>
     <div class="project-gallery">
-      <img src="assets/PENCIL_ASSEMBLY.png" alt="Pencil Assembly Exploded View">
-      <img src="assets/PENCIL_DRAWING.png" alt="Technical Drawing and BOM">
+      <img src="../assets/PENCIL_ASSEMBLY.png" alt="Pencil Assembly Exploded View">
+      <img src="../assets/PENCIL_DRAWING.png" alt="Technical Drawing and BOM">
     </div>
     <div class="project-description">
       <h2><a href="#pencil">Mechanical Pencil Assembly Design</a></h2>
@@ -453,26 +458,26 @@
       <ul>
         <li>Optimized tolerances for smooth internal mechanism movement.</li>
         <li>Utilized Design for Manufacturing (DFM) principles to ensure part feasibility.</li>
-        <li>Applied Geometric Dimensioning and Tolerancing (GD&T) for critical components[cite: 1].</li>
+        <li>Applied Geometric Dimensioning and Tolerancing (GD&amp;T) for critical components[cite: 1].</li>
       </ul>
     </div>
   </div>
 </div>
     <div id="cad-details" class="project-details">
       <div class="project-details-inner">
-        <button class="close-details" onclick="closeProjectDetails('cad')">&times;</button>
+        <button class="close-details" aria-label="Close project details" onclick="closeProjectDetails('cad')">&times;</button>
         <div class="project-gallery">
-          <img src="assets/CAD_THUMB.jpg" alt="3D Model Design">
-          <img src="assets/CAD_TEMPLE.jpeg" alt="3D Model Design">
-          <img src="assets/cad_temple2.jpeg" alt="3D Model Design">
-          <img src="assets/CAD_TEMPLE3.jpeg" alt="3D Model Design">
-          <img src="assets/CAD_SNACKUP1.jpeg" alt="3D Model Design">
-          <img src="assets/CAD_SNACKUP2.jpeg" alt="3D Model Design">
-          <img src="assets/CAD_TRUCK.jpeg" alt="3D Model Design">
-          <img src="assets/CAD_WATCH.jpeg" alt="3D Model Design">
+          <img src="../assets/CAD_THUMB.jpg" alt="CAD thumbnail render">
+          <img src="../assets/CAD_TEMPLE.jpeg" alt="CAD model of a temple carving, view 1">
+          <img src="../assets/cad_temple2.jpeg" alt="CAD model of a temple carving, view 2">
+          <img src="../assets/CAD_TEMPLE3.jpeg" alt="CAD model of a temple carving, view 3">
+          <img src="../assets/CAD_SNACKUP1.jpeg" alt="CAD model of a snack dispenser, view 1">
+          <img src="../assets/CAD_SNACKUP2.jpeg" alt="CAD model of a snack dispenser, view 2">
+          <img src="../assets/CAD_TRUCK.jpeg" alt="CAD model of a pickup truck">
+          <img src="../assets/CAD_WATCH.jpeg" alt="CAD model of a wristwatch">
         </div>
         <div class="project-description">
-          <h2><a href="#cad">Mechanical Design & CAD Projects</a></h2>
+          <h2><a href="#cad">Mechanical Design &amp; CAD Projects</a></h2>
           <p>Engineering solutions through advanced 3D modeling and prototyping.</p>
           
           <h3>Engineering Expertise</h3>
@@ -482,7 +487,7 @@
           <ul>
             <li>Advanced 3D modeling in SolidWorks</li>
             <li>Design for Manufacturing (DFM) principles</li>
-            <li>Geometric Dimensioning & Tolerancing (GD&T)</li>
+            <li>Geometric Dimensioning &amp; Tolerancing (GD&amp;T)</li>
             <li>FEA and motion analysis</li>
           </ul>
           
@@ -512,11 +517,11 @@
     <div class="footer-section">
       <h3>Contact Info</h3>
   <p>Email: <a href="mailto:b.navin@wustl.edu" aria-label="Email Navin Bhattarai">b.navin@wustl.edu</a></p>
-      <p>Phone: <a href="tel:+1-555-555-5555" aria-label="Call Navin Bhattarai">+1 (555) 555-5555</a></p>
+      <p>Phone: <a href="tel:+1-660-280-5163" aria-label="Call Navin Bhattarai">+1 (660) 280-5163</a></p>
     </div>
     <div class="footer-section">
       <h3>Connect</h3>
-      <a href="https://linkedin.com/in/navin-bhattarai" target="_blank" rel="noopener" aria-label="Navin Bhattarai's LinkedIn">LinkedIn</a>
+      <a href="https://linkedin.com/in/navin-bh" target="_blank" rel="noopener" aria-label="Navin Bhattarai's LinkedIn">LinkedIn</a>
       <a href="https://github.com/navinbhattarai" target="_blank" rel="noopener" aria-label="Navin Bhattarai's GitHub">GitHub</a>
     </div>
     <div class="footer-section">
@@ -527,11 +532,11 @@
       <a href="contact.html" aria-label="Contact Navin Bhattarai">Contact</a>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 Navin Bhattarai | Built with ❤️</p>
+      <p>© 2026 Navin Bhattarai | Built with ❤️</p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="../script.js"></script>
   <script>
     let activeProject = null;
 

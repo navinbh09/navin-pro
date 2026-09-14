@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio-static",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "unset PYTHONPATH; exec python3 -c \"import functools,http.server,socketserver as s; s.TCPServer.allow_reuse_address=True; H=functools.partial(http.server.SimpleHTTPRequestHandler, directory='/Users/navinbhattarai/Desktop/Navin-Bhattarai_Protofolio'); srv=s.TCPServer(('127.0.0.1',8642), H); srv.serve_forever()\""],
+      "port": 8642
+    }
+  ]
+}

@@ -7,25 +7,26 @@
   <meta name="keywords" content="mechanical engineering, 3D modeling, CAD, prototyping, portfolio">
   <meta name="author" content="Navin Bhattarai">
   <title>About Navin Bhattarai</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
+<body data-site="engineering">
   <canvas id="hyperspeed-bg"></canvas>
 
   <header class="navbar">
     <a href="index.html" class="logo">
-      <img src="./assets/navin-headshot.jpg" alt="" class="logo-thumbnail">
+      <img src="../assets/navin-headshot.jpg" alt="" class="logo-thumbnail">
       <span>Navin Bhattarai</span>
     </a>
     <nav>
-      <ul class="nav-links">
+      <ul class="nav-links" id="primary-nav">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html" aria-current="page">About</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="contact.html">Contact</a></li>
+        <li><a href="../academic/index.html" class="site-switch">Academic Site ↗</a></li>
       </ul>
-      <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0" onclick="toggleMenu()">
+      <div class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" role="button" tabindex="0" onclick="toggleMenu()">
         <span></span><span></span><span></span>
       </div>
     </nav>
@@ -35,12 +36,12 @@
   <section class="intro-about">
     <div class="intro-content">
       <!-- Ensure exact case sensitivity for GitHub Pages -->
-      <img src="./assets/NAVIN_IMAGE.JPG" alt="Navin Bhattarai" class="intro-image" onerror="this.onerror=null; this.src='assets/NAVIN_IMAGE.JPG';">
+      <img src="../assets/NAVIN_IMAGE.JPG" alt="Navin Bhattarai" class="intro-image">
       <div class="intro-text">
         <h1 class="gradient-text">Hi, I'm Navin</h1>
         <p>Engineering student passionate about 3D modeling, mechanical design, and turning ideas into prototypes.</p>
         <div class="resume-links">
-          <a href="assets/Resume_NAVIN_B.pdf" target="_blank" rel="noopener noreferrer" class="resume-btn">View Resume</a>
+          <button type="button" class="resume-btn resume-cv-trigger" data-resume-href="../assets/Resume_NAVIN_B.pdf" data-cv-href="../assets/Academic_CV_NAVIN_B.pdf">Download Resume / CV</button>
         </div>
       </div>
     </div>
@@ -59,14 +60,14 @@
 
           <div class="timeline-item left">
             <h4>Washington University in St. Louis</h4>
-            <span>2025 – Present · McKelvey School of Engineering</span>
-            <p>B.S. Mechanical &amp; Aerospace Engineering (4.0/4.0)<br>Coursework: Engineering Analysis, CAD/CAM, Fluid Mechanics</p>
+            <span>Expected Dec. 2026 · McKelvey School of Engineering</span>
+            <p>B.S. Mechanical Engineering (GPA 3.98/4.00)<br>Honors: Lee Hunter Scholarship<br>Coursework: Heat Transfer, CFD, Fluid Mechanics, Design of Thermal Systems, Solid Mechanics, Machine Elements</p>
           </div>
 
           <div class="timeline-item right">
             <h4>Truman State University</h4>
-            <span>2022 – 2025 · College of Arts &amp; Sciences</span>
-            <p>B.A. Physics (4.0/4.0)<br>Coursework: Classical Mechanics, Materials Science, Advanced Physics Lab</p>
+            <span>Degree Awarded May 2026 · College of Arts &amp; Sciences</span>
+            <p>B.A. Physics (GPA 4.00/4.00), via the Truman–WashU 3+2 Dual-Degree Program<br>Honors: Summa Cum Laude, Sigma Pi Sigma<br>Coursework: Classical Mechanics, Mathematical Methods, Advanced Physics Lab</p>
           </div>
         </div>
       </section>
@@ -77,21 +78,33 @@
           <h3 class="gradient-text" style="font-family:'Rajdhani',sans-serif; font-size:2rem; margin: 2rem 0 1rem 0;">Experience</h3>
 
           <div class="timeline-item left">
-            <h4>Design-Build-Fly — Structures Engineer</h4>
+            <h4>SURGE Program — Undergraduate Researcher</h4>
+            <span>May 2026 – Present · Washington University in St. Louis</span>
+            <p>CFD research on flow-channel optimization for heat &amp; mass transfer.</p>
+          </div>
+
+          <div class="timeline-item right">
+            <h4>WashU Design/Build/Fly, Structures Sub-Team — Co-Lead</h4>
             <span>Aug 2025 – Present · Washington University in St. Louis</span>
             <p>Structures engineering &amp; prototyping for competition aircraft.</p>
           </div>
 
-          <div class="timeline-item right">
-            <h4>Dye-Sensitized Solar Cells — Research Associate</h4>
+          <div class="timeline-item left">
+            <h4>Dye-Sensitized Solar Cells — Research Assistant</h4>
             <span>Feb 2024 – Aug 2025 · Truman State University</span>
             <p>Fabrication and testing of plant-based dye solar cells.</p>
           </div>
 
-          <div class="timeline-item left">
+          <div class="timeline-item right">
             <h4>McKelvey School of Engineering — Course Assistant</h4>
             <span>Aug 2025 – Present · Washington University in St. Louis</span>
-            <p>Assisting Statics &amp; Mechanics courses; student support and grading.</p>
+            <p>Assisting Thermodynamics &amp; Solid Mechanics; student support and grading.</p>
+          </div>
+
+          <div class="timeline-item left">
+            <h4>Student Technology Services — Level 1 Technician</h4>
+            <span>Feb 2026 – Present · Washington University in St. Louis</span>
+            <p>Diagnosing and resolving hardware, software, and network issues.</p>
           </div>
 
           <div class="timeline-item right">
@@ -116,21 +129,35 @@
 
             <details class="experience-block">
             <summary>
-              <strong>Design-Build-Fly, Structures Sub-Team — Structures Engineer</strong>
-              <div class="muted">Aug 2025 – Present · Washington University in St. Louis</div>
+              <strong>SURGE Program — Undergraduate Researcher</strong>
+              <div class="muted">May 2026 – Present · Washington University in St. Louis · Advisor: Dr. Xianglin Li</div>
             </summary>
             <div class="exp-body">
               <ul>
-                <li>Design and analyze wing spars and fuselage frame for competition RC aircraft using SolidWorks.</li>
-                <li>Optimize structures to ensure CAD designs are manufacturing-ready for laser cutting.</li>
-                <li>Collaborate with aerodynamics &amp; propulsion sub-team to meet flight performance specifications.</li>
+                <li>Conduct CFD research on flow-channel optimization for enhanced heat and mass transfer.</li>
+                <li>Develop OpenFOAM workflows spanning geometry, meshing, solver configuration, and ParaView post-processing.</li>
+                <li>Implement topology optimization via the Method of Moving Asymptotes (MMA) to generate optimized flow-channel architectures.</li>
+                <li>Evaluate designs on pressure drop, temperature distribution, and thermal uniformity; validate against published benchmarks.</li>
               </ul>
             </div>
           </details>
 
           <details class="experience-block">
             <summary>
-              <strong>Dye-Sensitized Solar Cells (DSSCs) — Research Associate</strong>
+              <strong>WashU Design/Build/Fly, Structures Sub-Team — Co-Lead</strong>
+              <div class="muted">Aug 2025 – Present · Washington University in St. Louis</div>
+            </summary>
+            <div class="exp-body">
+              <ul>
+                <li>Design and model aircraft structural components and subassemblies using SOLIDWORKS for fabrication and integration.</li>
+                <li>Optimize structural designs for manufacturability and collaborate with aerodynamics &amp; propulsion sub-teams to meet performance requirements.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="experience-block">
+            <summary>
+              <strong>Dye-Sensitized Solar Cells (DSSCs) — Research Assistant</strong>
               <div class="muted">Feb 2024 – Aug 2025 · Truman State University</div>
             </summary>
             <div class="exp-body">
@@ -152,6 +179,18 @@
               <ul>
                 <li>Support 150+ students via office hours, exam reviews, and homework assistance.</li>
                 <li>Grade assignments and provide feedback to improve problem-solving approaches.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="experience-block">
+            <summary>
+              <strong>Student Technology Services — Level 1 Technician</strong>
+              <div class="muted">Feb 2026 – Present · Washington University in St. Louis</div>
+            </summary>
+            <div class="exp-body">
+              <ul>
+                <li>Diagnose and resolve hardware, software, network, and account-access issues using systematic troubleshooting.</li>
               </ul>
             </div>
           </details>
@@ -182,7 +221,8 @@
             </div>
           </details>
         </section>
-      </section>
+      </div>
+    </section>
 
   <!-- Skills -->
   <section class="skills-section">
@@ -197,6 +237,8 @@
       <li><span class="skill-tag">Python</span></li>
       <li><span class="skill-tag">Prototyping</span></li>
       <li><span class="skill-tag">3D Printing</span></li>
+      <li><span class="skill-tag">OpenFOAM</span></li>
+      <li><span class="skill-tag">CFD</span></li>
     </ul>
 
     <!-- categorized grid -->
@@ -212,8 +254,8 @@
       <div>
         <h4>Programming</h4>
         <ul>
-          <li>MATLAB, Python</li>
-          <li>C++ (basic)</li>
+          <li>Python, MATLAB, C++</li>
+          <li>Mathematica, R</li>
           <li>Data/Plotting &amp; automation scripts</li>
         </ul>
       </div>
@@ -226,12 +268,12 @@
         </ul>
       </div>
       <div>
-        <h4>Aerospace/CFD</h4>
+        <h4>CFD &amp; Computational</h4>
         <ul>
-          <li>Structures &amp; materials</li>
-          <li>Flight dynamics</li>
-          <li>Aerodynamics basics</li>
-          <li>OpenFoam & ParaView</li>
+          <li>OpenFOAM, ParaView</li>
+          <li>Computational Fluid Dynamics</li>
+          <li>Topology Optimization (MMA)</li>
+          <li>Finite Element Analysis (FEA)</li>
         </ul>
       </div>
       <div>
@@ -245,10 +287,22 @@
     </div>
   </section>
 
+  <!-- Honors & Awards -->
+  <section class="skills-section">
+    <h2>Honors &amp; Awards</h2>
+    <ul class="skills-list">
+      <li><span class="skill-tag">Lee Hunter Scholarship</span></li>
+      <li><span class="skill-tag">Summa Cum Laude</span></li>
+      <li><span class="skill-tag">Sigma Pi Sigma</span></li>
+      <li><span class="skill-tag">International President's Honorary Scholarship</span></li>
+      <li><span class="skill-tag">7+ Merit-Based Scholarships</span></li>
+    </ul>
+  </section>
+
   <div class="cta-buttons container" style="margin:2rem auto; max-width:900px;">
     <a href="projects.html" class="btn">View My Projects</a>
     <a href="contact.html" class="btn btn-outline">Get in Touch</a>
-    <a href="assets/Resume_NAVIN_B.pdf" class="btn" download>Download Resume</a>
+    <button type="button" class="btn resume-cv-trigger" data-resume-href="../assets/Resume_NAVIN_B.pdf" data-cv-href="../assets/Academic_CV_NAVIN_B.pdf">Download Resume / CV</button>
   </div>
 
   <footer>
@@ -259,7 +313,7 @@
     </div>
     <div class="footer-section">
       <h3>Connect</h3>
-      <a href="https://linkedin.com/in/navin-bhattarai" target="_blank" rel="noopener" aria-label="Navin Bhattarai's LinkedIn">LinkedIn</a>
+      <a href="https://linkedin.com/in/navin-bh" target="_blank" rel="noopener" aria-label="Navin Bhattarai's LinkedIn">LinkedIn</a>
       <a href="https://github.com/navinbhattarai" target="_blank" rel="noopener" aria-label="Navin Bhattarai's GitHub">GitHub</a>
     </div>
     <div class="footer-section">
@@ -270,10 +324,10 @@
       <a href="contact.html" aria-label="Contact Navin Bhattarai">Contact</a>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 Navin Bhattarai | Built with ❤️</p>
+      <p>© 2026 Navin Bhattarai | Built with ❤️</p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="../script.js"></script>
 </body>
 </html>

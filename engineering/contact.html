@@ -7,8 +7,8 @@
   <meta name="keywords" content="contact, mechanical engineering, 3D modeling, portfolio, Navin Bhattarai">
   <meta name="author" content="Navin Bhattarai">
   <title>Contact - Navin Bhattarai</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <!-- Local styles for contact form -->
   <style>
     .contact-container {
@@ -56,6 +56,7 @@
       border-radius: 8px;
       color: var(--text);
       font-family: 'Inter', sans-serif;
+      font-size: 1rem; /* 16px -- prevents iOS Safari auto-zoom on focus */
       transition: all 0.3s ease;
     }
     .form-group input:focus,
@@ -118,22 +119,23 @@
     }
   </style>
 </head>
-<body>
+<body data-site="engineering">
   <canvas id="hyperspeed-bg"></canvas>
 
   <header class="navbar">
     <a href="index.html" class="logo">
-      <img src="./assets/navin-headshot.jpg" alt="" class="logo-thumbnail">
+      <img src="../assets/navin-headshot.jpg" alt="" class="logo-thumbnail">
       <span>Navin Bhattarai</span>
     </a>
     <nav>
-      <ul class="nav-links">
+      <ul class="nav-links" id="primary-nav">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="contact.html" aria-current="page">Contact</a></li>
+        <li><a href="../academic/index.html" class="site-switch">Academic Site ↗</a></li>
       </ul>
-      <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0" onclick="toggleMenu()">
+      <div class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" role="button" tabindex="0" onclick="toggleMenu()">
         <span></span><span></span><span></span>
       </div>
     </nav>
@@ -146,7 +148,7 @@
       <!-- Contact Form -->
       <div class="contact-form">
         <h2 style="color: var(--gold-1); font-family: 'Rajdhani', sans-serif; margin-bottom: 1.5rem;">Send a Message</h2>
-        <form id="contact-form" action="https://formspree.io/f/your-formspree-id" method="POST">
+        <form id="contact-form" action="mailto:b.navin@wustl.edu" method="POST" enctype="text/plain">
           <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
@@ -178,7 +180,7 @@
 
         <div class="contact-info-item">
           <h4>Email</h4>
-          <a href="mailto:navin.bhattarai515@gmail.com">navin.bhattarai515@gmail.com</a>
+          <a href="mailto:b.navin@wustl.edu">b.navin@wustl.edu</a>
         </div>
 
         <div class="contact-info-item">
@@ -189,7 +191,7 @@
         <div class="contact-info-item">
           <h4>Connect</h4>
           <div class="social-links">
-            <a href="https://linkedin.com/in/navin-bhattarai" target="_blank" rel="noopener">
+            <a href="https://linkedin.com/in/navin-bh" target="_blank" rel="noopener">
               LinkedIn
             </a>
             <a href="https://github.com/navinbhattarai" target="_blank" rel="noopener">
@@ -214,7 +216,7 @@
     </div>
     <div class="footer-section">
       <h3>Connect</h3>
-      <a href="https://linkedin.com/in/navin-bhattarai" target="_blank" rel="noopener" aria-label="Navin Bhattarai's LinkedIn">LinkedIn</a>
+      <a href="https://linkedin.com/in/navin-bh" target="_blank" rel="noopener" aria-label="Navin Bhattarai's LinkedIn">LinkedIn</a>
       <a href="https://github.com/navinbhattarai" target="_blank" rel="noopener" aria-label="Navin Bhattarai's GitHub">GitHub</a>
     </div>
     <div class="footer-section">
@@ -229,6 +231,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="../script.js"></script>
 </body>
 </html>

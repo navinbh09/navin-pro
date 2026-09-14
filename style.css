@@ -47,7 +47,7 @@
   height: 16px;
   border-radius: 50%;
   background: var(--gold-1);
-  box-shadow: 0 0 10px rgba(255,215,0,0.2);
+  box-shadow: 0 0 10px rgba(255,106,61,0.2);
 }
 
 .timeline-item.right::after {
@@ -167,6 +167,9 @@
   gap: 1rem;
   margin-top: 2rem;
 }
+@media (max-width:768px){
+  .cta-buttons{ flex-direction:column; align-items:stretch }
+}
 
 .btn-outline {
   background: transparent;
@@ -184,16 +187,20 @@
   background: var(--bg-1);
 }
 :root{
-  --bg-1:#0b132b;
-  --bg-2:#1c2541;
-  --bg-3:#3a506b;
-  --text:#e6e6e6;
-  --text-dim:#cfd6e1;
+  /* "Planckian Night" -- a stylized blackbody/color-temperature curve
+     (deep ember-violet -> ember-orange -> white-hot), the same color
+     science behind thermal-contour CFD plots. See script.js's
+     drawStars()/planckianColor() for the animated version of this curve. */
+  --bg-1:#060912;
+  --bg-2:#10142c;
+  --bg-3:#262a4d;
+  --text:#ece7df;
+  --text-dim:#b7bdd6;
   --ink:#333;
   --link-hover:#5bc0be;
   --brand:#0077ff;
-  --gold-1:#FFD700;
-  --gold-2:#FFA500;
+  --gold-1:#ff6a3d;
+  --gold-2:#ffe9a8;
   --glass:rgba(255,255,255,.10);
   --glass-strong:rgba(255,255,255,.18);
   --nav-glass:rgba(255,255,255,.85);
@@ -202,9 +209,17 @@
   --radius:14px;
   --radius-lg:22px;
   --pad:clamp(16px,2.2vw,28px);
+  --font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   /* Safari-specific */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Per-site accent: engineering keeps the default warm ember-orange;
+   academic sits at a cooler point on the same Planckian curve -- one
+   quiet variable difference, same everything else. */
+body[data-site="academic"]{
+  --gold-1:#b23a6e;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -302,6 +317,12 @@ h1,h2,h3,h4{color:#fff}
 }
 .nav-links a:hover,.nav-links a:focus{color:var(--brand); transform:translateY(-2px)}
 .nav-links a[aria-current="page"]{color:var(--brand); font-weight:600}
+.nav-links a.site-switch{
+  padding:.35rem .9rem; border-radius:999px;
+  background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
+  color:var(--bg-1) !important; font-weight:600;
+}
+.nav-links a.site-switch:hover{transform:translateY(-2px); opacity:.9}
 
 .hamburger{display:none; flex-direction:column; gap:5px; cursor:pointer}
 .hamburger span{width:25px;height:3px;background:#333;border-radius:5px;display:block}
@@ -313,6 +334,7 @@ h1,h2,h3,h4{color:#fff}
     box-shadow:0 8px 25px rgba(0,0,0,.15); z-index:999; max-width:90%;
   }
   .nav-links.active{display:flex}
+  .nav-links a{ padding:.6rem 0; display:block; }
   .hamburger{display:flex}
 }
 
@@ -354,11 +376,11 @@ h1,h2,h3,h4{color:#fff}
   padding: 2rem 0;
   background: linear-gradient(
     to right,
-    rgba(255, 215, 0, 0.1),
-    rgba(218, 165, 32, 0.15)
+    rgba(255, 106, 61, 0.1),
+    rgba(255, 233, 168, 0.15)
   );
-  border-top: 1px solid rgba(255, 215, 0, 0.3);
-  border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+  border-top: 1px solid rgba(255, 106, 61, 0.3);
+  border-bottom: 1px solid rgba(255, 106, 61, 0.3);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 10;
@@ -388,10 +410,21 @@ h1,h2,h3,h4{color:#fff}
     text-align: center;
     gap: 1rem;
   }
-  
+
+  /* Below the desktop breakpoint, take the box out of fixed/viewport-anchored
+     positioning entirely so it can never collide with .hero-buttons or the
+     .display-controls gear widget -- it just flows in after the hero content. */
+  #hero{
+    height:auto;
+    align-items:flex-start;
+    padding-top:calc(72px + 1rem);
+    padding-bottom:2rem;
+  }
   .resume-gold-box {
-    bottom: 80px;
-    padding: 1.5rem 0;
+    position: static;
+    width: auto;
+    margin-top: 1.5rem; /* extra clearance from the fixed gear widget is added at runtime, see script.js */
+    padding: 1.25rem 0;
   }
 }
 .resume-gold-box h3{
@@ -401,7 +434,7 @@ h1,h2,h3,h4{color:#fff}
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: var(--gold-1); /* fallback for older browsers */
-  text-shadow: 0 2px 8px rgba(255,215,0,0.08);
+  text-shadow: 0 2px 8px rgba(255,106,61,0.08);
 }
 
 /* Golden button styles for resume box */
@@ -412,25 +445,25 @@ h1,h2,h3,h4{color:#fff}
   padding: 0.7rem 1.2rem;
   border-radius: 10px;
   font-weight:700;
-  box-shadow: 0 8px 24px rgba(255,165,0,0.08);
+  box-shadow: 0 8px 24px rgba(255,106,61,0.08);
   transition: transform .18s ease, box-shadow .18s ease;
 }
 .resume-gold-box .btn-primary:hover{
   transform: translateY(-3px);
-  box-shadow: 0 14px 40px rgba(255,165,0,0.14);
+  box-shadow: 0 14px 40px rgba(255,106,61,0.14);
 }
 
 .resume-gold-box .btn-secondary{
   background: transparent;
   color: var(--gold-1);
-  border: 2px solid rgba(255,215,0,0.23);
+  border: 2px solid rgba(255,106,61,0.23);
   padding: 0.6rem 1rem;
   border-radius: 10px;
   font-weight:600;
   transition: background .18s ease, transform .18s ease;
 }
 .resume-gold-box .btn-secondary:hover{
-  background: rgba(255,215,0,0.06);
+  background: rgba(255,106,61,0.06);
   transform: translateY(-2px);
 }
 
@@ -548,10 +581,12 @@ section{scroll-margin-top:84px}
   margin-bottom:.25rem
 }
 .timeline-item span{
-  display:block; 
-  color:#c0c0c0; 
-  font-size:.95rem; 
-  margin-bottom:.35rem
+  display:block;
+  color:#c0c0c0;
+  font-size:.95rem;
+  margin-bottom:.35rem;
+  font-family:var(--font-mono);
+  letter-spacing:.02em;
 }
 .timeline-item p{
   font-family:'Inter',sans-serif; 
@@ -569,7 +604,7 @@ section{scroll-margin-top:84px}
   height:16px; 
   border-radius:50%;
   background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
-  box-shadow:0 0 0 4px rgba(255,215,0,.18), 0 6px 14px rgba(0,0,0,.35);
+  box-shadow:0 0 0 4px rgba(255,106,61,.18), 0 6px 14px rgba(0,0,0,.35);
   z-index:2;
 }
 
@@ -660,6 +695,7 @@ section{scroll-margin-top:84px}
 }
 .detailed-experience .muted{color:var(--text-dim); font-size:.95rem}
 .detailed-experience .exp-body{margin-top:0.6rem}
+.detailed-experience summary .muted{ font-family:var(--font-mono); letter-spacing:.02em; }
 .detailed-experience details.experience-block[open]{background:var(--glass-strong)}
 
 /* make summary content more visible */
@@ -723,7 +759,7 @@ section{scroll-margin-top:84px}
   text-align:center; transition:transform .25s, box-shadow .25s, background .25s;
   border:1px solid rgba(255,255,255,.14);
 }
-.project-card:hover,.project-card:focus-within{transform:translateY(-5px); box-shadow:0 10px 26px rgba(255,215,0,.28)}
+.project-card:hover,.project-card:focus-within{transform:translateY(-5px); box-shadow:0 10px 26px rgba(255,106,61,.28)}
 .project-card img{width:100%; height:160px; object-fit:cover; border-radius:10px; margin-bottom:.9rem}
 .project-card h3{font-family:'Rajdhani',sans-serif; font-size:1.35rem; margin-bottom:.4rem; color:#fff}
 .project-card p{font-family:'Inter',sans-serif; font-size:.95rem; color:var(--text)}
@@ -756,7 +792,7 @@ footer{
    ====================================== */
 @keyframes fadeInUp{
   0%{opacity:0; transform:translateY(40px)}
-  100%{opacity:1; transform:translateY(0)}
+  100%{opacity:1}
 }
 
 /* Fix for bullet overflow inside detailed experience boxes */
@@ -901,8 +937,8 @@ footer{
   appearance:none;
   -webkit-appearance:none;
   background:linear-gradient(to right, 
-    rgba(255,215,0,0.5) 0%,
-    rgba(255,215,0,0.2) 100%);
+    rgba(255,106,61,0.5) 0%,
+    rgba(255,106,61,0.2) 100%);
   border-radius:2px;
   outline:none;
   position:relative;
@@ -932,7 +968,7 @@ footer{
   border:2px solid rgba(255,255,255,0.9);
   box-shadow:
     0 2px 8px rgba(0,0,0,0.2),
-    0 0 0 2px rgba(255,215,0,0.1);
+    0 0 0 2px rgba(255,106,61,0.1);
   transition:all 0.2s ease;
 }
 
@@ -1025,6 +1061,8 @@ body.light-theme h1 span{
   line-height:1;
   display:inline-block;
 }
+.display-controls .dc-toggle > span svg{ width:1.35em; height:1.35em; display:block; fill:currentColor; }
+.dc-icon{ width:14px; height:14px; vertical-align:-2px; margin-right:4px; fill:currentColor; }
 
 /* small responsive tweak */
 @media (max-width:520px){
@@ -1041,8 +1079,14 @@ body.light-theme h1 span{
 .img-modal-content{
   position:relative; max-width:min(95%,1200px); width:auto; background:transparent; border-radius:10px;
   box-shadow:0 20px 60px rgba(0,0,0,0.6); overflow:hidden;
+  max-height:90vh; overflow-y:auto;
 }
 .img-modal-content img{display:block; width:100%; height:auto; border-radius:8px; max-height:80vh; object-fit:contain}
+/* On short/landscape-phone viewports, keep the modal clear of the sticky navbar */
+@media (max-height:500px){
+  .img-modal{ align-items:flex-start; padding-top:84px; overflow-y:auto; }
+  .img-modal-content{ max-height:calc(100vh - 108px); }
+}
 .img-modal-close{
   position:absolute; top:8px; right:8px; z-index:2; background:rgba(0,0,0,0.6); color:#fff; border:0;
   width:40px; height:40px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
@@ -1050,3 +1094,61 @@ body.light-theme h1 span{
 }
 .img-modal-close:hover{transform:scale(1.06); background:rgba(0,0,0,0.8)}
 .img-modal-caption{color:var(--text-dim); font-size:0.9rem; margin-top:8px; text-align:center}
+
+/* Resume / CV picker modal */
+.doc-picker-content{
+  background:linear-gradient(160deg,var(--bg-2),var(--bg-1));
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radius-lg);
+  padding:clamp(24px,4vw,40px);
+  max-width:min(560px,92vw);
+  width:auto;
+  box-shadow:var(--shadow-2);
+}
+.doc-picker-title{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(1.3rem,3vw,1.7rem);
+  text-align:center;
+  margin-bottom:1.5rem;
+}
+.doc-picker-options{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1rem;
+}
+.doc-picker-card{
+  display:flex; flex-direction:column; align-items:center; text-align:center; gap:.4rem;
+  padding:1.4rem 1rem;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radius);
+  text-decoration:none;
+  color:var(--text);
+  transition:transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+}
+.doc-picker-card:hover,.doc-picker-card:focus{
+  transform:translateY(-4px);
+  background:var(--glass-strong);
+  box-shadow:var(--shadow-2);
+  border-color:var(--gold-1);
+}
+.doc-picker-icon{font-size:2rem}
+.doc-picker-icon svg{width:2rem; height:2rem; display:block; margin:0 auto; fill:currentColor;}
+.doc-picker-name{
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:1.1rem; color:#fff;
+}
+.doc-picker-desc{font-family:'Inter',sans-serif; font-size:.85rem; color:var(--text-dim); line-height:1.4}
+.doc-picker-card.recommended{
+  border-color:var(--gold-1);
+  box-shadow:0 0 0 1px var(--gold-1), var(--shadow-1);
+}
+.doc-picker-card.recommended::after{
+  content:'Recommended';
+  font-size:.7rem; font-weight:700; letter-spacing:.03em; text-transform:uppercase;
+  color:var(--bg-1);
+  background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
+  padding:.2rem .6rem; border-radius:999px; margin-top:.3rem;
+}
+@media (max-width:520px){
+  .doc-picker-options{grid-template-columns:1fr}
+}

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Research by Navin Bhattarai, spanning CFD-based flow-channel optimization and dye-sensitized solar cell research.">
+  <meta name="keywords" content="CFD, flow-channel optimization, topology optimization, dye-sensitized solar cells, research">
+  <meta name="author" content="Navin Bhattarai">
+  <title>Research - Navin Bhattarai</title>
+  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Rajdhani:wght@700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Project card and grid styles (shared pattern with engineering/projects.html) */
+    .project-card h3 {
+      background: linear-gradient(90deg,var(--gold-1),var(--gold-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      width: min(1200px, 90%);
+      margin: 0 auto;
+    }
+
+    .project-card {
+      cursor: pointer;
+      overflow: hidden;
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-2);
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .research-visual {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, rgba(255,106,61,0.18), rgba(58,80,107,0.5));
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .research-visual {
+      transform: scale(1.05);
+    }
+
+    .project-card-content {
+      padding: 1.5rem;
+    }
+
+    .project-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, margin 0.5s ease, opacity 0.5s ease;
+      background: var(--glass-strong);
+      margin: 0 auto;
+      width: min(1200px, 90%);
+      border-radius: var(--radius);
+      opacity: 0;
+      position: absolute;
+      left: -9999px;
+      pointer-events: none;
+    }
+
+    .project-details.active {
+      position: relative;
+      left: 0;
+      pointer-events: all;
+      max-height: 3000px;
+      margin: 2rem auto;
+      opacity: 1;
+    }
+
+    .project-details-inner {
+      padding: 2rem;
+      position: relative;
+    }
+
+    .project-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .project-gallery img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .project-gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    .close-details {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: background 0.3s ease;
+    }
+
+    .close-details:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    @media (max-width:480px){
+      .close-details{ width:44px; height:44px; font-size:24px; }
+    }
+
+    /* A one-off hover glow for the DSSC card, pulled from the actual natural
+       dyes tested (beetroot magenta / sumac amber) rather than the site-wide
+       ember accent -- a detail that only makes sense once you've read the project. */
+    .dssc-card:hover,.dssc-card:focus-within{
+      box-shadow: 0 10px 26px rgba(178,58,110,.30), 0 10px 30px rgba(201,138,62,.18);
+    }
+
+    .project-description {
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .project-description h2 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+
+    .project-description h2 a {
+      background: linear-gradient(90deg,var(--gold-1),var(--gold-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .view-more-prompt {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: var(--gold-2);
+      font-size: 0.9rem;
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover .view-more-prompt {
+      opacity: 1;
+    }
+
+    .project-description h3 {
+      color: var(--gold-2);
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .project-description ul {
+      list-style: none;
+      margin: 0.5rem 0;
+    }
+
+    .project-description li {
+      margin: 0.25rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .project-description li:before {
+      content: "•";
+      color: var(--gold-1);
+      position: absolute;
+      left: 0;
+    }
+  </style>
+</head>
+<body data-site="academic">
+  <canvas id="hyperspeed-bg"></canvas>
+  <header class="navbar">
+    <a href="index.html" class="logo">
+      <img src="../assets/navin-headshot.jpg" alt="" class="logo-thumbnail">
+      <span>Navin Bhattarai</span>
+    </a>
+    <nav>
+      <ul class="nav-links" id="primary-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="research.html" aria-current="page">Research</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="../engineering/index.html" class="site-switch">Engineering Site ↗</a></li>
+      </ul>
+      <div class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" role="button" tabindex="0" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <section id="projects">
+    <h1 class="projects-intro">Research</h1>
+    <p class="projects-subtitle">Computational and experimental work in thermal-fluid systems and renewable energy.</p>
+    <div class="project-grid">
+      <!-- Flow Channel Optimization / SURGE -->
+      <div class="project-card" onclick="toggleProjectDetails('surge')">
+        <div class="research-visual" aria-hidden="true">🌊</div>
+        <div class="project-card-content">
+          <h3>Flow-Channel Optimization for Heat &amp; Mass Transfer</h3>
+          <p>CFD and topology optimization research on flow-channel architectures, using OpenFOAM and the Method of Moving Asymptotes.</p>
+          <span class="view-more-prompt">Click to view details →</span>
+        </div>
+      </div>
+
+      <!-- DSSC Research -->
+      <div class="project-card dssc-card" onclick="toggleProjectDetails('solar')">
+        <img src="../assets/DSSCS_THMB.jpg" alt="Dye-Sensitized Solar Cell Research" loading="lazy">
+        <div class="project-card-content">
+          <h3>Dye-Sensitized Solar Cells from Natural Dyes</h3>
+          <p>Fabricated and characterized 30+ DSSCs using plant-derived dyes as low-cost, sustainable sensitizers.</p>
+          <span class="view-more-prompt">Click to view details →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Details Sections -->
+    <div id="surge-details" class="project-details">
+      <div class="project-details-inner">
+        <button class="close-details" aria-label="Close project details" onclick="closeProjectDetails('surge')">&times;</button>
+        <div class="project-description">
+          <h2><a href="#surge">Flow-Channel Optimization for Heat &amp; Mass Transfer</a></h2>
+          <p>SURGE Program, Undergraduate Researcher · May 2026 – Present · Advisor: Dr. Xianglin Li · Washington University in St. Louis</p>
+
+          <h3>Overview</h3>
+          <p>This project applies computational fluid dynamics and topology optimization to design flow-channel architectures that improve heat and mass transfer performance — work that sits at the intersection of thermal-fluid systems, numerical methods, and computational mechanics.</p>
+
+          <h3>Method</h3>
+          <ul>
+            <li>Built OpenFOAM workflows spanning geometry creation, mesh generation, solver configuration, and convergence monitoring.</li>
+            <li>Post-processed and visualized flow &amp; temperature fields in ParaView.</li>
+            <li>Implemented topology optimization using the Method of Moving Asymptotes (MMA) to generate optimized channel geometries.</li>
+          </ul>
+
+          <h3>Evaluation</h3>
+          <ul>
+            <li>Designs assessed on pressure drop, temperature distribution, heat-transfer performance, and thermal uniformity.</li>
+            <li>Computational models validated against published benchmark studies.</li>
+          </ul>
+
+          <h3>Status</h3>
+          <p>Active, ongoing research — results and figures will be added here as the project progresses.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="solar-details" class="project-details">
+      <div class="project-details-inner">
+        <button class="close-details" aria-label="Close project details" onclick="closeProjectDetails('solar')">&times;</button>
+        <div class="project-gallery">
+          <img src="../assets/DSSCS_THMB.jpg" alt="DSSC Assembly Process">
+          <img src="../assets/IMG_5826.jpeg" alt="Solar Cell Testing Setup">
+          <img src="../assets/IMG_5825.jpeg" alt="Solar Cell Testing">
+        </div>
+        <div class="project-description">
+          <h2><a href="#solar">Dye-Sensitized Solar Cells Using Natural-Dye Sensitizers</a></h2>
+          <p>Research Assistant, Department of Physics · Feb 2024 – Aug 2025 · Advisor: Dr. Rasanjali Jayathissa · Truman State University</p>
+
+          <h3>Overview</h3>
+          <p>Investigated plant-derived natural dyes as alternative sensitizers for dye-sensitized solar cells (DSSCs) — a lower-cost, more sustainable path to solar energy conversion than traditional silicon panels or synthetic sensitizers.</p>
+
+          <h3>Method</h3>
+          <ul>
+            <li>Designed experiments for natural-dye extraction and characterization using UV-Visible spectroscopy and Fourier Transform Infrared Spectroscopy (FTIR).</li>
+            <li>Fabricated and tested 30+ laboratory-scale DSSCs.</li>
+            <li>Characterized performance using Electrochemical Impedance Spectroscopy (EIS) and current-voltage measurements from a solar simulator (max PCE ≈ 9.90%, 55% FF).</li>
+          </ul>
+
+          <h3>Findings</h3>
+          <ul>
+            <li>Analyzed relationships among dye properties, material characteristics, and photovoltaic performance.</li>
+            <li>Presented findings at the 2025 APS Prairie Section Meeting.</li>
+          </ul>
+
+          <h3>Acknowledgment</h3>
+          <p>I gratefully acknowledge the mentorship and guidance of Dr. Rasanjali Jayathissa during this research, conducted at Truman State University.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <div class="footer-section">
+      <h3>Contact Info</h3>
+  <p>Email: <a href="mailto:b.navin@wustl.edu" aria-label="Email Navin Bhattarai">b.navin@wustl.edu</a></p>
+      <p>Phone: <a href="tel:+1-660-280-5163" aria-label="Call Navin Bhattarai">+1 (660) 280-5163</a></p>
+    </div>
+    <div class="footer-section">
+      <h3>Connect</h3>
+      <a href="https://linkedin.com/in/navin-bh" target="_blank" rel="noopener" aria-label="Navin Bhattarai's LinkedIn">LinkedIn</a>
+      <a href="https://github.com/navinbhattarai" target="_blank" rel="noopener" aria-label="Navin Bhattarai's GitHub">GitHub</a>
+    </div>
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <a href="index.html" aria-label="Home Page">Home</a>
+      <a href="about.html" aria-label="About Navin Bhattarai">About</a>
+      <a href="research.html" aria-label="Navin's Research">Research</a>
+      <a href="contact.html" aria-label="Contact Navin Bhattarai">Contact</a>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Navin Bhattarai | Built with ❤️</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script>
+    let activeProject = null;
+
+    function toggleProjectDetails(projectId) {
+      const detailsSection = document.getElementById(`${projectId}-details`);
+
+      if (activeProject === projectId) {
+        closeProjectDetails(projectId);
+        return;
+      }
+
+      if (activeProject) {
+        closeProjectDetails(activeProject);
+      }
+
+      detailsSection.classList.add('active');
+      activeProject = projectId;
+
+      setTimeout(() => {
+        detailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+
+    function closeProjectDetails(projectId) {
+      const detailsSection = document.getElementById(`${projectId}-details`);
+      detailsSection.classList.remove('active');
+      activeProject = null;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && activeProject) {
+        closeProjectDetails(activeProject);
+      }
+    });
+  </script>
+</body>
+</html>
