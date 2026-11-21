@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Research by Navin Bhattarai, spanning CFD-based flow-channel optimization and dye-sensitized solar cell research.">
-  <meta name="keywords" content="CFD, flow-channel optimization, topology optimization, dye-sensitized solar cells, research">
+  <meta name="description" content="Research by Navin Bhattarai: topology optimization of cold-plate flow channels for battery thermal management in OpenFOAM, and dye-sensitized solar cells from natural dyes.">
+  <meta name="keywords" content="CFD, OpenFOAM, topology optimization, cold plate, battery thermal management, dye-sensitized solar cells, research">
   <meta name="author" content="Navin Bhattarai">
   <title>Research - Navin Bhattarai</title>
   <link rel="stylesheet" href="../style.css">
@@ -250,8 +250,8 @@
       <div class="project-card" onclick="toggleProjectDetails('surge')">
         <div class="research-visual" aria-hidden="true">🌊</div>
         <div class="project-card-content">
-          <h3>Flow-Channel Optimization for Heat &amp; Mass Transfer</h3>
-          <p>Adjoint-based topology optimization of flow-channel geometries for battery cold-plate thermal management — up to 15.7% pressure-drop reduction via corner-curvature optimization, using OpenFOAM.</p>
+          <h3>Topology Optimization of Cold-Plate Flow Channels for Battery Thermal Management</h3>
+          <p>Set up and debugged OpenFOAM's adjoint topology optimization framework for battery cold plates. Rounding serpentine turns cut pressure drop 12–17% in turbulent runs; an optimized 2D channel cut pressure loss 19% vs. an open plate. Best Talk by an Undergraduate Student, ASME St. Louis Section Mini Symposium, Nov 2026.</p>
           <span class="view-more-prompt">Click to view details →</span>
         </div>
       </div>
@@ -272,27 +272,39 @@
       <div class="project-details-inner">
         <button class="close-details" aria-label="Close project details" onclick="closeProjectDetails('surge')">&times;</button>
         <div class="project-description">
-          <h2><a href="#surge">Flow-Channel Optimization for Heat &amp; Mass Transfer</a></h2>
+          <h2><a href="#surge">Topology Optimization of Cold-Plate Flow Channels for Battery Thermal Management</a></h2>
           <p>SURGE Program, Undergraduate Researcher · May 2026 – Present · PI: Dr. Xianglin Li · Washington University in St. Louis</p>
 
           <h3>Overview</h3>
-          <p>This project applies CFD and topology optimization to flow-channel geometries for battery cold-plate thermal management, targeting reduced pressure drop while maintaining flow uniformity — work that sits at the intersection of thermal-fluid systems, numerical methods, and computational mechanics.</p>
+          <p>Batteries need to stay around 15–40 °C with less than 5 °C of variation across the pack. Cold plates force a trade-off: straight channels lose little pressure but cool unevenly, while serpentine channels cover the plate but lose pressure at every turn. This project asks whether adjoint-based topology optimization, which decides cell by cell where the channel walls go, can escape that trade-off. Simulations run in OpenFOAM v2512 on the McKelvey Engineering Research Compute Cluster.</p>
 
           <h3>Method</h3>
           <ul>
-            <li>Developed OpenFOAM workflows spanning mesh generation (blockMesh, snappyHexMesh), solver configuration, turbulence modeling, and ParaView post-processing.</li>
-            <li>Implemented adjoint-based topology optimization, achieving 70+ stable design iterations; now extending the method to handle more complex design problems.</li>
+            <li>Validated the CFD setup against Ghia et al. (1982): lid-driven cavity at Re = 100 on a 150×150 mesh, with centerline velocities within 0.4% of the lid speed.</li>
+            <li>Characterized a 2D four-pass serpentine channel from Re ≈ 1,000 to 10,000: pressure drop rose 73× for a 10× increase in Re (42.2 to 3,072 Pa), close to Re², so the turns cause most of the loss.</li>
+            <li>Set up and debugged OpenFOAM's adjoint topology optimization framework (porosity-based Brinkman penalization, steady laminar SIMPLE, adjointOptimisationFoam, Method of Moving Asymptotes). First tested in 3D (72,000 cells, 60 cores, 70 stable cycles); the results below use 2D meshes.</li>
+            <li>It did not work off the shelf. Unconverged flow at Re = 1,000 turned the sensitivities into noise (fix: Re = 100); a flat start stalled the optimizer for about 20 cycles (fix: start at α = 0.3); the default move limit overshot and closed the channel (fix: 0.1, which converged smoothly in about 40 cycles).</li>
+            <li>Built OpenFOAM workflows spanning mesh generation (blockMesh, snappyHexMesh), solver configuration, turbulence modeling, and ParaView post-processing.</li>
           </ul>
 
           <h3>Results</h3>
           <ul>
-            <li>Quantified up to 15.7% pressure-drop reduction via corner-curvature (fillet) optimization of sharp channel turns; curvature proved beneficial above Re ≈ 3000.</li>
-            <li>Validated baseline CFD methodology against Ghia et al.'s (1982) lid-driven cavity benchmark.</li>
-            <li>Executed OpenFOAM simulations with over 72,000 computational cells across 60 CPU cores using shell-scripted workflows.</li>
+            <li>Rounded turns (2D characterization study, not optimization): 0.5, 1.0 and 1.25 cm fillets cut pressure drop 12–17% in k-ω SST runs (Re ≥ 3,000), but laminar runs (Re ≤ 2,300) showed up to +14%. The sign flip sits exactly at the turbulence-model switch, so I treat it as an open question, not a result.</li>
+            <li>Optimization (2D, laminar, Re = 100): a single S-shaped channel cut pressure loss 19% vs. an open plate, using 40% of the domain as fluid.</li>
+            <li>With the whole plate free, pressure loss fell 87%, but coolant reached only 16% of the plate. That told me pressure alone is the wrong objective. There is no thermal objective yet, so these designs are not claimed to cool better.</li>
           </ul>
 
-          <h3>Status</h3>
-          <p>Active, ongoing research — extending the adjoint-based method to more complex design problems.</p>
+          <h3>Presentations &amp; recognition</h3>
+          <ul>
+            <li>Poster: "Topology Optimization of Cold-Plate Flow Channels for Rechargeable Battery Thermal Management," Fall 2026 Undergraduate Research Symposium, WashU, Nov 6, 2026.</li>
+            <li>Five-minute lightning talk on this work, ASME St. Louis Section Mini Symposium, Nov 15, 2026. Awarded Best Talk by an Undergraduate Student.</li>
+          </ul>
+
+          <h3>Next steps</h3>
+          <p>Verify the designs with solid walls, add peak-temperature and uniformity objectives, move to 3D plates, then 3D-print and test them.</p>
+
+          <h3>Acknowledgment</h3>
+          <p>I'm grateful to Dr. Xianglin Li, who guided the direction of this research.</p>
         </div>
       </div>
     </div>

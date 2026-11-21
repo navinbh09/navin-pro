@@ -431,7 +431,7 @@ function trapModalTabKey(modalEl, e) {
         <a class="doc-picker-card" data-doc="cv" target="_blank" rel="noopener">
           <span class="doc-picker-icon">${CV_SVG}</span>
           <span class="doc-picker-name">Academic CV</span>
-          <span class="doc-picker-desc">Full research, teaching &amp; publication record</span>
+          <span class="doc-picker-desc">Full research, teaching &amp; presentations</span>
         </a>
       </div>
     </div>
