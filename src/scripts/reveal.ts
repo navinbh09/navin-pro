@@ -21,9 +21,7 @@ if ('IntersectionObserver' in window) {
 const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
 if (toggle) {
   const root = document.documentElement;
-  const isDark = () =>
-    root.getAttribute('data-theme') === 'dark' ||
-    (!root.hasAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+  const isDark = () => root.getAttribute('data-theme') === 'dark';
   const sync = () => {
     const dark = isDark();
     toggle.setAttribute('aria-pressed', String(dark));
@@ -34,10 +32,6 @@ if (toggle) {
     const next = isDark() ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     try { localStorage.setItem('theme', next); } catch { /* storage blocked: fine */ }
-    sync();
-    window.dispatchEvent(new CustomEvent('themechange'));
-  });
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
     sync();
     window.dispatchEvent(new CustomEvent('themechange'));
   });

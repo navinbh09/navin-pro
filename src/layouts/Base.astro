@@ -30,8 +30,7 @@ const ogImage = new URL(image, Astro.site);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta name="author" content={site.name} />
-    <meta name="theme-color" content="#FFF5F3" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#15172B" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FFF5F3" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
@@ -52,7 +51,7 @@ const ogImage = new URL(image, Astro.site);
     <script is:inline>
       (function () {
         var d = document.documentElement; d.classList.add('js');
-        try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t); } catch (e) {}
+        try { var t = localStorage.getItem('theme'); if (t === 'dark') d.setAttribute('data-theme', 'dark'); } catch (e) {}
       })();
     </script>
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}

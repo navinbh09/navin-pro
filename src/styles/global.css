@@ -25,14 +25,7 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #15172B; --surface: #1E2140; --surface-2: #252950; --ink: #FBEFEC; --muted: #B7AFC4; --line: #2E3156;
-    --c1: #6E93FF; --c2: #3ED3C6; --c3: #FFB956; --c4: #FF7A6B; --accent: #86A5FF; --on-accent: #15172B;
-    --warm-text: #FF8B7D; --cool-text: #5EE0D4; --shadow: 0 18px 40px -24px rgb(0 0 0 / 0.7);
-    color-scheme: dark;
-  }
-}
+/* Light is the default. Dark only when the visitor picks it with the toggle. */
 :root[data-theme="dark"] {
   --bg: #15172B; --surface: #1E2140; --surface-2: #252950; --ink: #FBEFEC; --muted: #B7AFC4; --line: #2E3156;
   --c1: #6E93FF; --c2: #3ED3C6; --c3: #FFB956; --c4: #FF7A6B; --accent: #86A5FF; --on-accent: #15172B;
