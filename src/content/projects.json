@@ -40,12 +40,12 @@
     {
       "id": "cooknup",
       "title": "CookNup",
-      "meta": "Web app",
+      "meta": "Team hackathon project · Web app",
       "body": [
-        "Take a photo of what's in your fridge. CookNup recognizes the ingredients and suggests recipes you can make, plus a lunch and dinner list."
+        "A cooking helper my team built at a hackathon. Take a photo of what's in your fridge: CookNup uses an API to recognize the ingredients, suggests recipes you can make, and builds a grocery list of what to buy."
       ],
       "link": { "label": "Try CookNup", "href": "https://foodies-e099a.web.app" },
-      "tags": ["Web app", "Image recognition"],
+      "tags": ["Hackathon", "Team project", "API integration", "Image recognition"],
       "images": [
         { "file": "cooknup-home.jpg", "alt": "CookNup's home screen with a sign-in card in front of a photo of an open fridge" },
         { "file": "cooknup-recipe.jpg", "alt": "CookNup showing a suggested recipe with its ingredient list" }

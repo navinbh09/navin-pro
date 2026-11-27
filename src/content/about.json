@@ -7,7 +7,7 @@
     "eyebrow": "About",
     "title": "The longer story.",
     "body": [
-      "I'm a mechanical engineer and thermal-fluids researcher from Gaindakot, a small town on the Narayani River in Nepal. I'm finishing a B.S. in Mechanical Engineering at WashU this December, after a B.A. in Physics at Truman State.",
+      "I'm a mechanical engineering student and thermal-fluids researcher from Gaindakot, a small town on the Narayani River in Nepal. I'm finishing a B.S. in Mechanical Engineering at WashU this December, after a B.A. in Physics at Truman State.",
       "I build CFD simulations and topology optimization for battery cold plates, and I distrust my own results until they earn it. I'm applying to PhD programs for Fall 2027."
     ],
     "image": "portrait.jpg",
@@ -43,7 +43,7 @@
         "label": "Pencil",
         "title": "Feel the sign convention",
         "body": [
-          "When I teach Statics, I ask students to pull or twist the pencil in their hand to feel which way a force or moment points. Then I connect integrals and derivatives to load, shear and moment diagrams, so the math has something to hold on to.",
+          "When I taught Statics, I asked students to pull or twist the pencil in their hand to feel which way a force or moment points. Then I connected integrals and derivatives to load, shear and moment diagrams, so the math has something to hold on to.",
           "My line to students: “I can be wrong, let's do this together.” My favorite moment is a student telling me they'd never have understood something without me."
         ]
       },
@@ -63,7 +63,7 @@
     "eyebrow": "Teaching",
     "title": "The thing I enjoy most, besides research",
     "body": [
-      "I'm an Undergraduate Teaching Fellow at WashU's McKelvey School of Engineering (since Aug 2025). I support Statics, Mechanics of Materials, Solid Mechanics and Thermodynamics, with 80–150 students per course, hold weekly office hours, and led J-Term sessions in Statics and Mechanics of Materials for about 15 students.",
+      "I'm an Undergraduate Teaching Fellow at WashU's McKelvey School of Engineering (since Aug 2025). I've supported Statics & Mechanics of Materials, Solid Mechanics and Thermodynamics, with 80–150 students per course. I hold weekly office hours, and I led J-Term sessions in Statics and Mechanics of Materials for about 15 students.",
       "Before that, I was an Academic Peer Tutor at Truman State (2023–2025) for Calculus I–III and Physics I–II, including in-class embedded tutoring.",
       "My style is real-life examples and simple breakdowns. And if a student's grade suddenly drops, my first question is “Are you okay?”"
     ]

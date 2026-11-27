@@ -6,11 +6,11 @@
       "simulate how coolant flows",
       "3D-printed a temple in pieces",
       "fix things nobody asked me to",
-      "help teach Statics",
+      "help teach mechanics",
       "debug until the answer holds up",
       "design coolant channels (in 2D, so far)"
     ],
-    "sub": "Mechanical engineer and thermal-fluids researcher at WashU. Seeking PhD positions for Fall 2027.",
+    "sub": "Mechanical engineering student and thermal-fluids researcher at WashU. Seeking PhD positions for Fall 2027.",
     "toyNote": "Move your cursor or drag a finger: you're the heat source. (A toy, not CFD.)"
   },
   "intro": {
@@ -48,7 +48,7 @@
         "id": "professor", "name": "Professor", "stat": "INT 18", "asks": "Is it verified?",
         "quest": [
           { "text": "The research story: validate, characterize, optimize, results", "href": "/research/cold-plate/" },
-          { "text": "The Nov 6 poster and the lightning talk that won Best Talk", "href": "/research/cold-plate/#presentations" },
+          { "text": "The Nov 6 poster and the lightning talk that received the Best Talk award", "href": "/research/cold-plate/#presentations" },
           { "text": "My academic CV, then an email", "href": "cv" }
         ]
       },
@@ -112,7 +112,7 @@
   "teaching": {
     "eyebrow": "Teaching",
     "quote": "\"I can be wrong, let's do this together.\"",
-    "body": "Besides research, teaching is what I enjoy most. I'm an Undergraduate Teaching Fellow at WashU for Statics, Mechanics of Materials, Solid Mechanics and Thermodynamics (80–150 students per course), and I led J-Term sessions in Statics and Mechanics of Materials. Before that I tutored calculus and physics at Truman.",
+    "body": "Besides research, teaching is what I enjoy most. I'm an Undergraduate Teaching Fellow at WashU. I've supported Statics & Mechanics of Materials, Solid Mechanics and Thermodynamics (80–150 students per course), and I led J-Term sessions in Statics and Mechanics of Materials. Before that I tutored calculus and physics at Truman.",
     "link": "How I teach"
   }
 }
