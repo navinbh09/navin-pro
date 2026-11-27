@@ -1,0 +1,191 @@
+---
+// SURGE research told as a scroll story that follows the poster, section by section.
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import data from '../../content/research-cold-plate.json';
+import site from '../../content/site.json';
+import { img } from '../../lib/images';
+
+const { header, chapters, presentations, thanks, seo } = data;
+// Poster regions are measured on a 1400×1050 preview of the poster; convert to percentages.
+const pct = (r: number[]) => [r[0] / 14, r[1] / 10.5, (r[2] - r[0]) / 14, (r[3] - r[1]) / 10.5].map((v) => v.toFixed(2)).join(',');
+---
+<Base title={seo.title} description={seo.description}>
+  <header class="section-tight r-head">
+    <div class="container">
+      <a class="back" href="/">← Home</a>
+      <span class="eyebrow">{header.eyebrow}</span>
+      <h1 class="r-title">{header.title}</h1>
+      <ul class="meta">{header.meta.map((m) => <li>{m}</li>)}</ul>
+      <p class="lede">{header.summary}</p>
+      <ul class="badges">{header.badges.map((b) => <li>{b}</li>)}</ul>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={site.files.poster} target="_blank" rel="noopener">View the full poster <span class="visually-hidden">(PDF, 16 MB, opens in a new tab)</span></a>
+        <a class="btn" href="#presentations">Presentations</a>
+      </div>
+      <ol class="toc" aria-label="Sections">
+        {chapters.filter((c, i, a) => a.findIndex((x) => x.step === c.step) === i).map((c) => (
+          <li><a href={`#${c.id}`}><span class="mono">{c.step}</span> {c.eyebrow.replace(/^Step \d · /, '').replace(/ \(.*\)$/, '')}</a></li>
+        ))}
+      </ol>
+    </div>
+    <div class="container"><div class="heatbar" aria-hidden="true"></div></div>
+  </header>
+
+  <div class="story">
+    {chapters.map((c) => (
+      <section class:list={['chapter', { 'no-fig': !c.figure }]} id={c.id} data-region={pct(c.region)} aria-labelledby={`${c.id}-t`}>
+        <div class="container ch-grid">
+          <div class="ch-text reveal">
+            <span class="eyebrow">{c.eyebrow}</span>
+            <h2 id={`${c.id}-t`}>{c.title}</h2>
+            {c.body.map((p) => <p set:html={p} />)}
+
+            {c.loop && (
+              <div class="loop" role="img" aria-label={`The optimization loop: ${c.loop.join(', then ')}, repeated until converged.`}>
+                {c.loop.map((s, i) => <span class="node" style={`--i:${i}`}>{s}</span>)}
+                <span class="repeat mono">repeat until converged ↻</span>
+              </div>
+            )}
+
+            {c.fixes && (
+              <ol class="fixes">
+                {c.fixes.map((f) => (
+                  <li>
+                    <b>{f.problem}</b>
+                    <p class="muted">{f.what}</p>
+                    <p class="fix"><span aria-hidden="true">→ </span><span class="visually-hidden">Fix: </span>{f.fix}</p>
+                  </li>
+                ))}
+              </ol>
+            )}
+
+            {c.stats && (
+              <div class="stats">
+                {c.stats.map((s) => <div class="stat"><b>{s.value}</b><span>{s.label}</span></div>)}
+              </div>
+            )}
+
+            {c.callout && (
+              <div class="callout"><strong>{c.callout.title}</strong>{c.callout.text}</div>
+            )}
+          </div>
+
+          {c.figure && (
+            <figure class="figure ch-fig reveal">
+              <Picture src={img(c.figure)} alt={c.alt} widths={[480, 800, 1200]} sizes="(min-width: 980px) 560px, 92vw" formats={['avif', 'webp']} />
+              <figcaption>{c.caption}</figcaption>
+            </figure>
+          )}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <section class="section band" id="presentations" aria-labelledby="pres-t">
+    <div class="container">
+      <h2 id="pres-t">{presentations.title}</h2>
+      <div class="grid grid-2">
+        {presentations.items.map((p) => (
+          <article class="card reveal">
+            <p class="eyebrow">{p.what} · {p.when}</p>
+            <h3>{p.where}</h3>
+            <p class="muted">{p.note}</p>
+          </article>
+        ))}
+      </div>
+      <p class="thanks reveal">{thanks}</p>
+      <div class="btn-row reveal">
+        <a class="btn btn-primary" href={site.files.poster} target="_blank" rel="noopener">View the full poster <span class="visually-hidden">(PDF, 16 MB, opens in a new tab)</span></a>
+        <a class="btn" href={site.files.cv} target="_blank" rel="noopener">Academic CV <span class="visually-hidden">(PDF, opens in a new tab)</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Poster map: shows which part of the poster you're reading (wide screens only) -->
+  <a class="postermap" href={site.files.poster} target="_blank" rel="noopener" aria-label="Open the full poster (PDF, opens in a new tab)" data-postermap hidden>
+    <span class="pm-label mono">You are here on the poster</span>
+    <span class="pm-frame">
+      <Picture src={img('poster-full.jpg')} alt="" widths={[280, 440]} sizes="220px" formats={['avif', 'webp']} />
+      <span class="pm-box" data-pm-box></span>
+    </span>
+  </a>
+</Base>
+
+<style>
+  .back { display: inline-block; margin-bottom: 22px; font-weight: 600; text-decoration: none; }
+  .r-title { font-size: clamp(2rem, 4.8vw, 3.7rem); max-width: 22ch; }
+  .meta { list-style: none; padding: 0; margin: 0 0 18px; display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--muted); font-size: 0.95rem; }
+  .meta li + li::before { content: "·"; margin-right: 18px; }
+  .badges { list-style: none; padding: 0; margin: 0 0 24px; }
+  .badges li { display: inline-block; font-weight: 650; background: color-mix(in oklab, var(--c3) 22%, var(--surface)); border: 1px solid color-mix(in oklab, var(--c3) 50%, var(--line)); padding: 8px 14px; border-radius: 99px; font-size: 0.95rem; }
+  .toc { list-style: none; padding: 0; margin: 32px 0 36px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .toc a { display: inline-block; padding: 7px 12px; border-radius: 99px; background: var(--surface); border: 1px solid var(--line); text-decoration: none; color: var(--ink); font-weight: 600; font-size: 0.9rem; }
+  .toc .mono { color: var(--accent); margin-right: 4px; }
+
+  .chapter { padding-block: clamp(56px, 9vw, 120px); border-top: 1px solid var(--line); }
+  .chapter:first-child { border-top: 0; }
+  .ch-grid { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); align-items: start; }
+  .no-fig .ch-grid { grid-template-columns: minmax(0, 760px); }
+  .ch-text { max-width: 62ch; }
+  .ch-fig { position: sticky; top: 96px; }
+  @media (max-width: 980px) {
+    .ch-grid { grid-template-columns: 1fr; }
+    .ch-fig { position: static; }
+  }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 20px 36px; margin: 24px 0 8px; }
+  .stats .stat { max-width: 240px; }
+
+  .loop { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 22px 0 8px; position: relative; }
+  .node { background: var(--surface); border: 1.5px solid var(--line); border-radius: 14px; padding: 10px 12px; font-size: 0.88rem; font-weight: 650; text-align: center; display: grid; place-items: center; min-height: 56px; }
+  .node:nth-child(4) { grid-column: 3; grid-row: 2; }
+  .node:nth-child(5) { grid-column: 2; grid-row: 2; }
+  .node:nth-child(6) { grid-column: 1; grid-row: 2; background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .repeat { grid-column: 1 / -1; grid-row: 3; text-align: center; color: var(--cool-text); font-size: 0.8rem; }
+
+  .fixes { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 12px; counter-reset: fix; }
+  .fixes li { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px 16px 56px; position: relative; counter-increment: fix; }
+  .fixes li::before { content: counter(fix); position: absolute; left: 16px; top: 15px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font: 700 0.85rem var(--mono); background: color-mix(in oklab, var(--c4) 18%, var(--surface)); color: var(--warm-text); }
+  .fixes b { display: block; margin-bottom: 4px; }
+  .fixes p { margin: 0 0 6px; }
+  .fix { color: var(--cool-text); font-weight: 600; }
+
+  .thanks { max-width: 70ch; margin: 36px 0 24px; color: var(--muted); }
+
+  .postermap {
+    position: fixed; right: 20px; bottom: 20px; z-index: 40; width: 236px; padding: 10px;
+    background: color-mix(in oklab, var(--surface) 92%, transparent); backdrop-filter: blur(10px);
+    border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow);
+    text-decoration: none; color: var(--muted); display: grid; gap: 6px;
+    opacity: 0; transform: translateY(10px); transition: opacity .35s ease, transform .35s ease;
+  }
+  .postermap.on { opacity: 1; transform: none; }
+  .pm-label { font-size: 0.68rem; letter-spacing: .06em; text-transform: uppercase; }
+  .pm-frame { position: relative; display: block; border-radius: 8px; overflow: hidden; }
+  .pm-frame :global(img) { width: 100%; display: block; }
+  .pm-box { position: absolute; border: 2.5px solid var(--c4); border-radius: 4px; box-shadow: 0 0 0 999px rgb(10 12 30 / 0.28); transition: all .5s cubic-bezier(.2,.7,.2,1); }
+  .postermap[hidden] { display: none; }
+  @media (max-width: 1279px) { .postermap { display: none; } }
+</style>
+
+<script>
+  const map = document.querySelector<HTMLElement>('[data-postermap]');
+  const box = document.querySelector<HTMLElement>('[data-pm-box]');
+  const chapters = document.querySelectorAll<HTMLElement>('.chapter[data-region]');
+  if (map && box && chapters.length) {
+    map.hidden = false;
+    const show = (el: HTMLElement) => {
+      const [x, y, w, h] = (el.dataset.region || '').split(',');
+      Object.assign(box.style, { left: x + '%', top: y + '%', width: w + '%', height: h + '%' });
+    };
+    show(chapters[0]);
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) show(e.target as HTMLElement);
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    chapters.forEach((c) => io.observe(c));
+    // Only show the map while the story is on screen.
+    const story = document.querySelector('.story')!;
+    new IntersectionObserver(([e]) => map.classList.toggle('on', e.isIntersecting), { rootMargin: '0px 0px -30% 0px' }).observe(story);
+  }
+</script>

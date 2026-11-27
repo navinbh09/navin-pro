@@ -1,0 +1,101 @@
+{
+  "seo": {
+    "title": "Projects",
+    "description": "Things Navin Bhattarai has designed and built: a 3D-printed temple, Design/Build/Fly aircraft structures, a cold-plate test rig, CookNup, CAD projects and a Raspberry Pi humidifier."
+  },
+  "header": {
+    "eyebrow": "Projects",
+    "title": "Hand me a power tool and I'll figure it out.",
+    "summary": "Making is my hobby; thermal-fluids is my intellectual home. Here's what I've designed, built, broken and rebuilt."
+  },
+  "featured": {
+    "title": "A home temple, 3D-printed in pieces",
+    "text": "My proudest build. The printer was too small, so I split the design into pieces joined with alignment pins and tab-and-slot joints. It took tens of failed prints.",
+    "href": "/projects/temple/",
+    "image": "temple-front.jpg",
+    "alt": "A white 3D-printed home temple with lattice panels, a tiered finial and murtis inside"
+  },
+  "items": [
+    {
+      "id": "dbf",
+      "title": "Design/Build/Fly: structures co-lead",
+      "meta": "WashU DBF · Aug 2025 – present",
+      "body": [
+        "I co-lead the structures sub-team of WashU's Design/Build/Fly team. I design aircraft structural components and subassemblies in SOLIDWORKS for manufacturability, working with the aerodynamics and propulsion teams.",
+        "I also designed and fabricated a motor test stand for full-throttle thrust and power testing, using stress analysis to balance rigidity, portability and safety."
+      ],
+      "tags": ["SOLIDWORKS", "Stress analysis", "Fabrication"],
+      "images": [{ "file": "dbf-plane.jpg", "alt": "Navin on an airfield holding a red and black team aircraft" }]
+    },
+    {
+      "id": "senior-design",
+      "title": "Senior design: a cold-plate test rig",
+      "meta": "WashU MEMS 4110 · Fall 2026 · in progress",
+      "body": [
+        "My team of three is building an instrumented liquid cold-plate test rig, based on the ASME K-16/ITherm cold plate competition geometry: a 78×78 mm copper baseplate under a 10-die, GPU-style heat map at 448 W, with 2.25 L/min of water at a 45 °C inlet.",
+        "It will measure thermal resistance and pressure drop, and compare a 3D-printed optimized fin insert against a straight-fin baseline. It's being built now, so there are no results yet."
+      ],
+      "tags": ["Thermal testing", "Instrumentation", "Team project"]
+    },
+    {
+      "id": "cooknup",
+      "title": "CookNup",
+      "meta": "Web app",
+      "body": [
+        "Take a photo of what's in your fridge. CookNup recognizes the ingredients and suggests recipes you can make, plus a lunch and dinner list."
+      ],
+      "link": { "label": "Try CookNup", "href": "https://foodies-e099a.web.app" },
+      "tags": ["Web app", "Image recognition"],
+      "images": [
+        { "file": "cooknup-home.jpg", "alt": "CookNup's home screen with a sign-in card in front of a photo of an open fridge" },
+        { "file": "cooknup-recipe.jpg", "alt": "CookNup showing a suggested recipe with its ingredient list" }
+      ]
+    },
+    {
+      "id": "snackup",
+      "title": "SnackUp snack container",
+      "meta": "SOLIDWORKS · 3D printing",
+      "body": [
+        "A modular, two-compartment snack cup with a cylindrical base that fits a car cup holder, plus a handle. I designed it in SOLIDWORKS for injection molding, with draft angles and constant wall thickness, and checked the snap-fit clip geometry with a tolerance stack-up analysis and 3D-printed prototypes."
+      ],
+      "tags": ["Design for manufacturing", "Tolerance analysis", "Prototyping"],
+      "images": [
+        { "file": "snackup-1.jpg", "alt": "A blue 3D-printed snack cup with a black handle and a red inner tray" },
+        { "file": "snackup-3.jpg", "alt": "Top view of the snack cup showing two compartments" }
+      ]
+    },
+    {
+      "id": "pencil",
+      "title": "Mechanical pencil assembly",
+      "meta": "SOLIDWORKS",
+      "body": [
+        "A 10-part SOLIDWORKS assembly with a spring-loaded lead-advance mechanism, with exploded views, cross-sections and a bill of materials."
+      ],
+      "tags": ["CAD", "Assemblies", "Drawings"],
+      "images": [{ "file": "pencil-drawing.jpg", "alt": "Engineering drawing of a mechanical pencil with a section view, numbered parts and a bill of materials" }]
+    },
+    {
+      "id": "humidifier",
+      "title": "Automated humidifier controller",
+      "meta": "Raspberry Pi · Python",
+      "body": [
+        "A Raspberry Pi with sensors and Python code that switches a humidifier on and off on its own."
+      ],
+      "tags": ["Raspberry Pi", "Python", "Sensors"],
+      "images": [{ "file": "humidifier.jpg", "alt": "A Raspberry Pi wired to a breadboard, a relay module and a sensor" }]
+    },
+    {
+      "id": "shelf",
+      "title": "The maker shelf",
+      "meta": "3D printing",
+      "body": [
+        "Smaller builds: an Apple Watch charging stand, a Cybertruck-style toy truck with working wheels, and my very first print, a cube with my name and the Truman logo. I'm also a Certified SOLIDWORKS Associate (CSWA)."
+      ],
+      "tags": ["FDM printing", "CAD"],
+      "images": [
+        { "file": "watch-stand.jpg", "alt": "A white 3D-printed Apple Watch charging stand" },
+        { "file": "truck.jpg", "alt": "A gray 3D-printed toy truck in the style of a Cybertruck" }
+      ]
+    }
+  ]
+}

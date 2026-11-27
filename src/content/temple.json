@@ -1,0 +1,35 @@
+{
+  "seo": {
+    "title": "A home temple, 3D-printed in pieces",
+    "description": "Navin's proudest personal project: a home temple (mandir) designed in Onshape, split into printable pieces with alignment pins and tab-and-slot joints, and printed through tens of failed runs."
+  },
+  "eyebrow": "Personal project",
+  "title": "A home temple, 3D-printed in pieces",
+  "summary": "My proudest personal project: a mandir (home temple) designed in Onshape and printed piece by piece. It holds my murti.",
+  "hero": { "file": "temple-front.jpg", "alt": "The finished white 3D-printed temple with lattice panels and an Om pattern, with murtis inside" },
+  "chapters": [
+    {
+      "title": "I taught myself CAD for it",
+      "body": [
+        "A class conflicted with the CAD course, so I taught myself Onshape and asked a Truman professor for access to the 3D printer room and software. My first print was a cube with my name and the Truman logo."
+      ]
+    },
+    {
+      "title": "The printer was too small",
+      "body": [
+        "So I split the design with cut planes into pieces, joined with colored alignment pins and tab-and-slot joints. The idea came from a flat-pack wooden mandir I'd seen sold online.",
+        "The design has jali lattice panels, an Om in a radial pattern, a tiled hip roof and a tiered finial."
+      ],
+      "image": { "file": "temple-om.jpg", "alt": "Front of the temple showing the jali lattice and a radial Om pattern on the back wall" }
+    },
+    {
+      "title": "Tens of failed prints",
+      "body": [
+        "It took months, including weeks of printing and tens of failed runs: a small, unreliable printer, filament jams, power cuts. The pieces still needed sanding and trimming to fit.",
+        "Only later, in WashU's CAD course, did I learn the tolerances that would have made them fit the first time."
+      ],
+      "image": { "file": "temple-side.jpg", "alt": "Side view of the temple showing the lattice side panel, the hip roof and the finial" }
+    }
+  ],
+  "quote": "Experience makes problems go away, but struggling makes sure you know how and why."
+}

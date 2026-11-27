@@ -1,0 +1,56 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import t from '../../content/temple.json';
+import { img } from '../../lib/images';
+---
+<Base title={t.seo.title} description={t.seo.description} >
+  <header class="section-tight">
+    <div class="container head">
+      <div>
+        <a class="back" href="/projects/">← All projects</a>
+        <span class="eyebrow">{t.eyebrow}</span>
+        <h1>{t.title}</h1>
+        <p class="lede">{t.summary}</p>
+      </div>
+      <figure class="hero-img">
+        <Picture src={img(t.hero.file)} alt={t.hero.alt} widths={[420, 700, 1000]} sizes="(min-width: 900px) 440px, 92vw" formats={['avif', 'webp']} loading="eager" />
+      </figure>
+    </div>
+  </header>
+
+  {t.chapters.map((c, i) => (
+    <section class="section-tight">
+      <div class:list={['container', 'ch', { flip: i % 2 === 1, solo: !c.image }]}>
+        <div class="reveal">
+          <span class="eyebrow">Part {i + 1}</span>
+          <h2>{c.title}</h2>
+          {c.body.map((p) => <p class="lede">{p}</p>)}
+        </div>
+        {c.image && (
+          <figure class="reveal">
+            <Picture src={img(c.image.file)} alt={c.image.alt} widths={[400, 700, 1000]} sizes="(min-width: 900px) 420px, 92vw" formats={['avif', 'webp']} />
+          </figure>
+        )}
+      </div>
+    </section>
+  ))}
+
+  <section class="section band">
+    <div class="narrow reveal">
+      <p class="quote">“{t.quote}”</p>
+      <p style="margin-top:28px"><a class="btn" href="/projects/">See all projects →</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .back { display: inline-block; margin-bottom: 22px; font-weight: 600; text-decoration: none; }
+  .head { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: center; }
+  .hero-img, figure { margin: 0; }
+  .hero-img :global(img), .ch :global(img) { border-radius: 26px; background: #000; width: 100%; max-height: 640px; object-fit: contain; }
+  .ch { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); align-items: center; }
+  .ch.flip > :first-child { order: 2; }
+  .ch.solo { grid-template-columns: minmax(0, 760px); }
+  @media (max-width: 860px) { .head, .ch { grid-template-columns: 1fr; } .ch.flip > :first-child { order: 0; } }
+</style>

@@ -1,0 +1,76 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import data from '../../content/projects.json';
+import { img } from '../../lib/images';
+const { seo, header, featured, items } = data;
+---
+<Base title={seo.title} description={seo.description}>
+  <header class="section-tight">
+    <div class="container">
+      <span class="eyebrow">{header.eyebrow}</span>
+      <h1 class="t">{header.title}</h1>
+      <p class="lede muted">{header.summary}</p>
+    </div>
+  </header>
+
+  <section class="container">
+    <a class="card featured reveal" href={featured.href}>
+      <div class="f-img">
+        <Picture src={img(featured.image)} alt={featured.alt} widths={[420, 700, 1000]} sizes="(min-width: 900px) 420px, 92vw" formats={['avif', 'webp']} loading="eager" />
+      </div>
+      <div class="f-text">
+        <span class="eyebrow">Featured · full story</span>
+        <h2>{featured.title}</h2>
+        <p class="lede muted">{featured.text}</p>
+        <span class="btn btn-primary">Read the story <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+  </section>
+
+  <section class="section-tight">
+    <div class="container items">
+      {items.map((p) => (
+        <article class="card item reveal" id={p.id} aria-labelledby={`${p.id}-t`}>
+          <div class="i-text">
+            <p class="meta">{p.meta}</p>
+            <h2 id={`${p.id}-t`} class="i-title">{p.title}</h2>
+            {p.body.map((b) => <p>{b}</p>)}
+            <ul class="tags" aria-label="Skills">{p.tags.map((t) => <li class="tag">{t}</li>)}</ul>
+            {p.link && <p class="link"><a class="btn" href={p.link.href} target="_blank" rel="noopener">{p.link.label} <span aria-hidden="true">↗</span></a></p>}
+          </div>
+          {p.images && (
+            <div class:list={['i-imgs', { two: p.images.length > 1 }]}>
+              {p.images.map((g) => (
+                <Picture src={img(g.file)} alt={g.alt} widths={[360, 640, 900]} sizes="(min-width: 900px) 420px, 92vw" formats={['avif', 'webp']} />
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .t { max-width: 18ch; }
+  .featured { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(20px, 4vw, 48px); align-items: center; padding: 16px; }
+  @media (max-width: 760px) { .featured { grid-template-columns: 1fr; } }
+  .f-img { border-radius: 18px; overflow: hidden; background: #000; }
+  .f-img :global(img) { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .5s ease; }
+  .featured:hover .f-img :global(img) { transform: scale(1.03); }
+  .f-text { padding: 8px 8px 16px; }
+  .items { display: grid; gap: 20px; }
+  .item { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: clamp(20px, 4vw, 40px); align-items: start; scroll-margin-top: 90px; }
+  .item:not(:has(.i-imgs)) { grid-template-columns: minmax(0, 760px); }
+  @media (max-width: 860px) { .item { grid-template-columns: 1fr; } }
+  .i-title { font-size: clamp(1.5rem, 2.8vw, 2.1rem); }
+  .meta { font: 600 0.74rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .tags { margin-top: 16px; }
+  .link { margin-top: 18px; }
+  .i-imgs { display: grid; gap: 12px; }
+  .i-imgs.two { grid-template-columns: 1fr 1fr; }
+  .i-imgs :global(img) { width: 100%; border-radius: 16px; object-fit: cover; aspect-ratio: 4 / 3; background: #fff; border: 1px solid var(--line); }
+  .i-imgs:not(.two) :global(img) { aspect-ratio: auto; max-height: 520px; object-fit: contain; }
+  #dbf .i-imgs :global(img) { aspect-ratio: 3 / 4; object-fit: cover; max-height: 560px; }
+</style>

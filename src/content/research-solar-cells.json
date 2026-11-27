@@ -1,0 +1,48 @@
+{
+  "seo": {
+    "title": "Solar cells from natural dyes",
+    "description": "Research at Truman State: 30 dye-sensitized solar cells made with beetroot and sumac dyes, characterized with UV-Vis, FTIR and impedance spectroscopy."
+  },
+  "header": {
+    "eyebrow": "Research · Truman State University",
+    "title": "Dye-sensitized solar cells from beetroot and sumac",
+    "meta": ["Feb 2024 – Aug 2025", "Advisor: Dr. Rasanjali Jayathissa"],
+    "summary": "Most dye-sensitized solar cells use metal-complex dyes. I tested whether dyes from beetroot and sumac could stand in for them, and tried to understand why the two behaved so differently.",
+    "image": "dssc-cells.jpg",
+    "imageAlt": "A set of small dye-sensitized solar cells on glass, laid out on lab paper"
+  },
+  "sections": [
+    {
+      "title": "What I did",
+      "body": [
+        "I designed the dye extraction experiments for beetroot and sumac, then characterized each dye: absorption with UV-Vis spectroscopy, functional groups with FTIR, and the finished cells' behavior with electrochemical impedance spectroscopy (EIS).",
+        "I fabricated 30 lab-scale cells with a repeatable assembly process, so the cells stayed comparable, and measured each one's current–voltage curve under a solar simulator."
+      ],
+      "images": [
+        { "file": "dssc-grind.jpg", "alt": "A mortar and pestle with finely ground red plant material" },
+        { "file": "dssc-dye-soak.jpg", "alt": "Coated glass slides soaking in a dish of red dye" },
+        { "file": "dssc-simulator.jpg", "alt": "A small solar cell clipped into a test fixture under a bright solar simulator lamp" }
+      ]
+    },
+    {
+      "title": "What I found",
+      "stats": [
+        { "value": "0.099%", "label": "efficiency, best sumac cell (55.2% fill factor)" },
+        { "value": "0.0195%", "label": "efficiency, a beetroot cell (49.35% fill factor)" },
+        { "value": "30", "label": "cells built and tested" }
+      ],
+      "body": [
+        "Small numbers. The interesting part was why the two dyes differed.",
+        "Sumac cells drew more current, which I linked to stronger light absorption. Beetroot cells held a higher open-circuit voltage, which I linked to lower recombination."
+      ],
+      "quote": "From capturing energy in a solar cell to keeping it safe in a battery."
+    }
+  ],
+  "presentation": {
+    "what": "Talk",
+    "where": "APS Prairie Section Meeting, Lewis University",
+    "when": "Feb 21, 2025",
+    "title": "“Harnessing the power of natural dyes for clean energy: Dye-Sensitized Solar Cells based on plant dyes.”"
+  },
+  "thanks": "Thanks to Dr. Rasanjali Jayathissa, who supervised this work."
+}

@@ -1,0 +1,159 @@
+{
+  "seo": {
+    "title": "Cold-plate topology optimization",
+    "description": "SURGE research at WashU: setting up and debugging OpenFOAM's adjoint topology optimization for battery cold plates. Validation, a serpentine study, three optimizer fixes, and what the results do and don't show."
+  },
+  "header": {
+    "eyebrow": "Research · SURGE · WashU",
+    "title": "Topology Optimization of Cold-Plate Flow Channels for Battery Thermal Management",
+    "meta": [
+      "May 2026 – present",
+      "Advisor: Dr. Xianglin Li",
+      "OpenFOAM v2512 on the McKelvey Engineering Research Compute Cluster"
+    ],
+    "summary": "I set up and debugged OpenFOAM's adjoint topology optimization framework to design coolant channels for battery cold plates. This page follows my poster, one section at a time.",
+    "badges": ["Best Talk by an Undergraduate Student · ASME St. Louis Section · Nov 2026"]
+  },
+  "chapters": [
+    {
+      "id": "problem",
+      "step": "0",
+      "eyebrow": "The problem",
+      "title": "Cold plates force a trade-off",
+      "region": [40, 330, 365, 708],
+      "body": [
+        "Batteries need to stay around 15–40 °C, with less than 5 °C of variation across the pack. Liquid-cooled cold plates are the standard fix, but the usual channel layouts force a trade-off.",
+        "Straight channels lose little pressure but cool unevenly. Serpentine channels cover the whole plate but lose pressure at every turn.",
+        "My question: can <b>adjoint-based topology optimization</b>, which decides cell by cell where the channel walls go, escape that trade-off?"
+      ],
+      "figure": "fig1-layouts.png",
+      "alt": "Diagram of two cold-plate layouts. Left: parallel straight channels, low pressure drop but uneven flow. Right: a serpentine channel, even coverage but high pressure drop at the sharp turns.",
+      "caption": "Straight channels vs. a serpentine channel: flow resistance and coverage."
+    },
+    {
+      "id": "validate",
+      "step": "1",
+      "eyebrow": "Step 1 · Validate",
+      "title": "Check the solver before trusting it",
+      "region": [40, 712, 365, 1022],
+      "body": [
+        "Before optimizing anything, I checked my OpenFOAM setup against a classic benchmark: the lid-driven cavity of Ghia et al. (1982).",
+        "At Re = 100 on a 150×150 mesh, my centerline velocities match theirs to within <b>0.4% of the lid speed</b>."
+      ],
+      "stats": [{ "value": "0.4%", "label": "max centerline difference vs. Ghia et al." }],
+      "figure": "fig2-validation.png",
+      "alt": "Left: a velocity profile along the cavity centerline, with Navin's OpenFOAM line passing through the Ghia et al. benchmark points. Right: the velocity field inside the square cavity.",
+      "caption": "Centerline velocity vs. Ghia et al. (left) and the cavity flow at Re = 100 (right)."
+    },
+    {
+      "id": "characterize",
+      "step": "2",
+      "eyebrow": "Step 2 · Characterize",
+      "title": "Where does a serpentine plate lose its pressure?",
+      "region": [380, 152, 702, 600],
+      "body": [
+        "I simulated a 2D, four-pass serpentine channel from Re ≈ 1,000 to 10,000, with sharp turns and with rounded (filleted) turns of 0.5, 1.0 and 1.25 cm.",
+        "Pressure drop rose <b>73×</b> for a 10× increase in Re (42.2 to 3,072 Pa). That's close to Re², much faster than wall friction alone would give, so the turns cause most of the loss.",
+        "Rounding the turns cut pressure drop by <b>12–17%</b> in the k-ω SST (turbulent) runs at Re ≥ 3,000. The laminar runs at Re ≤ 2,300 showed the opposite: up to 14% <i>more</i> pressure drop."
+      ],
+      "stats": [
+        { "value": "73×", "label": "pressure drop for 10× Re" },
+        { "value": "12–17%", "label": "less pressure drop with rounded turns (turbulent runs)" }
+      ],
+      "callout": {
+        "title": "An open question, not a result",
+        "text": "The sign flips exactly where the simulations switch from the laminar model to the turbulence model. So I don't know yet whether rounding really hurts at low Re, or whether the switch causes it. Until I run both models over the same Re range, and test sharp and filleted plates in a real flow loop, I treat it as a question, not a result."
+      },
+      "figure": "fig3-serpentine.png",
+      "alt": "Two plots against Reynolds number. Left: pressure drop rising roughly with Re squared for sharp and filleted turns. Right: percent change from rounding the turns, positive below Re 2,300 and about minus 12 to 17 percent above 3,000.",
+      "caption": "Laminar up to Re = 2,300; k-ω SST above. The sign change on the right falls at that switch. This is a 2D characterization study, separate from the optimization."
+    },
+    {
+      "id": "optimize",
+      "step": "3",
+      "eyebrow": "Step 3 · Optimize",
+      "title": "Let the optimizer place the walls",
+      "region": [380, 604, 702, 1022],
+      "body": [
+        "Every mesh cell carries a design variable α (0 = fluid, 1 = solid). Solid cells add drag to the flow equations (Brinkman penalization). One continuous adjoint solve gives every cell's sensitivity of pressure loss, and the Method of Moving Asymptotes (MMA) updates the design under a limit on how much of the plate can be fluid.",
+        "I set up and debugged OpenFOAM's adjoint topology optimization framework (adjointOptimisationFoam, steady laminar SIMPLE). I first tested it in 3D (a 120×60×10 mesh, 72,000 cells, 60 cores, 70 stable cycles). The results on this page use faster 2D meshes.",
+        "<b>One idea of mine:</b> the designs kept pinching the channel right at the inlet. I asked whether the ports needed to be part of the design at all. With Dr. Li's agreement, the inlet and outlet became fixed ducts outside the design region."
+      ],
+      "loop": ["First guess for α", "Filter + projection", "Flow solve", "Adjoint solve", "Sensitivity dJ/dα", "MMA update"],
+      "figure": "fig4-domain.png",
+      "alt": "The rectangular design domain on a fine mesh, with a short fixed inlet duct on the upper right and an outlet duct on the lower left. A zoomed inset shows the ducts are always fluid.",
+      "caption": "The ducts stay fluid; every other cell is free to change. Mesh: 28,640 cells."
+    },
+    {
+      "id": "fixes",
+      "step": "4",
+      "eyebrow": "Step 4 · Debug",
+      "title": "It didn't work off the shelf",
+      "region": [714, 152, 1036, 702],
+      "body": [
+        "The first designs looked unrealistic. I debugged on small, fast 2D cases and traced the problem to three setup issues, not to the method itself."
+      ],
+      "fixes": [
+        { "problem": "Unconverged flow", "what": "At Re = 1,000 the 2D flow never settled, so the sensitivities were noise.", "fix": "Re = 100, steady laminar. Flow and adjoint now converge to 10⁻⁶ every cycle." },
+        { "problem": "Flat start", "what": "At α = 0 the projection is flat, and MMA stalled for about 20 cycles.", "fix": "Start at α = 0.3: still fluid, but with a steeper slope, so the design moves from cycle 2." },
+        { "problem": "Oversized steps", "what": "MMA's default move limit (0.5) overshot: the channel closed and the loss spiked 1,468×.", "fix": "Move limit 0.1. Smooth convergence in about 40 cycles." }
+      ],
+      "figure": "fig5-mma.png",
+      "alt": "Pressure loss over optimization cycles on a log scale. The default setup stalls, then spikes about a thousand times higher; with all three fixes the loss falls smoothly below the open plate. Snapshots show the stalled, shut and fixed designs.",
+      "caption": "Pressure loss over the optimization cycles. A: default, stalled. B: default, channel shut. C: all three fixes."
+    },
+    {
+      "id": "results",
+      "step": "5",
+      "eyebrow": "Step 5 · Results (2D, laminar, Re = 100)",
+      "title": "One smooth channel, and one useless shortcut",
+      "region": [714, 706, 1036, 1022],
+      "body": [
+        "<b>Single channel.</b> One inlet, one outlet, with fluid limited to 40% of the domain. The optimizer found one smooth S-shaped channel that cut pressure loss by <b>19%</b> compared with the fully open plate, because it avoids the open plate's recirculation."
+      ],
+      "stats": [{ "value": "−19%", "label": "pressure loss vs. the fully open plate, using 40% of the domain as fluid" }],
+      "figure": "fig6-single.png",
+      "alt": "A single smooth S-shaped coolant channel running from the inlet at upper right to the outlet at lower left, with streamlines and velocity colors.",
+      "caption": "One smooth direct channel avoids the open plate's recirculation: less fluid, less loss."
+    },
+    {
+      "id": "serpentine",
+      "step": "5",
+      "eyebrow": "Step 5 · Results, continued",
+      "title": "The best number was useless",
+      "region": [1048, 152, 1376, 556],
+      "body": [
+        "<b>Serpentine plate, baffles kept.</b> The optimizer could turn 5% of the channel solid. It rounded every turn, but the loss barely moved (−0.1%).",
+        "<b>Serpentine plate, whole plate free.</b> Pressure loss fell <b class=\"cool\">87%</b>, but the coolant took the shortest route and reached only <b class=\"warm\">16% of the plate</b>.",
+        "I was glad, not surprised. The optimizer was finally behaving logically, and the result proved that pressure alone is the wrong objective. An optimizer answers exactly the question you ask it, and nothing more.",
+        "<b>A newer check:</b> on a three-branch layout, the optimizer evened the flow split to 33/33/34% (2D, Re = 100)."
+      ],
+      "callout": {
+        "title": "What these results don't show",
+        "text": "They are 2D, laminar, at Re = 100, with pressure loss as the only objective. There's no thermal objective yet, so I don't claim any of these designs cool better."
+      },
+      "figure": "fig7-serpentine-opt.png",
+      "alt": "Two optimized serpentine plates. Top: original baffles kept, every turn rounded. Bottom: whole plate free, coolant cuts across one end while dashed outlines show where the original baffles were.",
+      "caption": "(a) Rounded turns at unchanged pressure loss (gray: original baffles; navy: solid added by the optimizer). (b) A short direct route that leaves most of the plate with little flow."
+    },
+    {
+      "id": "next",
+      "step": "6",
+      "eyebrow": "What's next",
+      "title": "Put heat into the question",
+      "region": [1048, 560, 1376, 802],
+      "body": [
+        "Next, I'll verify the designs with solid walls (extract, re-mesh, re-simulate), add peak temperature and temperature uniformity as objectives, and move to 3D plates at operating Reynolds numbers. After that: 3D-print the plates and test them.",
+        "I also want to settle the fillet question: run both turbulence models over the same Re range, then test sharp and filleted plates in a flow loop with a flowmeter and pressure transducers."
+      ]
+    }
+  ],
+  "presentations": {
+    "title": "Presentations",
+    "items": [
+      { "what": "Lightning talk", "where": "ASME St. Louis Section Mini Symposium", "when": "Nov 15, 2026", "note": "Best Talk by an Undergraduate Student. I talked about the process (the failures and fixes) and let the results follow." },
+      { "what": "Poster", "where": "Fall 2026 Undergraduate Research Symposium, WashU", "when": "Nov 6, 2026", "note": "“Topology Optimization of Cold-Plate Flow Channels for Rechargeable Battery Thermal Management.”" }
+    ]
+  },
+  "thanks": "Thanks to Dr. Xianglin Li, who guided the direction of this research; the Office of Undergraduate Research (SURGE) for funding; and the Engineering Research Compute Cluster at the McKelvey School of Engineering for computing resources."
+}
