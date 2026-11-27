@@ -1,0 +1,14 @@
+---
+// "View" buttons open the PDF in a new tab; the browser's own viewer offers download.
+import site from '../content/site.json';
+---
+<div class="btn-row">
+  <a class="btn btn-primary" href={site.files.resume} target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+    Resume <span class="visually-hidden">(1 page, PDF, opens in a new tab)</span>
+  </a>
+  <a class="btn" href={site.files.cv} target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2.5Z"/><path d="M8 7h6M8 11h6"/></svg>
+    Academic CV <span class="visually-hidden">(PDF, opens in a new tab)</span>
+  </a>
+</div>

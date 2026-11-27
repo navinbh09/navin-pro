@@ -1,0 +1,18 @@
+{
+  "name": "Navin Bhattarai",
+  "role": "Mechanical engineer and thermal-fluids researcher",
+  "tagline": "Mechanical engineer and thermal-fluids researcher at WashU. Seeking PhD positions for Fall 2027.",
+  "description": "Navin Bhattarai is a mechanical engineer and thermal-fluids researcher at Washington University in St. Louis, working on CFD and topology optimization of battery cold plates. Seeking PhD positions for Fall 2027.",
+  "email": "navin.bhattarai515@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/navin-bh",
+  "files": {
+    "resume": "/files/Navin-Bhattarai-Resume.pdf",
+    "cv": "/files/Navin-Bhattarai-CV.pdf",
+    "poster": "/files/Navin-Bhattarai-SURGE-Poster-2026.pdf"
+  },
+  "nav": [
+    { "label": "Research", "href": "/research/cold-plate/" },
+    { "label": "Projects", "href": "/projects/" },
+    { "label": "About", "href": "/about/" }
+  ]
+}

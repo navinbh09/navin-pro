@@ -1,0 +1,32 @@
+---
+import site from '../content/site.json';
+import CvButtons from './CvButtons.astro';
+const year = new Date().getFullYear();
+---
+<footer class="footer" id="contact">
+  <div class="container">
+    <div class="heatbar" aria-hidden="true"></div>
+    <div class="foot-grid">
+      <div>
+        <h2 class="foot-title">Say hi.</h2>
+        <p class="muted">Email is the best way to reach me.</p>
+        <p><a class="email" href={`mailto:${site.email}`}>{site.email}</a></p>
+      </div>
+      <div class="foot-links">
+        <CvButtons />
+        <p class="small"><a href={site.linkedin} rel="me noopener" target="_blank">LinkedIn</a></p>
+      </div>
+    </div>
+    <p class="fine">© {year} Navin Bhattarai · St. Louis, Missouri</p>
+  </div>
+</footer>
+
+<style>
+  .footer { padding: clamp(56px, 8vw, 96px) 0 calc(40px + env(safe-area-inset-bottom, 0px)); }
+  .foot-grid { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); margin-top: 40px; align-items: end; }
+  .foot-title { font-size: clamp(2.4rem, 6vw, 4rem); margin-bottom: 10px; }
+  .email { font-family: var(--display); font-variation-settings: "SOFT" 100, "WONK" 1; font-size: clamp(1.15rem, 2.6vw, 1.6rem); font-weight: 600; overflow-wrap: anywhere; }
+  .foot-links { display: grid; gap: 14px; justify-items: start; }
+  .small { font-weight: 600; margin: 0; }
+  .fine { margin-top: 48px; font-size: 0.85rem; color: var(--muted); }
+</style>

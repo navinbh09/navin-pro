@@ -1,0 +1,66 @@
+---
+import site from '../content/site.json';
+const path = Astro.url.pathname;
+const isActive = (href: string) => path.startsWith(href.replace(/\/$/, '').split('/').slice(0, 2).join('/') + '/');
+---
+<header class="nav">
+  <div class="container nav-in">
+    <a class="logo" href="/" aria-label="Navin Bhattarai, home">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="full">Navin Bhattarai</span><span class="short">Navin</span>
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        {site.nav.map((item) => (
+          <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <button class="theme" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in oklab, var(--bg) 82%, transparent);
+    backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    border-bottom: 1px solid color-mix(in oklab, var(--line) 70%, transparent);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .nav-in { display: flex; align-items: center; gap: 12px; min-height: 64px; }
+  .logo {
+    display: inline-flex; align-items: center; gap: 10px; margin-right: auto;
+    font-family: var(--display); font-variation-settings: "SOFT" 100, "WONK" 1; font-weight: 680;
+    font-size: 1.2rem; color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
+  }
+  .dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: conic-gradient(from 200deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c1));
+  }
+  .short { display: none; }
+  ul { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
+  nav a {
+    display: inline-block; padding: 8px 12px; border-radius: 99px; color: var(--ink);
+    text-decoration: none; font-weight: 600; font-size: 0.96rem;
+  }
+  nav a:hover { background: var(--surface-2); }
+  nav a[aria-current="page"] { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+  .theme {
+    width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface);
+    display: grid; place-items: center; cursor: pointer; flex: none;
+  }
+  .theme svg { width: 19px; height: 19px; grid-area: 1 / 1; }
+  .theme .moon { display: none; }
+  .theme[aria-pressed="true"] .sun { display: none; }
+  .theme[aria-pressed="true"] .moon { display: block; }
+  @media (max-width: 560px) {
+    .full { display: none; }
+    .short { display: inline; }
+    nav a { padding: 8px 9px; font-size: 0.92rem; }
+    .nav-in { gap: 6px; }
+  }
+</style>
