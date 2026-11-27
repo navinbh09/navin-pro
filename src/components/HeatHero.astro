@@ -2,6 +2,7 @@
 // Homepage opening: a heat-diffusion toy (the visitor's cursor is the heat source)
 // behind "Hi, I'm Navin. I ___." with endings that change every few seconds.
 import home from '../content/home.json';
+import AskBox from './AskBox.astro';
 const h = home.hero;
 ---
 <section class="hero" data-hero>
@@ -14,6 +15,7 @@ const h = home.hero;
       <span class="visually-hidden">{h.prefix} {h.endings.join(', ')}.</span>
     </h1>
     <p class="sub">{h.sub}</p>
+    <AskBox />
     <div class="btn-row">
       <a class="btn btn-primary" href="/research/cold-plate/">See the research</a>
       <a class="btn" href="#contact">Say hi</a>

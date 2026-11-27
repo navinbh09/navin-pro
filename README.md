@@ -56,15 +56,40 @@ Build settings: framework **Astro**, build command `npm run build`, output direc
 
 Old URLs (`/academic/...`, `/engineering/...`, old PDF links) redirect via `public/_redirects`.
 
-## The AI assistant and its API key
+## The AI assistant ("Ask anything about my research")
 
-_This section will be filled in when the "Ask about my research" assistant is added._ In short: the key lives only in Cloudflare as an encrypted environment variable, never in this repo.
+- **Front end:** `src/components/AskBox.astro`, the box in the homepage hero, labeled "AI assistant".
+- **Back end:** `functions/api/ask.ts`, a Cloudflare Pages Function. It calls Claude Haiku 5.5 with the Anthropic SDK.
+- **What it knows:** only the public text in `src/content/*.json`, assembled by `functions/_knowledge.ts`. Edit the site's content and the assistant learns it on the next deploy. Nothing private is in there, so nothing private can leak.
+- **Rules:** the system prompt at the top of `ask.ts` keeps it on Navin's public work, enforces the accuracy rules, refuses role changes, and says "I don't know, email Navin" instead of guessing.
+- **Limits:**
+  - Answers are capped at 600 tokens, and questions at 500 characters.
+  - It sends only the last 6 messages of a conversation.
+  - Each visitor gets about 6 questions a minute and 60 a day.
+  - Only bhattarainavin.com and its previews can call it.
+  - The monthly dollar cap is set in the Anthropic Console (see below).
+- **Privacy:** questions go to Anthropic to be answered. This site stores nothing and logs no question text.
 
-To rotate the key:
-1. Create a new key in the Anthropic Console.
-2. Paste it into the Cloudflare Pages project → Settings → Variables and Secrets.
-3. Redeploy.
-4. Delete the old key in the Anthropic Console.
+### Set up or rotate the API key
+
+1. In the Anthropic Console (console.anthropic.com) → **API keys** → **Create key**, and name it something like `bhattarainavin-site`.
+2. In the Anthropic Console → **Settings → Limits**, set the **monthly spend limit** to $5.
+3. In Cloudflare → Workers & Pages → `bhattarainavin` → **Settings → Variables and Secrets** → **Add**:
+   - Type: **Secret**
+   - Name: `ANTHROPIC_API_KEY`
+   - Value: the key
+   - Do this for **Production** (and Preview, if you want previews to answer too).
+4. Redeploy: **Deployments** → latest → **Retry deployment**.
+5. **To rotate:** create a new key, replace the secret's value, redeploy, then delete the old key in the Console.
+
+Never paste the key into code, chat, or this repo.
+
+### Optional extra protection
+
+In Cloudflare → your domain → **Security → WAF → Rate limiting rules**, add a rule:
+- If URI Path equals `/api/ask`
+- then allow 10 requests per 10 seconds per IP
+- and block for 10 seconds.
 
 ## Facts and privacy
 

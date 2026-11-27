@@ -1,0 +1,160 @@
+---
+// "Ask about my research": a clearly labeled AI assistant. It calls /api/ask
+// (a Cloudflare Pages Function); the API key never reaches the browser.
+const suggestions = [
+  'What went wrong with the optimizer?',
+  'Why might rounding hurt in laminar flow?',
+  'What is Navin looking for in a PhD?',
+];
+---
+<div class="ask" data-ask>
+  <div class="ask-head">
+    <span class="ai-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l1.9 5.6L19.5 9.5l-5.6 1.9L12 17l-1.9-5.6L4.5 9.5l5.6-1.9zM19 14l.9 2.6 2.6.9-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9z"/></svg>AI assistant</span>
+    <span class="ask-title">Ask anything about my research, projects or story</span>
+  </div>
+
+  <div class="log" data-log aria-live="polite" hidden></div>
+
+  <form class="ask-form" data-form>
+    <label class="visually-hidden" for="ask-input">Your question for Navin's AI assistant</label>
+    <input id="ask-input" name="q" type="text" maxlength="500" autocomplete="off" placeholder="e.g. What did the optimizer get wrong?" required />
+    <button class="btn btn-primary send" type="submit" data-send>Ask</button>
+  </form>
+
+  <div class="chips" data-chips>
+    {suggestions.map((s) => <button type="button" class="chip" data-q={s}>{s}</button>)}
+  </div>
+
+  <p class="fine">
+    An AI (Claude) answers from what's on this site and can be wrong. Your question is sent to Anthropic to answer it; this site doesn't save it. Please don't share personal info.
+    <button type="button" class="reset" data-reset hidden>Clear chat</button>
+  </p>
+</div>
+
+<style>
+  .ask {
+    background: color-mix(in oklab, var(--surface) 92%, transparent);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--line); border-radius: 22px; padding: 14px;
+    max-width: 640px; margin-bottom: 24px; box-shadow: var(--shadow);
+  }
+  .ask-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 0 2px 10px; }
+  .ai-pill {
+    display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 8px; border-radius: 99px;
+    font: 700 0.72rem/1.2 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+    color: var(--on-accent); background: linear-gradient(90deg, var(--c1), var(--c2));
+  }
+  .ai-pill svg { width: 14px; height: 14px; }
+  .ask-title { font-weight: 650; font-size: 0.98rem; }
+  .ask-form { display: flex; gap: 8px; }
+  .ask-form input {
+    flex: 1; min-width: 0; font: inherit; font-size: 1rem; color: var(--ink); background: var(--bg);
+    border: 1.5px solid var(--line); border-radius: 99px; padding: 11px 16px;
+  }
+  .ask-form input:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+  .send { flex: none; }
+  .send[disabled] { opacity: .6; cursor: progress; transform: none; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .chip {
+    border: 1px solid var(--line); background: var(--bg); border-radius: 99px; padding: 6px 11px;
+    font-size: 0.85rem; font-weight: 600; color: var(--ink); cursor: pointer;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .fine { font-size: 0.76rem; color: var(--muted); margin: 10px 2px 0; line-height: 1.45; }
+  .reset { border: 0; background: none; padding: 0; margin-left: 6px; font: inherit; color: var(--accent); text-decoration: underline; cursor: pointer; }
+
+  .log { display: grid; gap: 10px; max-height: min(46vh, 420px); overflow-y: auto; margin-bottom: 12px; padding: 2px; overscroll-behavior: contain; }
+  .log :global(.msg) { padding: 10px 14px; border-radius: 16px; font-size: 0.98rem; line-height: 1.5; max-width: 92%; overflow-wrap: anywhere; }
+  .log :global(.msg.q) { justify-self: end; background: var(--accent); color: var(--on-accent); border-bottom-right-radius: 6px; }
+  .log :global(.msg.a) { justify-self: start; background: var(--bg); border: 1px solid var(--line); border-bottom-left-radius: 6px; }
+  .log :global(.msg.err) { border-color: color-mix(in oklab, var(--c4) 50%, var(--line)); }
+  .log :global(.msg p) { margin: 0 0 .5em; }
+  .log :global(.msg p:last-child) { margin: 0; }
+  .log :global(.msg ul) { margin: 0 0 .5em; padding-left: 1.2em; }
+  .log :global(.msg.a a) { font-weight: 650; }
+  .log :global(.typing span) { display: inline-block; width: 7px; height: 7px; margin-right: 4px; border-radius: 50%; background: var(--muted); animation: blink 1.2s infinite ease-in-out; }
+  .log :global(.typing span:nth-child(2)) { animation-delay: .2s; }
+  .log :global(.typing span:nth-child(3)) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+  @media (max-width: 560px) { .ask { padding: 12px; } .chip { font-size: 0.8rem; } }
+</style>
+
+<script>
+  type Msg = { role: 'user' | 'assistant'; content: string };
+  const root = document.querySelector<HTMLElement>('[data-ask]');
+  if (root) {
+    const form = root.querySelector<HTMLFormElement>('[data-form]')!;
+    const input = form.querySelector<HTMLInputElement>('input')!;
+    const send = root.querySelector<HTMLButtonElement>('[data-send]')!;
+    const log = root.querySelector<HTMLElement>('[data-log]')!;
+    const chips = root.querySelector<HTMLElement>('[data-chips]')!;
+    const reset = root.querySelector<HTMLButtonElement>('[data-reset]')!;
+    const history: Msg[] = [];
+    let busy = false;
+
+    // Safe rendering: escape everything, then allow **bold**, [links](/path or https://), and "- " lists.
+    const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+    const inline = (s: string) =>
+      esc(s)
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\[([^\]]+)\]\(((?:\/|https:\/\/|mailto:)[^)\s]*)\)/g, (_m, t, href) => {
+          const ext = /^https:/.test(href);
+          return `<a href="${href}"${ext ? ' target="_blank" rel="noopener"' : ''}>${t}</a>`;
+        });
+    const render = (text: string) => {
+      const blocks = text.trim().split(/\n{2,}/);
+      return blocks
+        .map((b) => {
+          const ls = b.split('\n');
+          if (ls.every((l) => /^\s*[-*•]\s+/.test(l))) return '<ul>' + ls.map((l) => '<li>' + inline(l.replace(/^\s*[-*•]\s+/, '')) + '</li>').join('') + '</ul>';
+          return '<p>' + ls.map(inline).join('<br>') + '</p>';
+        })
+        .join('');
+    };
+    const add = (cls: string, html: string) => {
+      const d = document.createElement('div');
+      d.className = 'msg ' + cls;
+      d.innerHTML = html;
+      log.hidden = false;
+      log.appendChild(d);
+      log.scrollTop = log.scrollHeight;
+      return d;
+    };
+
+    const ask = async (q: string) => {
+      q = q.trim().slice(0, 500);
+      if (!q || busy) return;
+      busy = true; send.disabled = true; chips.hidden = true; reset.hidden = false;
+      add('q', esc(q));
+      history.push({ role: 'user', content: q });
+      const wait = add('a typing', '<span></span><span></span><span></span><span class="visually-hidden">Thinking…</span>');
+      try {
+        const res = await fetch('/api/ask', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ messages: history.slice(-6) }),
+        });
+        const data = await res.json().catch(() => ({}));
+        wait.remove();
+        if (res.ok && data.answer) {
+          add('a', render(data.answer));
+          history.push({ role: 'assistant', content: data.answer });
+        } else {
+          history.pop();
+          add('a err', esc(data.error || 'Something went wrong. Please try again.'));
+        }
+      } catch {
+        wait.remove(); history.pop();
+        add('a err', 'Could not reach the assistant. Check your connection and try again.');
+      } finally {
+        busy = false; send.disabled = false; input.value = ''; input.focus({ preventScroll: true });
+      }
+    };
+
+    form.addEventListener('submit', (e) => { e.preventDefault(); ask(input.value); });
+    chips.querySelectorAll<HTMLButtonElement>('[data-q]').forEach((b) => b.addEventListener('click', () => ask(b.dataset.q || '')));
+    reset.addEventListener('click', () => {
+      history.length = 0; log.innerHTML = ''; log.hidden = true; chips.hidden = false; reset.hidden = true; input.focus();
+    });
+  }
+</script>
