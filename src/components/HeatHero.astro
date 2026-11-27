@@ -1,0 +1,156 @@
+---
+// Homepage opening: a heat-diffusion toy (the visitor's cursor is the heat source)
+// behind "Hi, I'm Navin. I ___." with endings that change every few seconds.
+import home from '../content/home.json';
+const h = home.hero;
+---
+<section class="hero" data-hero>
+  <canvas class="heat" aria-hidden="true"></canvas>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="container hero-in">
+    <h1 class="hero-title">
+      <span class="hello">{h.hello}</span>
+      <span class="line" aria-hidden="true">{h.prefix} <span class="rot" data-rot>{h.endings[0]}</span>.</span>
+      <span class="visually-hidden">{h.prefix} {h.endings.join(', ')}.</span>
+    </h1>
+    <p class="sub">{h.sub}</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="/research/cold-plate/">See the research</a>
+      <a class="btn" href="#contact">Say hi</a>
+    </div>
+  </div>
+  <div class="container hero-foot">
+    <p class="toy-note">{h.toyNote}</p>
+    <button type="button" class="pause" data-pause aria-pressed="false">Pause motion</button>
+  </div>
+  <script type="application/json" data-endings set:html={JSON.stringify(h.endings)} />
+</section>
+
+<style>
+  .hero {
+    position: relative; isolation: isolate; overflow: hidden;
+    min-height: min(calc(100svh - 64px), 900px);
+    display: grid; align-content: center; padding-block: 72px 96px;
+    touch-action: pan-y;
+  }
+  .heat { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; opacity: 0.9; }
+  .scrim {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(90deg, color-mix(in oklab, var(--bg) 88%, transparent) 0%, color-mix(in oklab, var(--bg) 62%, transparent) 48%, transparent 78%),
+      linear-gradient(0deg, var(--bg) 0%, transparent 18%);
+  }
+  .hero-title { font-size: clamp(2.7rem, 7.6vw, 6rem); line-height: 1.02; max-width: 15ch; margin-bottom: 0.35em; }
+  .hello { display: block; }
+  .line { display: block; }
+  .rot { position: relative; display: inline; color: var(--accent);
+    background-image: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4));
+    background-size: 100% 0.09em; background-repeat: no-repeat; background-position: 0 96%;
+  }
+  .rot.swap { animation: swap .55s ease; }
+  @keyframes swap { from { opacity: 0; transform: translateY(.3em); } to { opacity: 1; transform: none; } }
+  .sub { font-size: clamp(1.08rem, 1.7vw, 1.3rem); max-width: 44ch; margin-bottom: 28px; }
+  .hero-title, .sub { text-shadow: 0 0 22px var(--bg), 0 0 8px var(--bg); }
+  .hero-foot {
+    position: absolute; left: 0; right: 0; bottom: 18px; margin-inline: auto;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .toy-note { margin: 0; font: 600 0.78rem/1.4 var(--mono); color: var(--muted); }
+  .pause {
+    border: 1px solid var(--line); background: color-mix(in oklab, var(--surface) 80%, transparent);
+    border-radius: 99px; padding: 6px 12px; font: 600 0.78rem var(--mono); color: var(--muted); cursor: pointer;
+  }
+</style>
+
+<script>
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  if (hero) {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let paused = reduced;
+    const pauseBtn = hero.querySelector<HTMLButtonElement>('[data-pause]')!;
+    const setPaused = (p: boolean) => {
+      paused = p;
+      pauseBtn.setAttribute('aria-pressed', String(p));
+      pauseBtn.textContent = p ? 'Play motion' : 'Pause motion';
+    };
+    setPaused(paused);
+    pauseBtn.addEventListener('click', () => setPaused(!paused));
+
+    // Changing endings
+    const rot = hero.querySelector<HTMLElement>('[data-rot]')!;
+    const endings: string[] = JSON.parse(hero.querySelector('[data-endings]')!.textContent || '[]');
+    let i = 0;
+    setInterval(() => {
+      if (paused || document.hidden) return;
+      i = (i + 1) % endings.length;
+      rot.textContent = endings[i];
+      rot.classList.remove('swap'); void rot.offsetWidth; rot.classList.add('swap');
+    }, 2600);
+
+    // Heat toy: explicit diffusion on a coarse grid, with a slight upward drift (buoyancy-ish).
+    const cv = hero.querySelector<HTMLCanvasElement>('canvas.heat')!;
+    const ctx = cv.getContext('2d')!;
+    let W = 0, H = 0, T = new Float32Array(0), B = new Float32Array(0);
+    let image: ImageData | null = null;
+    const lut = new Uint8ClampedArray(256 * 3);
+    let ptr: { x: number; y: number } | null = null;
+    let visible = true, lastPtr = 0;
+    const t0 = performance.now();
+
+    const hex = (h: string) => { h = h.trim().replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+    const buildLUT = () => {
+      const cs = getComputedStyle(document.documentElement);
+      const v = (k: string) => hex(cs.getPropertyValue('--' + k) || '#888888');
+      const stops: [number, number[]][] = [[0, v('bg')], [0.18, v('c1')], [0.45, v('c2')], [0.72, v('c3')], [1, v('c4')]];
+      for (let q = 0; q < 256; q++) {
+        const x = q / 255; let j = 0;
+        while (j < stops.length - 2 && x > stops[j + 1][0]) j++;
+        const [a0, a] = stops[j], [b0, b] = stops[j + 1];
+        const f = Math.min(1, Math.max(0, (x - a0) / (b0 - a0)));
+        for (let c = 0; c < 3; c++) lut[q * 3 + c] = a[c] + (b[c] - a[c]) * f;
+      }
+    };
+    const add = (x: number, y: number, amp: number) => {
+      const r = 6, r2 = (r * r) / 2.2;
+      for (let dy = -r; dy <= r; dy++) {
+        const yy = Math.round(y) + dy; if (yy < 1 || yy >= H - 1) continue;
+        for (let dx = -r; dx <= r; dx++) {
+          const xx = Math.round(x) + dx; if (xx < 1 || xx >= W - 1) continue;
+          T[yy * W + xx] += amp * Math.exp(-(dx * dx + dy * dy) / r2);
+        }
+      }
+    };
+    const step = (now: number) => {
+      if (ptr) add(ptr.x, ptr.y, 0.42);
+      else { const t = (now - t0) / 1000; add(W * (0.72 + 0.18 * Math.sin(t * 0.5)), H * (0.55 + 0.25 * Math.sin(t * 0.85 + 1)), 0.2); }
+      for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) { const k = y * W + x; B[k] = T[k] + 0.22 * (T[k - 1] + T[k + 1] + T[k - W] + T[k + W] - 4 * T[k]); }
+      for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) { const k = y * W + x; const v = (B[k] * 0.86 + B[k + W] * 0.14) * 0.982; T[k] = v > 1.6 ? 1.6 : v; }
+    };
+    const render = () => {
+      if (!image) return; const d = image.data;
+      for (let k = 0; k < W * H; k++) { let v = T[k]; v = v > 1 ? 1 : v < 0 ? 0 : v; const q = (v * 255) | 0; d[k * 4] = lut[q * 3]; d[k * 4 + 1] = lut[q * 3 + 1]; d[k * 4 + 2] = lut[q * 3 + 2]; d[k * 4 + 3] = 255; }
+      ctx.putImageData(image, 0, 0);
+    };
+    const size = () => {
+      const r = hero.getBoundingClientRect(); if (!r.width) return;
+      W = 128; H = Math.max(48, Math.round((128 * r.height) / r.width));
+      cv.width = W; cv.height = H; T = new Float32Array(W * H); B = new Float32Array(W * H); image = ctx.createImageData(W, H);
+      for (let k = 0; k < 160; k++) step(performance.now() + k * 40);
+      render();
+    };
+    const loop = (now: number) => {
+      const interacting = ptr && now - lastPtr < 1500;
+      if (visible && (!paused || interacting)) { step(now); render(); }
+      requestAnimationFrame(loop);
+    };
+    const setPtr = (e: PointerEvent) => { const r = cv.getBoundingClientRect(); ptr = { x: ((e.clientX - r.left) / r.width) * W, y: ((e.clientY - r.top) / r.height) * H }; lastPtr = performance.now(); };
+    hero.addEventListener('pointermove', setPtr);
+    hero.addEventListener('pointerdown', setPtr);
+    hero.addEventListener('pointerleave', () => (ptr = null));
+    hero.addEventListener('pointercancel', () => (ptr = null));
+    new IntersectionObserver((es) => (visible = es[0].isIntersecting)).observe(hero);
+    new ResizeObserver(() => size()).observe(hero);
+    window.addEventListener('themechange', () => { buildLUT(); render(); });
+    buildLUT(); size(); requestAnimationFrame(loop);
+  }
+</script>

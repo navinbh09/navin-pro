@@ -1,4 +1,147 @@
 ---
+import { Picture } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import HeatHero from '../components/HeatHero.astro';
+import ClassPicker from '../components/ClassPicker.astro';
+import home from '../content/home.json';
+import site from '../content/site.json';
+import { img } from '../lib/images';
+
+const { intro, paradox, work, teaching } = home;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: 'https://bhattarainavin.com',
+  email: `mailto:${site.email}`,
+  jobTitle: 'Undergraduate researcher and Undergraduate Teaching Fellow',
+  affiliation: { '@type': 'CollegeOrUniversity', name: 'Washington University in St. Louis' },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Truman State University' },
+  knowsAbout: ['Computational fluid dynamics', 'Topology optimization', 'Thermal management', 'OpenFOAM'],
+  sameAs: [site.linkedin],
+};
 ---
-<Base><section class="section container"><h1>Hi, I'm Navin.</h1></section></Base>
+<Base jsonLd={jsonLd}>
+  <HeatHero />
+
+  <!-- The short version: medal photo + origin strip -->
+  <section class="section intro" aria-labelledby="intro-title">
+    <div class="container">
+      <div class="intro-grid">
+        <figure class="photo reveal">
+          <Picture src={img('medal.jpg')} alt={intro.photoAlt} widths={[420, 640, 900, 1240]} sizes="(min-width: 900px) 460px, 92vw" formats={['avif', 'webp']} loading="eager" />
+          <figcaption>{intro.caption}</figcaption>
+        </figure>
+        <div class="reveal">
+          <span class="eyebrow">{intro.eyebrow}</span>
+          <h2 id="intro-title">{intro.title}</h2>
+          {intro.body.map((p) => <p class="lede">{p}</p>)}
+          <p><a href="/about/">The longer story →</a></p>
+        </div>
+      </div>
+      <ol class="stops reveal" aria-label="Where I've been">
+        {intro.stops.map((s) => (
+          <li>
+            <span class="when">{s.when}</span>
+            <b>{s.place}</b>
+            <span class="note">{s.note}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- The paradox -->
+  <section class="section band" id="paradox" aria-labelledby="paradox-title">
+    <div class="container paradox">
+      <div class="reveal">
+        <span class="eyebrow">{paradox.eyebrow}</span>
+        <h2 id="paradox-title">{paradox.title}</h2>
+        <p class="lede" set:html={paradox.body} />
+        <p class="lede">{paradox.after}</p>
+        <blockquote class="quote pq">“{paradox.quote}”</blockquote>
+        <a class="btn btn-primary" href="/research/cold-plate/">{paradox.cta} <span aria-hidden="true">→</span></a>
+      </div>
+      <figure class="figure reveal">
+        <Picture src={img('fig7-serpentine-opt.png')} alt={paradox.figAlt} widths={[480, 760, 1100, 1359]} sizes="(min-width: 980px) 560px, 92vw" formats={['avif', 'webp']} />
+        <figcaption>{paradox.caption}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <ClassPicker />
+
+  <!-- Selected work -->
+  <section class="section band" aria-labelledby="work-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">{work.eyebrow}</span>
+        <h2 id="work-title">{work.title}</h2>
+      </div>
+      <div class="grid grid-3">
+        {work.cards.map((w) => (
+          <a class="card work reveal" href={w.href}>
+            <div class="work-img">
+              <Picture src={img(w.image)} alt={w.alt} widths={[400, 700]} sizes="(min-width: 1000px) 360px, 92vw" formats={['avif', 'webp']} />
+            </div>
+            <p class="meta">{w.meta}</p>
+            <h3>{w.title}</h3>
+            <p class="muted">{w.text}</p>
+          </a>
+        ))}
+      </div>
+      <p class="more reveal"><a class="btn" href="/projects/">{work.more} <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  <!-- Teaching -->
+  <section class="section" aria-labelledby="teach-title">
+    <div class="narrow reveal">
+      <span class="eyebrow" id="teach-title">{teaching.eyebrow}</span>
+      <p class="quote">{teaching.quote}</p>
+      <p class="lede muted" style="margin-top:20px">{teaching.body}</p>
+      <p><a href="/about/#teaching">{teaching.link} →</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro-grid { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); align-items: center; }
+  @media (max-width: 860px) { .intro-grid { grid-template-columns: 1fr; } }
+  .photo { margin: 0; }
+  .photo :global(img) { border-radius: 28px; width: 100%; aspect-ratio: 1242 / 1321; object-fit: cover; box-shadow: var(--shadow); }
+  .photo figcaption { font-size: 0.88rem; color: var(--muted); margin-top: 10px; }
+
+  .stops {
+    list-style: none; padding: 28px 0 0; margin: clamp(40px, 6vw, 72px) 0 0; position: relative;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px;
+  }
+  .stops::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px; border-radius: 99px;
+    background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4));
+  }
+  .stops li { display: grid; gap: 4px; position: relative; padding-top: 10px; }
+  .stops li::before { content: ""; position: absolute; top: -33px; left: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 4px solid var(--accent); }
+  .when { font: 600 0.75rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .stops b { font-family: var(--display); font-variation-settings: "SOFT" 100, "WONK" 1; font-size: 1.2rem; font-weight: 640; line-height: 1.2; }
+  .note { font-size: 0.95rem; color: var(--muted); }
+  @media (max-width: 860px) {
+    .stops { grid-template-columns: 1fr; padding: 0 0 0 30px; gap: 24px; }
+    .stops::before { top: 4px; bottom: 4px; left: 5px; right: auto; width: 6px; height: auto; background: linear-gradient(180deg, var(--c1), var(--c2), var(--c3), var(--c4)); }
+    .stops li { padding-top: 0; }
+    .stops li::before { top: 4px; left: -31px; }
+  }
+
+  .paradox { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+  @media (max-width: 980px) { .paradox { grid-template-columns: 1fr; } }
+  .pq { font-size: clamp(1.3rem, 2.4vw, 1.7rem); border-left: 4px solid var(--c2); padding-left: 16px; margin: 8px 0 28px; }
+
+  .work { display: grid; gap: 6px; align-content: start; padding: 14px 14px 22px; }
+  .work-img { border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 3; background: #fff; margin-bottom: 12px; }
+  .work-img :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+  .work:hover .work-img :global(img) { transform: scale(1.04); }
+  .work h3, .work p { padding-inline: 8px; }
+  .work h3 { margin-bottom: 4px; }
+  .meta { font: 600 0.74rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin: 0; }
+  .more { margin-top: 28px; }
+</style>

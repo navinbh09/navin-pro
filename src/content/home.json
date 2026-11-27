@@ -1,0 +1,118 @@
+{
+  "hero": {
+    "hello": "Hi, I'm Navin.",
+    "prefix": "I",
+    "endings": [
+      "simulate how coolant flows",
+      "3D-printed a temple in pieces",
+      "fix things nobody asked me to",
+      "help teach Statics",
+      "debug until the answer holds up",
+      "design coolant channels (in 2D, so far)"
+    ],
+    "sub": "Mechanical engineer and thermal-fluids researcher at WashU. Seeking PhD positions for Fall 2027.",
+    "toyNote": "Move your cursor or drag a finger: you're the heat source. (A toy, not CFD.)"
+  },
+  "intro": {
+    "eyebrow": "The short version",
+    "title": "That's me, biting a summa cum laude medal.",
+    "photoAlt": "Navin in a graduation cap and gown, biting his medal and smiling",
+    "caption": "Truman State University, May 2026. B.A. in Physics, 4.00 GPA.",
+    "body": [
+      "I grew up in Gaindakot, a small town on the Narayani River in Nepal, between my grandfather's tractor and my father's engine-parts shop. (The tractor is older than my father.)",
+      "I started college in physics at Truman State in Missouri, then moved to WashU through the 3+2 dual-degree engineering program to finish mechanical engineering. Now I study how coolant moves through battery cold plates, and I'm applying to PhD programs for Fall 2027."
+    ],
+    "stops": [
+      { "when": "Where it started", "place": "Gaindakot, Nepal", "note": "Grandpa's screwdriver, Dad's engine parts." },
+      { "when": "2022 – 2025", "place": "Truman State University", "note": "B.A. Physics, 4.00, summa cum laude. Solar cells from beetroot and sumac." },
+      { "when": "2025 – Dec 2026", "place": "Washington University in St. Louis", "note": "B.S. Mechanical Engineering, 3.98. Cold-plate CFD, teaching, Design/Build/Fly." },
+      { "when": "Fall 2027", "place": "A PhD in mechanical engineering", "note": "Learning to know whether a simulation is right, not just whether it runs." }
+    ]
+  },
+  "paradox": {
+    "eyebrow": "SURGE research · 2D, laminar, Re = 100",
+    "title": "The best number my optimizer ever gave me was useless.",
+    "body": "I let a topology optimizer redesign a whole serpentine cold plate with one goal: lose as little pressure as possible. It cut pressure loss by <b class=\"cool\">87%</b>. It did that by sending the coolant along the shortest route, so it reached only <b class=\"warm\">16% of the plate</b>.",
+    "after": "I was glad, not surprised. The optimizer was finally behaving logically, and it proved that pressure alone is the wrong objective.",
+    "quote": "An optimizer answers exactly the question you ask it, and nothing more.",
+    "figAlt": "Two simulation results from Navin's poster. Top: with the original baffles kept, the optimizer only rounds the turns. Bottom: with the whole plate free, coolant takes a short path across one end and most of the plate sees almost no flow.",
+    "caption": "From my SURGE poster. (a) Baffles kept: turns rounded, pressure loss −0.1%. (b) Whole plate free: pressure loss −87%, but the flow takes a shortcut.",
+    "cta": "Read the whole story"
+  },
+  "classes": {
+    "eyebrow": "Pick your path",
+    "title": "Choose your class",
+    "sub": "I once earned college credit, with an A, for a class on Dungeons & Dragons. Pick a class and I'll hand you a quest.",
+    "list": [
+      {
+        "id": "professor", "name": "Professor", "stat": "INT 18", "asks": "Is it verified?",
+        "quest": [
+          { "text": "The research story: validate, characterize, optimize, results", "href": "/research/cold-plate/" },
+          { "text": "The Nov 6 poster and the lightning talk that won Best Talk", "href": "/research/cold-plate/#presentations" },
+          { "text": "My academic CV, then an email", "href": "cv" }
+        ]
+      },
+      {
+        "id": "recruiter", "name": "Recruiter", "stat": "DEX 16", "asks": "Can he build it?",
+        "quest": [
+          { "text": "The 3D-printed temple: tens of failed prints, then it fit", "href": "/projects/temple/" },
+          { "text": "Design/Build/Fly: structures co-lead and a motor test stand", "href": "/projects/#dbf" },
+          { "text": "My one-page resume", "href": "resume" }
+        ]
+      },
+      {
+        "id": "human", "name": "Curious human", "stat": "CHA 17", "asks": "Who is this guy?",
+        "quest": [
+          { "text": "From Gaindakot, Nepal, to St. Louis", "href": "/about/" },
+          { "text": "Hand me a tool: four short stories", "href": "/about/#tools" },
+          { "text": "CookNup, the app that looks in your fridge", "href": "/projects/#cooknup" }
+        ]
+      },
+      {
+        "id": "student", "name": "Student", "stat": "WIS 15", "asks": "Why is the moment diagram like that?",
+        "quest": [
+          { "text": "Pull or twist the pencil in your hand to feel a sign convention", "href": "/about/#teaching" },
+          { "text": "Integrals, through load, shear and moment diagrams", "href": "/about/#teaching" },
+          { "text": "\"I can be wrong, let's do this together.\" Email me.", "href": "email" }
+        ]
+      }
+    ]
+  },
+  "work": {
+    "eyebrow": "Selected work",
+    "title": "Things I've figured out (and some I'm still figuring out)",
+    "cards": [
+      {
+        "title": "Cold-plate topology optimization",
+        "meta": "SURGE · WashU · 2026",
+        "text": "Set up and debugged OpenFOAM's adjoint topology optimization framework for battery cold plates. Best Talk by an Undergraduate Student, ASME St. Louis Section.",
+        "href": "/research/cold-plate/",
+        "image": "fig6-single.png",
+        "alt": "A single smooth S-shaped coolant channel found by the optimizer, with streamlines"
+      },
+      {
+        "title": "Solar cells from beetroot and sumac",
+        "meta": "Research · Truman State · 2024–2025",
+        "text": "Built and tested 30 dye-sensitized solar cells with plant dyes, and traced why the two dyes behaved differently.",
+        "href": "/research/solar-cells/",
+        "image": "dssc-cells.jpg",
+        "alt": "Small dye-sensitized solar cells laid out on a lab bench"
+      },
+      {
+        "title": "A temple, 3D-printed in pieces",
+        "meta": "Personal project",
+        "text": "My proudest build. The printer was too small, so I split the design into pieces joined with alignment pins.",
+        "href": "/projects/temple/",
+        "image": "temple-om.jpg",
+        "alt": "A white 3D-printed home temple with lattice panels and an Om pattern"
+      }
+    ],
+    "more": "See all projects"
+  },
+  "teaching": {
+    "eyebrow": "Teaching",
+    "quote": "\"I can be wrong, let's do this together.\"",
+    "body": "Besides research, teaching is what I enjoy most. I'm an Undergraduate Teaching Fellow at WashU for Statics, Mechanics of Materials, Solid Mechanics and Thermodynamics (80–150 students per course), and I led J-Term sessions in Statics and Mechanics of Materials. Before that I tutored calculus and physics at Truman.",
+    "link": "How I teach"
+  }
+}

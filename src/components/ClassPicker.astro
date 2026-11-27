@@ -1,0 +1,85 @@
+---
+// "Choose your class": a playful router for professors, recruiters, students and everyone else.
+import home from '../content/home.json';
+import site from '../content/site.json';
+const c = home.classes;
+const resolve = (href: string) =>
+  href === 'cv' ? site.files.cv : href === 'resume' ? site.files.resume : href === 'email' ? `mailto:${site.email}` : href;
+const external = (href: string) => href === 'cv' || href === 'resume';
+const icons: Record<string, string> = {
+  professor: '<path d="M3 9.5 12 5l9 4.5-9 4.5-9-4.5Z"/><path d="M7 11.5V16c0 1 2.2 2.5 5 2.5s5-1.5 5-2.5v-4.5M21 9.5v5"/>',
+  recruiter: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7M3 12.5h18"/>',
+  human: '<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5s1.2 1.8 3.5 1.8 3.5-1.8 3.5-1.8M9 9.5h.01M15 9.5h.01"/>',
+  student: '<path d="M4 20l4-1L19 8l-3-3L5 16l-1 4Z"/><path d="m14 7 3 3"/>',
+};
+---
+<section class="section" aria-labelledby="classes-title">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">{c.eyebrow}</span>
+      <h2 id="classes-title">{c.title}</h2>
+      <p class="lede muted">{c.sub}</p>
+    </div>
+    <div class="picker reveal" data-picker>
+      <div class="classes" role="group" aria-label="Choose your class">
+        {c.list.map((k, i) => (
+          <button type="button" class="cls" data-cls={k.id} aria-pressed={i === 0 ? 'true' : 'false'} aria-controls={`quest-${k.id}`}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[k.id]} />
+            <span class="name">{k.name}</span>
+            <span class="stat">{k.stat}</span>
+            <span class="asks">Asks: “{k.asks}”</span>
+          </button>
+        ))}
+      </div>
+      {c.list.map((k, i) => (
+        <div class="quest" id={`quest-${k.id}`} data-quest={k.id} hidden={i !== 0}>
+          <p class="qt">Your quest, {k.name.toLowerCase()}</p>
+          <ol>
+            {k.quest.map((q) => (
+              <li>
+                <a href={resolve(q.href)} target={external(q.href) ? '_blank' : undefined} rel={external(q.href) ? 'noopener' : undefined}>
+                  {q.text}<span aria-hidden="true"> →</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .picker { display: grid; gap: 18px; }
+  .classes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 14px; }
+  .cls {
+    text-align: left; border: 1.5px solid var(--line); background: var(--surface); border-radius: var(--radius);
+    padding: 18px; cursor: pointer; display: grid; gap: 6px; align-content: start;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .cls:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .cls[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+  .cls svg { width: 30px; height: 30px; color: var(--accent); margin-bottom: 4px; }
+  .name { font-family: var(--display); font-variation-settings: "SOFT" 100, "WONK" 1; font-weight: 650; font-size: 1.35rem; line-height: 1.1; }
+  .stat { font: 700 0.75rem var(--mono); color: var(--warm-text); letter-spacing: .06em; }
+  .asks { font-size: 0.92rem; color: var(--muted); line-height: 1.4; }
+  .quest {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: clamp(20px, 3vw, 28px); position: relative; overflow: hidden;
+  }
+  .quest::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: linear-gradient(180deg, var(--c1), var(--c2), var(--c3), var(--c4)); }
+  .qt { font: 600 0.75rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  ol { margin: 0; padding-left: 1.4em; display: grid; gap: 10px; font-size: 1.08rem; }
+  ol a { font-weight: 600; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-picker]').forEach((root) => {
+    const btns = root.querySelectorAll<HTMLButtonElement>('[data-cls]');
+    btns.forEach((b) => b.addEventListener('click', () => {
+      const id = b.dataset.cls;
+      btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      root.querySelectorAll<HTMLElement>('[data-quest]').forEach((q) => (q.hidden = q.dataset.quest !== id));
+    }));
+  });
+</script>
