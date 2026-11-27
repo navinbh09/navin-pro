@@ -42,7 +42,8 @@ const h = home.hero;
   }
   .hero-title { font-size: clamp(2.7rem, 7.6vw, 6rem); line-height: 1.02; max-width: 15ch; margin-bottom: 0.35em; }
   .hello { display: block; }
-  .line { display: block; }
+  .line { display: block; min-height: calc(2 * 1.02em); }
+  @media (max-width: 640px) { .line { min-height: calc(3 * 1.02em); } }
   .rot { position: relative; display: inline; color: var(--accent);
     background-image: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4));
     background-size: 100% 0.09em; background-repeat: no-repeat; background-position: 0 96%;

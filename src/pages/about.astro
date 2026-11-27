@@ -1,0 +1,175 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import CvButtons from '../components/CvButtons.astro';
+import a from '../content/about.json';
+import { img } from '../lib/images';
+
+const icons: Record<string, string> = {
+  screwdriver: '<path d="M14.5 9.5 20 4l1 1-5.5 5.5"/><path d="m13 8 3 3-1.5 1.5-3-3z"/><path d="M11.5 9.5 4 17a2.1 2.1 0 0 0 3 3l7.5-7.5"/>',
+  wrench: '<path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-2 2-1.3-1.3a4 4 0 0 0-5-5L4 17.4a1.9 1.9 0 0 0 2.7 2.7"/><path d="M14.7 6.3 17 4l3 3-2.3 2.3"/>',
+  pencil: '<path d="M4 20l4-1L19 8l-3-3L5 16l-1 4Z"/><path d="m14 7 3 3"/>',
+  mesh: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',
+};
+---
+<Base title={a.seo.title} description={a.seo.description}>
+  <header class="section-tight">
+    <div class="container head">
+      <div>
+        <span class="eyebrow">{a.header.eyebrow}</span>
+        <h1>{a.header.title}</h1>
+        {a.header.body.map((p) => <p class="lede">{p}</p>)}
+        <CvButtons />
+      </div>
+      <figure class="portrait">
+        <Picture src={img(a.header.image)} alt={a.header.imageAlt} widths={[360, 560, 683]} sizes="(min-width: 900px) 380px, 80vw" formats={['avif', 'webp']} loading="eager" />
+      </figure>
+    </div>
+  </header>
+
+  <!-- Hand me a tool -->
+  <section class="section band" id="tools" aria-labelledby="tools-t">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">{a.tools.eyebrow}</span>
+        <h2 id="tools-t">{a.tools.title}</h2>
+        <p class="lede muted">{a.tools.sub}</p>
+      </div>
+      <div class="toolbox reveal" data-toolbox>
+        <div class="tools" role="group" aria-label="Pick a tool">
+          {a.tools.list.map((t, i) => (
+            <button type="button" class="tool" data-tool={t.id} aria-pressed={i === 0 ? 'true' : 'false'} aria-controls={`story-${t.id}`}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[t.id]} />
+              <span>{t.label}</span>
+            </button>
+          ))}
+        </div>
+        {a.tools.list.map((t, i) => (
+          <article class="story card" id={`story-${t.id}`} data-story={t.id}>
+            <h3>{t.title}</h3>
+            {t.body.map((p) => <p>{p}</p>)}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaching -->
+  <section class="section" id="teaching" aria-labelledby="teach-t">
+    <div class="narrow reveal">
+      <span class="eyebrow">{a.teaching.eyebrow}</span>
+      <h2 id="teach-t">{a.teaching.title}</h2>
+      {a.teaching.body.map((p) => <p class="lede">{p}</p>)}
+    </div>
+  </section>
+
+  <!-- Where I'm headed -->
+  <section class="section band" aria-labelledby="headed-t">
+    <div class="narrow reveal">
+      <span class="eyebrow">{a.headed.eyebrow}</span>
+      <h2 id="headed-t">{a.headed.title}</h2>
+      <blockquote class="quote hq">“{a.headed.quote}”</blockquote>
+      {a.headed.body.map((p) => <p class="lede">{p}</p>)}
+    </div>
+  </section>
+
+  <!-- Education, experience, honors -->
+  <section class="section" aria-labelledby="record-t">
+    <div class="container">
+      <h2 id="record-t" class="reveal">The record</h2>
+      <div class="record">
+        <div class="reveal">
+          <h3>Education</h3>
+          <ul class="list">
+            {a.education.map((e) => (
+              <li><b>{e.degree}</b><span>{e.school} · {e.when}</span><span class="muted">{e.detail}</span></li>
+            ))}
+          </ul>
+          <h3>{a.courses.title}</h3>
+          <ul class="plain">{a.courses.list.map((c) => <li>{c}</li>)}</ul>
+        </div>
+        <div class="reveal">
+          <h3>Experience</h3>
+          <ul class="list">
+            {a.experience.map((e) => (
+              <li><b>{e.role}</b><span>{e.where}</span><span class="muted mono">{e.when}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div class="reveal">
+          <h3>Honors</h3>
+          <ul class="plain">{a.honors.map((h) => <li set:html={h} />)}</ul>
+          <div style="margin-top:24px"><CvButtons /></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Outside the lab -->
+  <section class="section band" aria-labelledby="out-t">
+    <div class="container outside">
+      <figure class="reveal">
+        <Picture src={img(a.outside.image)} alt={a.outside.imageAlt} widths={[400, 700, 1000]} sizes="(min-width: 900px) 420px, 92vw" formats={['avif', 'webp']} />
+      </figure>
+      <div class="reveal">
+        <span class="eyebrow">{a.outside.eyebrow}</span>
+        <h2 id="out-t">{a.outside.title}</h2>
+        <ul class="facts">{a.outside.facts.map((f) => <li>{f}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); align-items: center; }
+  .head h1 { font-size: clamp(2.6rem, 6.4vw, 4.8rem); }
+  .head .lede:last-of-type { margin-bottom: 28px; }
+  .portrait { margin: 0; }
+  .portrait :global(img) { border-radius: 30px; width: 100%; aspect-ratio: 683 / 1024; object-fit: cover; box-shadow: var(--shadow); transform: rotate(1.5deg); }
+  @media (max-width: 860px) { .head { grid-template-columns: 1fr; } .portrait { max-width: 360px; } }
+
+  .toolbox { display: grid; gap: 18px; grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr); align-items: start; }
+  @media (max-width: 860px) { .toolbox { grid-template-columns: 1fr; } }
+  :global(html:not(.js)) .toolbox { grid-template-columns: 1fr; }
+  .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tool {
+    border: 1.5px solid var(--line); background: var(--surface); border-radius: 20px; padding: 18px 10px;
+    display: grid; justify-items: center; gap: 8px; cursor: pointer; font-weight: 650;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .tool svg { width: 40px; height: 40px; color: var(--accent); }
+  .tool:hover { transform: translateY(-3px) rotate(-3deg); }
+  .tool[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+  .story h3 { font-size: clamp(1.5rem, 2.6vw, 2rem); }
+  .story { font-size: 1.06rem; }
+  .story + .story { margin-top: 0; }
+
+  .hq { font-size: clamp(1.3rem, 2.6vw, 1.8rem); border-left: 4px solid var(--c2); padding-left: 18px; margin: 8px 0 28px; }
+
+  .record { display: grid; gap: clamp(24px, 4vw, 48px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); margin-top: 24px; }
+  .record h3 { margin-top: 8px; }
+  .list { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 16px; }
+  .list li { display: grid; gap: 2px; }
+  .list span { font-size: 0.95rem; }
+  .plain { padding-left: 1.1em; display: grid; gap: 8px; margin-bottom: 28px; }
+
+  .outside { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: center; }
+  @media (max-width: 860px) { .outside { grid-template-columns: 1fr; } }
+  .outside figure { margin: 0; }
+  .outside :global(img) { border-radius: 28px; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .facts { padding-left: 1.1em; display: grid; gap: 12px; font-size: 1.05rem; }
+</style>
+
+<script>
+  const box = document.querySelector<HTMLElement>('[data-toolbox]');
+  if (box) {
+    const btns = box.querySelectorAll<HTMLButtonElement>('[data-tool]');
+    const stories = box.querySelectorAll<HTMLElement>('[data-story]');
+    const show = (id?: string) => stories.forEach((s) => (s.hidden = s.dataset.story !== id));
+    show(btns[0]?.dataset.tool);
+    btns.forEach((b) => b.addEventListener('click', () => {
+      btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      show(b.dataset.tool);
+    }));
+  }
+</script>

@@ -1,0 +1,137 @@
+{
+  "seo": {
+    "title": "About",
+    "description": "Navin Bhattarai's story: from his grandfather's screwdriver in Gaindakot, Nepal, to physics at Truman State, mechanical engineering at WashU, teaching, and a PhD in Fall 2027."
+  },
+  "header": {
+    "eyebrow": "About",
+    "title": "The longer story.",
+    "body": [
+      "I'm a mechanical engineer and thermal-fluids researcher from Gaindakot, a small town on the Narayani River in Nepal. I'm finishing a B.S. in Mechanical Engineering at WashU this December, after a B.A. in Physics at Truman State.",
+      "I build CFD simulations and topology optimization for battery cold plates, and I distrust my own results until they earn it. I'm applying to PhD programs for Fall 2027."
+    ],
+    "image": "portrait.jpg",
+    "imageAlt": "Portrait of Navin smiling, in a white T-shirt, in a library"
+  },
+  "tools": {
+    "eyebrow": "Hand me a tool",
+    "title": "Pick a tool, get a story.",
+    "sub": "Every one of these has been in my hands for a reason.",
+    "list": [
+      {
+        "id": "screwdriver",
+        "label": "Screwdriver",
+        "title": "“Kancha, pass me that screwdriver.”",
+        "body": [
+          "My grandfather was my first mentor. He was a farmer with a vintage Massey Ferguson 35 tractor (older than my father), and he fixed old gadgets and took care of the things around the house that everyone else ignored.",
+          "During Tihar in 2013, he was hanging Jhilimili lights and called out for a screwdriver. The next year, I wired the lights myself, while my grandmother told me to stay away from the electricity.",
+          "He never went to college, but he's an engineer in my eyes. I got my habit from him: I can't unsee a thing that needs attention. I'll spend 30 minutes now so someone isn't annoyed for a year."
+        ]
+      },
+      {
+        "id": "wrench",
+        "label": "Wrench",
+        "title": "Dad's engine-parts shop",
+        "body": [
+          "My father runs an automobile and engine-parts business: tractor parts, engine components, piston rings. I spent hours among the new replacement parts and the greasy, broken ones from the repair shop.",
+          "I remember staring at a massive tractor engine opened into two halves, its hollow cavities slick with oil, trying to imagine how it worked. I read the car magazines he brought home instead of storybooks.",
+          "I admire how hard he works. I only really understood it after working hard myself in the U.S."
+        ]
+      },
+      {
+        "id": "pencil",
+        "label": "Pencil",
+        "title": "Feel the sign convention",
+        "body": [
+          "When I teach Statics, I ask students to pull or twist the pencil in their hand to feel which way a force or moment points. Then I connect integrals and derivatives to load, shear and moment diagrams, so the math has something to hold on to.",
+          "My line to students: “I can be wrong, let's do this together.” My favorite moment is a student telling me they'd never have understood something without me."
+        ]
+      },
+      {
+        "id": "mesh",
+        "label": "Mesh",
+        "title": "Learn by doing, then go back for the why",
+        "body": [
+          "I don't always wait to fully understand before I start. I dive in, track every step, retrace to whatever broke, and once it works, I dig into why.",
+          "All summer, I saw the Courant number in every OpenFOAM run. Then it showed up in my graduate CFD course, and that moment made me want to learn the rest.",
+          "My golden key: always remember how you reached each step, so you can step back and redo the wrong one. Either I know it, or I'll make myself learn it."
+        ]
+      }
+    ]
+  },
+  "teaching": {
+    "eyebrow": "Teaching",
+    "title": "The thing I enjoy most, besides research",
+    "body": [
+      "I'm an Undergraduate Teaching Fellow at WashU's McKelvey School of Engineering (since Aug 2025). I support Statics, Mechanics of Materials, Solid Mechanics and Thermodynamics, with 80–150 students per course, hold weekly office hours, and led J-Term sessions in Statics and Mechanics of Materials for about 15 students.",
+      "Before that, I was an Academic Peer Tutor at Truman State (2023–2025) for Calculus I–III and Physics I–II, including in-class embedded tutoring.",
+      "My style is real-life examples and simple breakdowns. And if a student's grade suddenly drops, my first question is “Are you okay?”"
+    ]
+  },
+  "headed": {
+    "eyebrow": "Where I'm headed",
+    "title": "Simulations I can trust, for energy systems.",
+    "quote": "The questions I care about now go past what I can teach myself. I can debug a setup until it runs; what I want is the training to know whether it is right, and the judgment to pick problems worth the effort.",
+    "body": [
+      "Next, I want to put heat into the optimizer's objective so designs reach the whole plate; understand when branching, leaf-vein-like channel networks emerge from optimization, and whether they hold up in 3D and in a real flow loop; and check simulations against experiments.",
+      "Ten years from now, I hope to lead a lab that builds trustworthy simulation and optimization tools for thermal-fluid energy systems, with industry partners close enough that results reach real engines and batteries, and with teaching at its center. My larger hope: to bring better energy technology to communities like the one I grew up in."
+    ]
+  },
+  "education": [
+    {
+      "school": "Washington University in St. Louis",
+      "degree": "B.S. in Mechanical Engineering",
+      "when": "Expected Dec 2026",
+      "detail": "GPA 3.98/4.00 · Lee Hunter Scholarship"
+    },
+    {
+      "school": "Truman State University",
+      "degree": "B.A. in Physics, Summa Cum Laude",
+      "when": "Awarded May 2026",
+      "detail": "GPA 4.00/4.00 · Truman State–WashU 3+2 dual-degree engineering program (at Truman 2022–2025) · Sigma Pi Sigma · International President's Honorary Scholarship"
+    }
+  ],
+  "courses": {
+    "title": "Favorite courses",
+    "list": [
+      "Design of Thermal Systems (my favorite, and the hardest)",
+      "Heat Transfer",
+      "Fluid Mechanics",
+      "Computational Fluid Dynamics (graduate, in progress)",
+      "Thermo-Fluid Modeling of Renewable Energy Systems (graduate, in progress)"
+    ]
+  },
+  "experience": [
+    { "role": "Undergraduate Researcher, SURGE", "where": "WashU · with Dr. Xianglin Li", "when": "May 2026 – present" },
+    { "role": "Undergraduate Teaching Fellow", "where": "WashU McKelvey School of Engineering", "when": "Aug 2025 – present" },
+    { "role": "Co-Lead, Structures Sub-Team", "where": "WashU Design/Build/Fly", "when": "Aug 2025 – present" },
+    { "role": "Level 1 Technician", "where": "WashU Student Technology Services", "when": "Feb 2026 – present" },
+    { "role": "Research Assistant, natural-dye solar cells", "where": "Truman State · with Dr. Rasanjali Jayathissa", "when": "Feb 2024 – Aug 2025" },
+    { "role": "Academic Peer Tutor", "where": "Truman State Center of Academic Excellence", "when": "Aug 2023 – May 2025" },
+    { "role": "Building Operations Student Manager", "where": "Truman State Student Union", "when": "Aug 2022 – Aug 2025" }
+  ],
+  "honors": [
+    "Best Talk by an Undergraduate Student, ASME St. Louis Section Mini Symposium (2026)",
+    "Summa Cum Laude, Truman State University (2026)",
+    "SURGE Recipient and Bauer Leaders Academy, WashU (2026)",
+    "Lee Hunter Scholarship, WashU (2025–2026)",
+    "Sigma Pi Sigma, physics honor society (2025)",
+    "International President's Honorary Scholarship, Truman State (2022–2025)",
+    "7+ merit-based scholarships, Truman State (2023–2025)",
+    "Certified SOLIDWORKS Associate (<a href=\"/files/Navin-Bhattarai-CSWA-Certificate.pdf\" target=\"_blank\" rel=\"noopener\">CSWA certificate</a>)"
+  ],
+  "outside": {
+    "eyebrow": "Outside the lab",
+    "title": "A few more things about me",
+    "image": "liberty.jpg",
+    "imageAlt": "Navin on a boat, fist raised and smiling, with the Statue of Liberty behind him",
+    "facts": [
+      "I earned college credit, with an A, for a class on Dungeons & Dragons. I also took Italian Film.",
+      "I trekked to Upper Mustang in the Himalayas with friends. When the altitude got hard, I pushed the group to stay together.",
+      "I like trying new sports and can usually hold my own the first time: tennis, indoor simulator golf, cricket (Truman Cricket Club), soccer, basketball.",
+      "I once fixed a Camry touchscreen I'd never worked on, by trial, error, some luck, and remembering every step so I could backtrack.",
+      "Energy is the thread: a ninth-grade concept for a hydropower dam in my hometown, then solar cells, now battery cold plates.",
+      "I'm part of the Nepalese Student Association, the South Asian Student Union and ASME."
+    ]
+  }
+}

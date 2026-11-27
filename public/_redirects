@@ -1,0 +1,15 @@
+# Old site URLs → new pages (Cloudflare Pages). Specific rules first.
+/academic/research.html   /research/cold-plate/  301
+/academic/about.html      /about/                301
+/academic/contact.html    /                      301
+/engineering/projects.html /projects/            301
+/engineering/about.html   /about/                301
+/engineering/contact.html /                      301
+/academic/*               /                      301
+/engineering/*            /                      301
+/academic                 /                      301
+/engineering              /                      301
+# Old PDF links
+/assets/Resume_NAVIN_B.pdf        /files/Navin-Bhattarai-Resume.pdf  301
+/assets/Academic_CV_NAVIN_B.pdf   /files/Navin-Bhattarai-CV.pdf      301
+/assets/*                         /                                  301
